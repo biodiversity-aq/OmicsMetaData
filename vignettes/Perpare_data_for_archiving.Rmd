@@ -1,0 +1,69 @@
+---
+title: "Perpare_data_for_archiving"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{retrieving_data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+#Perparing data and metadata for online archiving
+This vignete will demonstrate how to standardize a table with sequence metadata following the MIxS standard, and creating a tab separated (TSV) file that can be uploaded directly to the Nucleotide Sequence Archive (ENA-EMBL) without any additional work or formatting required. 
+
+##The test dataset
+For the purpose of this vignett, the Alaskan Methanobase dataset (PRJEB36732) will be used as an example. Set up your environment as follows, and download the metadata from the POLA3R website with RCurl. 
+
+```{r R-setup, eval = FALSE}
+library(OmicsMetaData)
+
+# download the some metadata
+library(RCurl)
+main_metadata <- getURL("https://www.biodiversity.aq/media/polaaar/project_files/METHANOBASE_Alaska.csv")
+main_metadata <- read.table(text = main_metadata, sep =",", header = TRUE, row.names=1, stringsAsFactors = FALSE)
+```
+
+##Converting into a MIxS.metadata object
+The dataset needs to be standardized into MIxS. That is, the variable names must be MIxS terms. This process is covered in detail elsewhere. For the test dataset, a standardization to MIxS was already performed, and it can be converted directly into a MIxS.metadata object. As a note: This dataset also contains a large number of variable that cannot be represented by a MIxS term. These missing terms are in the process of being develloped and ratified by GSC, but untill they are official, the placeholder names can be used as is.
+
+```{r standardizing_MIxS, eval = FALSE}
+main_metadata.MIxS <- dataQC.MIxS(dataset=main_metadata)
+```
+
+##Synchronizing metadata and sequence files
+The OmicsMetaData package contains several function to help deal with the large number of sequence files that are usually part of the 'omics dataset. The sequence files need to be formatted as FASTA or FASTQ. 
+
+All the names of all sequence files in a folder can be extracted
+
+```{r seq_files, eval = FALSE}
+seq_files <- FileNames.to.Table("_path_to_seqFiles_")
+```
+
+The sample names in a metadata file can be compared to the names of sequence files in a directory. Any discrepancies or missing metadata sample records or sequence files will be flagged and need to be corrected manually.
+
+```{r sync_files, eval = FALSE}
+sync.metadata.sequenceFiles(row.names(main_metadata.MIxS@data), file.dir="_path_to_seqFiles_")
+```
+
+There is also a function to bulk rename sequence files based on a dataframe with a column of old names and a column of corresponding new names. For example, when sequence files were renamed by a sequencing center and they need to be named back to the original sample names, using a dataframe with two columns that links both names all sequence files can be renamed.
+
+```{r rename, eval = FALSE}
+names_dic <- data.frame(seq_facility_name = c("AA1234", "BB2345"), original_name = c("sampleLocation_year_1", "sampleLocation_year_2"))
+
+renameSequenceFiles(names_dic, colNameOld="seq_facility_name", colNameNew="original_name", file.dir= "_path_to_seqFiles_")
+```
+
+##Data archiving on INSDC
+To upload data, that is, both sequence files and metadata, on an INSDC database such as ENA, see a detailed description here: https://ena-docs.readthedocs.io/en/latest/submit/fileprep/upload.html
+
+For the purpose of this vignette, we will only focus on formatting the metadata into a TSV file in the format that ENA can read directly. Any other format will lead to the user either having to manually copy-paste each value of metadata individually, or a high number of iterations in uploading data untill all the issues that ENA flagged are resolved. NCBI has a similar process, which is not covered here or by these functions. 
+
+The prep.metadata.ENA can convert a MIxS.metadata object to an ENA-acceptible TSV file. Because a number of mandatory information fields need to be provided, the function will ask for user input if the information can't be found. This information can also be directly provided as function variables.
+
+
+```{r format_ENA, eval = FALSE}
+prep.metadata.ENA(metadata=main_metadata.MIxS, dest.dir=get.wd(), file.name="vignette")
+```
+
+This will create a \*_runinfo.tsv file with the technical information and a \*.tsv file with the sample metadata in the destination directory.
+
+When submitting a dataset to ENA, a Bioproject needs to be made first that will be at the root of all the samples and act as the project-level accession number. After this, it will be possible to submit a completed spreadsheet, which is the \*.tsv file. The \*_runinfo.tsv file is submitted later in the process to complete the technical information of the project.

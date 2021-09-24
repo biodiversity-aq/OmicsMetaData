@@ -1,0 +1,27 @@
+Package: OmicsMetaData
+Title: Tools standardizing ‘omics metadata.
+Version: 0.0.1
+Authors@R: 
+	person("Maxime",
+		"Sweetlove",
+		role = c("aut", "cre"),
+		email = "msweetlove@naturalsciences.be")
+Description: 
+	OmicsMetaData was developed by the SCAR biodiversity data management team to provide a toolbox to retrieve, standardize and quality control metadata and chemo-physical measurement data that is associated with nucleotide sequences.
+License: CC-0 2021
+Encoding: UTF-8
+LazyData: true
+Depends:
+    xml2,
+    reshape2,
+    tidyr,
+    RecordLinkage,
+    mapview,
+    Orcs,
+    worrms,
+    rgbif,
+    stringr,
+    R (>= 2.10)
+RoxygenNote: 7.1.1
+Suggests: 
+    testthat

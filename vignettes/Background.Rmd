@@ -1,0 +1,125 @@
+---
+title: "Background"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+#Rationale and background information
+
+The OmicsMetaData package was develloped as a set of tools to download, standardize and handle 'omics datasets, and more particulary the non-nucleotide sequence metadata components. 
+
+There are functions to retrieve metadata from sequences stored at the INSDC databases together with the sequences themselves and tools that can help with some basic quality control on these metadata (e.g. violations to the data standards). User-provided data can be standardized with MIxS or DwC in a supervised way, and can be readied for upload and archiving on one of the INSDC databases. Finally, there are several tools for common manipulations in ecological molecular data, such as easy conversion between wide and long formats.
+
+
+
+
+Omics datasets are complex and multifaceted digital constructions, comprising of a core of DNA sequences, RNA or proteins, wrapped up in many layers of metadata that are important to correctly use and interpret the sequence data. These metadata layers can include lab protocols, sequencing methods, experimental settings, or post-sequencing taxonomical annotations. Environmental measurements or other co-collected data are also a common feature associated nucleotide sequences. These environmental measurements can be concentrations of chemical elements, temperature, pH, conductivity,... and can be used in correlation or multivariate analyses to detect patterns within the sequence data.
+
+This R-package focuses on handling these metadata and environmental data in a standardized way, paying special attention to data interoperability and re-use. Therefore we implement the Minimum Information about any (x) sequence (MIxS) and the DarwinCore (DwC) standards, which are the most widely used in the 'omics and biodiversity data communities. 
+
+There are functions to retrieve such data from sequences stored at the INSDC databases together with the sequences themselves and tools that can help with some basic quality control on these metadata (e.g. violations to the data standards). User-provided data can be standardized with MIxS or DwC in a supervised way, and can be readied for upload and archiving on one of the INSDC databases. Finally, there are several tools for common manipulations in ecological molecular data, such as easy conversion between wide and long formats.
+
+
+### Background information
+#### Data and metadata standards
+A data standard consists of well-defined and a non-redundant body of "variable names" (in other contexts these might be called "terms", "properties", "elements", "fields", "attributes", or "descriptors") that is used with a particular technical application in the framework of 'omics and 'omics-related data. Like a language, each variable name thus identifies a specific aspect of the data, and is constrained by rules on implementation and notation of the values (e.g. the use of separators, use of a fixed vocabulary or the units that are allowed).
+
+#### Minimum Information on any (x) Sequence (MIxS)
+The MIxS standard has been developed by the Genomic Standards Consortium (GSC) for reporting information on nucleotide sequences (Yilmaz et al., 2011). The standard is built up of a core of common descriptors, that can be supplemented with packages of environment-specific information components. For more information, see https://gensc.org/mixs/ and https://github.com/GenomicsStandardsConsortium/mixs.
+
+#### DarwinCore
+The Darwin Core standard (DwC) was intended to facilitate the sharing of information about biological diversity, and is centered around identified taxa and their occurrences. DwC is not meant for reporting sequences of unknown or unidentified organisms. For more information, see https://dwc.tdwg.org and https://github.com/tdwg/dwc.
+
+#### interoperability of MIxS and DwC
+As is evident from the above, DwC and MIxS have their own specific niche, but also a potential lto overlap. While MIxS is optimized to describe sequence data without necessarily needing to know the taxonomic context of the data, DwC is optimized to deal with taxonomic data that can have associated sequence information but DwC has great difficulty with taxonomically non-contextualized sequence data. Both standards are currently working on becoming sustainably interoperable, so that taxonomic data derived from sequences or sequences associated with taxa or individuals can be formatted in DwC using MIxS terminology.
+
+#### flavors and implementation of data standards
+In some instances, the implementation of a datastandard between platforms. For instance differences in the use of capitals, underscores, or additional "non-official" terms can complicate interoperability between platforms. In this package some of these flavours have been taken into account, including the ENA version of MIxS as well as other commonly encountered variants (read: typos) of MIxS terms.
+
+In theory, each standard consists of a single official current version, but in practice, variants can arise based on specific needs or constrains of organizations, platforms and databases. These differences are usually very small and of a technical nature, such as a stricter or less stringent implementation of the rules or in the use of capitals and underscores. These variants are called flavors. For instance, on INSDC, MIxS terms can be written differently.
+
+#### implementation of the standards
+In this package, the MIxS and DwC data standards are implemented through an internal library of terms (the TermsLib object), including term definitions, commonly encountered synonyms, and translation into other standards or flavors of the standard. At present, this library is manually constructed and curated by the biodiversity.aq data management team, but as MIxS and DwC further converge and make their terms and the mappings between the standards available in computer readable formats instead of simple spreadsheets, in the future, there is a possibility to automize the generation of this library. In any case, updates of the packages will be required with new version releases of the standards.
+
+In the case of this R-package, the following adaptations to the MIxS standard have been implemented: 
+- geographic coordinates in the lat_lon term, are also separately stored in decimalLatitude and decimalLongitude due to the tendency of spreadsheet editing software to automatically sum the values in the lat_lon field. 
+- terms from different environmental MIxS packages can be used regardless of the package because most datasets require terms from different environmental packages.
+- to allow interoperability with the DarwinCore format, and better capture complex sampling designs, samples can be structured as events (eventID) and parent events (parentEventID), analogously to the eventCore variant of DarwinCore.
+
+
+##Classes  -  R-objects
+MIxS.metadata  -  metadata formated in the MIxS standard 
+DwC.event  -  metadata formated in DarwinCore (DwC) with event core 
+DwC.occurrence  -  metadata formated in DwC with occurrence core
+
+##Methods for classes
+write.MIxS  -  write MIxS.metadata to a CSV file 
+check.valid.metadata.DwC  -  validator function for the DwC.event and DwC.occurrence classes check.valid.metadata.MIxS  -  validator function for the MIxS.metadata class
+
+##Libraries  -  built-in R-objects that describe the various data standards
+TermsLib  -  central library with mapped terms of DwC, MIxS and miscellaneous terms that are missing from MIxS and DwC
+TermsSyn  -  library with synonyms or writing variants for standard terms 
+TermsSyn_DwC  -  library with synonyms for DwC terms 
+ENA_allowed_terms  -  a list of terms accepted by ENA-EMBL 
+ENA_checklistAccession  -   checklist accession terms accepted by ENA-EMBL 
+ENA_geoloc  -  a list of geographic location names accepted by ENA-EMBL 
+ENA_instrument  -  a list of instrument names accepted by ENA-EMBL
+
+##Functions for retrieving sequence data and metadata
+download.sequences.INSDC  -  download sequences from an INSDC database to R
+get.BioProject.metadata.INSDC  -  downloads a minimal set of sample metadata from an INSDC database
+get.sample.attributes.INSDC  -  downloads the complete set of sample metadata and environmental measurements from an INSDC database
+
+##Functions for standardizing metadata
+dataQC.MIxS  -  standarize a data.frame using MIxS term
+dataQC.DwC_general  -  stanardize a data.frame using DwC terms
+dataQC.DwC  -  check if data.frames or a DwC archive are in compliance with the DwC standard
+
+##Functions for archiving data
+sync.metadata.sequenceFiles  -  checks all samples have a matching sequence data file in a directory
+prep.metadata.ENA  -  converts metadata into the format accepted by the European Nucleotide Archive (ENA) 
+get.ENAName  -  get the ENA variant a MIxS term
+FileNames.to.Table  -  make a table of all the filenames in a directory
+renameSequenceFiles  -  bulk-change filenames in a directory
+
+##Functions to manipulate and reformat metadata
+combine.data  -  combine MIxS.metadata objects into one
+combine.data.frame  -  combine data.frame objects into one
+eMoF.to.wideTable  -  convert a long-format eMoF to a wide-format
+wideTable.to.eMoF  -  convert a wide-format table to a long-format eMoF
+
+##Getting help
+term.definition  -  get the definition of a term
+get.boundingBox  -  get a bouding box from a dataset
+get.insertSize  -  get the sequence length of the first sequence in a fasta or fastq file
+
+##quality control tools for metadata
+dataQC.dateCheck  -  detect a date column and format as ISO 8601 (YYYY-MM-DD)
+dataQC.LatitudeLongitudeCheck  -  detect a geographic coordinate column and format as decimal degrees
+coordinate.to.decimal  -  convert any coordinate value into decimal degree
+dataQC.taxaNames  -  correct trailing spaces or common typos in a list taxonomic names
+dataQC.TermsCheck  -  check if field names are consistent with a data standard, suggesting solutions for problems where possible
+dataQC.completeTaxaNamesFromRegistery  -  complete a list of taxonomic names by looking-up missing information on an accepted taxonomic registery
+dataQC.eventStructure  -  check the validity of, or create an event-parentEvent structure for a dataset
+dataQC.generate.footprintWKT  -  generate a WKT notation from geographic coordinates
+dataQC.guess.env_package.from.data  -  automatically guess the best fitting MIxS environmental package
+dataQC.findNames  -  find the sample names field/column in a (meta-)dataset
+dataQC.TaxonListFromData  -  find the taxonomic names field/column in a (meta-)dataset
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

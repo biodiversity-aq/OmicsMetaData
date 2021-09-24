@@ -1,0 +1,76 @@
+---
+title: "Metadata_standardization"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{retrieving_data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Standardization of metadata
+This vignete will demonstrate how to standardize and quality control metadata. 
+
+##The test dataset
+For the purpose of this vignett, the dataset PRJNA305344 will be used as an example. Set up your environment as follows, and download the (non-stanardized) metadata like this:
+
+```{r R-setup, eval = FALSE}
+library(OmicsMetaData)
+
+workingDir <- "_path_to_a_working_directory_" #the directory you'll be working from and download the data to
+keyINSDC <- "****************" #your personal NCBI API key
+
+# download the metadata
+main_metadata <- get.sample.attributes.INSDC(apiKey=keyINSDC, BioPrjct="PRJNA305344")
+```
+
+When we look at the data, it is immediately clear there are some issues that will make it difficult to work with:
+
+```{r first_look, eval = FALSE}
+View(main_metadata)
+```
+
+The geographic coordinades in the lat_lon fields are not in decimal degrees, 
+The column names "electric_conductivity_microS_cm", "Inorganic_carbon_%", "lichen", "moisture_%", "moss", "Total_carbon_%", and "Total_organic_carbon" are not MIxS standardized terms, and the variables "lichen", "moss", and "Total_organic_carbon" even miss a unit. Then, some important information is missing from this data.frame, such as the sequencing technology used (which has important implications for the types of sequencing errors to expect).
+
+Any violations agains the MIxS data standard for 'omics data needs to be resolved manually, although the dataQC.TermsCheck function can help a great deal with finding suiteble terms. 
+
+```{r termsCheck, eval = FALSE}
+terms <- dataQC.TermsCheck(colnames(main_metadata), exp.standard="MIxS")
+terms
+```
+
+Running the function shows only three column names are accepted MIxS terms.
+
+There are also a number of columnnames that are not MIxS terms, but have a close match to one. This can be the case for spelling errors or misuse of capitals and underscores, or if those columnnames are a known synonym of a MIxS term. In that case, dataQC.TermsCheck will be able to suggest a suiteble MIxS terms. Importamtly, this is not waterproof, and needs to be manually assessed. For example "Inorganic_carbon_%" is matched to MIxS:inorg_particles, but this is not the same. For matches that do seem correct, the MIxS term can be assigned to the column instead of the old name like this:
+
+```{r change_colName, eval = FALSE}
+colnames(main_metadata)[colnames(main_metadata)=="_old_name_"]<-"_new_MIxS_match_"
+```
+
+In other cases, we will need to manually sift through the terms to find the appropriate ones. A complete list of the terms can be obtained from the GSC website (https://gensc.org/mixs/), or form the TermsLib object in teh OmicsMetaData package:
+
+```{r consult_MIxS_terms, eval = FALSE}
+# consult the full list of MIxS terms
+TermsLib[TermsLib$name_origin=="MIxS",]$name
+#get the definition of a specific term
+term.definition("_MIxS_term_")
+```
+
+Now the dataset is aligned with the MIxS standard terminology for variables, we can have a look at the content of the variables, and how this compares to the rules set up by MIxS. For example, remember the text format of the geographic coordinates, which should be represented as numerical values in a decimal degree format. The dataQC.MIxS function will take care of a lot os such issues. No-brainers, like converting the coordinates or the dates are done automatically, but for other issues human interference will be asked. For example any remaining non-MIxS terms will be asked to keep (for the sake of having complete data, MIxS is not perfect) or remove (if we want to be completely in tune with MIxS). A first step of the protocol will be to identify teh names of the samples. Also if required terms are missing, the function will ask to provide these on the spot, or will flag the issue to provide later n case of more complicated data.
+
+
+```{r dataQC_MIxS, eval = FALSE}
+main_metadata.MIxS <- dataQC.MIxS(dataset=main_metadata)
+```
+
+The resulting MIxS.metadata class object is an S4 object with xx slots that can be accessed using "@": data, section, units, type, env_package, QC. The data slot will contain all the data analogously to the dataframe that was entered into the function. The units slot can now be altered to include the units that were previously included in the column names.
+
+```{r units, eval = FALSE}
+main_metadata.MIxS@units[names(main_metadata.MIxS@units)=="tot_carb"] <- "percentage"
+```
+
+At the end, the MIxS.metadata object can be written to a simple CSV file, which will include the units and section as a seperate column alongside the samples.
+
+```{r write, eval = FALSE}
+write.MIxS(main_metadata.MIxS, "main_metadata_MIxS.csv")
+```

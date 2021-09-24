@@ -1,0 +1,49 @@
+---
+title: "Retrieving_online_data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{retrieving_data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Retrieving data from online sources
+This vignete will demonstrate how to download sequence data and associated metadata from INSDC to be used directly into R.
+
+The OmicsMetaData package allows users to retrieve data from the databases of the International Nucleotide Sequence Database Consortium (INSDC) databases. These databases include the ones of the National Center for Biotechnology Information (NCBI, such as GenBank and SRA, located in the USA), the European Nucleotide Archive (ENA, located in Europe) and the DNA Databank of Japan (DDBJ, located in Japan). The data that can be downloaded includes the nucleotide sequence data, which can simply be downloaded from the Bioproject accession number, as well as any metadata that is associated to the sequences, such as information on the sequencing technology that was used, sampling dates, environmental measurements (e.g. pH, temperature, chemical ions),... 
+
+These data can be cumbersome to obtain from INSDC, so this package offers an easy route to get data of many samples directly into R on your local (or remote) machine, together with all associated metadata. As a remark: the metadata documentation of sequence data on INSDC is left up to the goodwill of the submitter. It is possible other metadata or environemntal data exists, but was not added to the sequence submission, or only the bare minimum of metadata was added. In case of older datasets (<2018), it is possible no metadata is present, or its format deviates from the MIxS standard.
+
+##Finding a dataset
+The functions in the package are meant to download data based on the BioProject accession number of a dataset. Querying the INSDC databases to look for data based on specific paremeters goes beyond the scope of this package. To find appropriate datasets, search the NCBI databases here: https://www.ncbi.nlm.nih.gov, or the ENA database can be querried here: https://www.ebi.ac.uk/ena/browser/home. Polar and Antarctic nucleotide sequence data can be queried in detail here: https://www.biodiversity.aq/pola3r. Each dataset on INSDC has a single identifier called the BioProject number, which starts with the letters "PRJ". This Bioproject number is at the root of all samples in a project. Samples have their own accession numbers (e.g. starting with SRR, SRS,...).
+
+For the purpose of this vignett, the dataset PRJNA305344 will be used as an example. Set up your environment as follows:
+
+```{r R-setup, eval = FALSE}
+library(OmicsMetaData)
+
+workingDir <- "_path_to_a_working_directory_" #the directory you'll be working from and download the data to
+keyINSDC <- "****************" #your personal NCBI API key
+
+```
+
+To get a primary look at the data, a list of the samples and some basic metadata can be downloaded like this:
+
+```{r first_look, eval = FALSE}
+general_metadata <- get.BioProject.metadata.INSDC("PRJNA305344")
+```
+
+If this looks OK, we can proceed to downloading some data. The code below will download all the samples in the BioProject to the place we defined as workingDir, while all the metadata will be saved to the main_metadata object in R, which will return a data.frame that can later be sved as a CSV.
+
+```{r download_sequences, eval = FALSE}
+main_metadata <- download.sequences.INSDC(BioPrj="PRJNA305344", destination.path=workingDir,
+apiKey=keyINSDC, keep.metadata = TRUE, download.sequences = TRUE)
+```
+
+Alternatvely, we can also choose only to download the metadata like this:
+
+```{r download_metadata, eval = FALSE}
+main_metadata <- get.sample.attributes.INSDC(apiKey=keyINSDC, BioPrjct="PRJNA305344")
+```
+
+These data can now flow further into custom pipelines, for example to delign OTUs or ASVs, assign a taxonomic annotation to each sequence, perform phylogenetic analyses or multivariate statistics.
