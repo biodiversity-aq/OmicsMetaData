@@ -4,12 +4,12 @@
 \alias{dataQC.completeTaxaNamesFromRegistery}
 \title{Complete a list of taxonomic names with information form an authorotive taxonomic backbone}
 \usage{
-dataQC.completeTaxaNamesFromRegistery(taxaNames, taxBackbone="gbif")
+dataQC.completeTaxaNamesFromRegistery(taxaNames, taxBackbone="worms")
 }
 \arguments{
 \item{taxaNames}{a character vector. A list with the taxonomic names to look for}
 
-\item{taxBackbone}{a character string. The taxonomic backbone to querry. Either "worms" or "gbif"}
+\item{taxBackbone}{a character string. The taxonomic backbone to querry. At present only "worms" is allowed.}
 }
 \value{
 a dataframe with the following fields:scientificName, scientificNameID, aphID, kingdom, phylum, class, order, family, genus, specificEpithet, scientificNameAuthorship, namePublishedInYear

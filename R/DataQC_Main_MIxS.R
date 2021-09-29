@@ -95,7 +95,11 @@ dataQC.MIxS <- function(dataset = NA, ask.input=TRUE, add_to = NA, sample.names 
 
   # 1. looking for the original sample name
   datasetNames <- dataQC.findNames(dataset = dataset_origcolNames, ask.input=ask.input, sample.names=sample.names)
-  New_dataset$original_name <- (datasetNames$Names)$original_name
+  if(all(is.na( (datasetNames$Names)$original_name))){
+    New_dataset$original_name <- row.names(dataset) #in case of no clear sample names
+  }else{
+    New_dataset$original_name <- (datasetNames$Names)$original_name
+  }
   warningmessages <- multi.warnings(datasetNames$warningmessages, warningmessages)
   tryCatch({
     rownames(New_dataset) <- New_dataset$original_name

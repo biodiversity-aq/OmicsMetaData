@@ -271,10 +271,10 @@ dataQC.DwC_general<-function(dataset = NA, DwC.type = "event", ask.input = TRUE,
     
     # now use the taxid_key table to complete the data in dataset
     for(term in setdiff(colnames(taxid_key), c("aphID"))){
-      dataset[,term]  <- as.character(species)
+      dataset[,term]  <- as.character(species$scientificName)
       dataset[,term] <- unname(unlist(sapply(as.character(dataset[,term]),
                                               FUN = function(x){
-                                                gsub(x,taxid_key[taxid_key$taxname==x,][,term],x)
+                                                gsub(x,taxid_key[taxid_key$scientificName==x,][,term],x)
                                               })))
     }
     warningmessages <- multi.warnings("added scientificNameID and additional species data", warningmessages)

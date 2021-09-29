@@ -136,17 +136,19 @@ setMethod("show",
           function(object) {
             N <- nrow(object@core)
             if(nrow(object@emof)>0 & nrow(object@occurrence)>0){
-              E <- "and an occurrence and eMoF extensions"
+              E <- " and an occurrence and eMoF extensions"
             } else if(nrow(object@emof)>0 & nrow(object@occurrence)==0){
-              E <- "and an eMoF extension"
+              E <- " and an eMoF extension"
             }else if(nrow(object@emof)==0 & nrow(object@occurrence)>0){
-              E <- "and an occurrence extension"
+              E <- " and an occurrence extension"
             }else{ E <- ""}
             message(paste("a  DwC.event class  object with a core of ", as.character(N),
                       " events", as.character(E), ".\n", sep=""))
-            if(EML.url!=""){
-              message(paste("\tThe metadata can be found at", EML.url,
-                        "\n", sep=""))
+            if(!is.na(EML.url)){
+              if(length(EML.url)>5){
+                message(paste("\tThe metadata can be found at", EML.url,
+                              "\n", sep=""))
+              }
             }
             if(object@QC){
               message("\tThe quality of this object has been checked.\n")
@@ -169,9 +171,11 @@ setMethod("show",
             }else{ E <- ""}
             message(paste("a  DwC.occurrence  class object with a core of ", as.character(N),
                       " occurrences", as.character(E), ".\n", sep=""))
-            if(EML.url!=""){
-              message(paste("\tThe metadata can be found at", EML.url,
-                        "\n", sep=""))
+            if(!is.na(EML.url)){
+              if(length(EML.url)>5){
+                message(paste("\tThe metadata can be found at", EML.url,
+                              "\n", sep=""))
+              }
             }
             if(object@QC){
               message("\tThe quality of this object has been checked.\n")

@@ -41,7 +41,7 @@ dataQC.DwC <- function(Event=NA, Occurrence=NA, eMoF=NA, EML.url=NA,
     # fix out.type as event, regardless of user input
     out.type <- "event"
     has.event <- TRUE
-    eventQC <- dataQC.DwC_general(DwC.data = Event, DwC.type = "event", ask.input = ask.input)
+    eventQC <- dataQC.DwC_general(dataset = Event, DwC.type = "event", ask.input = ask.input)
   }else{
     has.event <- FALSE
     eventQC<-data.frame
@@ -49,7 +49,7 @@ dataQC.DwC <- function(Event=NA, Occurrence=NA, eMoF=NA, EML.url=NA,
   # 2. checking the Occurrence data.
   if(!all(is.na(Occurrence))){
     has.occurrence <- TRUE
-    occurrenceQC <- dataQC.DwC_general(DwC.data = Occurrence, DwC.type = "occurrence", ask.input = ask.input)
+    occurrenceQC <- dataQC.DwC_general(dataset = Occurrence, DwC.type = "occurrence", ask.input = ask.input)
     if(out.type == "event" & !"eventID" %in% colnames(occurrenceQC)){
       stop("eventID missing from the occurrence extension. Please correct.")
     }
@@ -58,12 +58,12 @@ dataQC.DwC <- function(Event=NA, Occurrence=NA, eMoF=NA, EML.url=NA,
     }
   }else{
     has.occurrence <- FALSE
-    occurrenceQC<-data.frame
+    occurrenceQC<-data.frame()
   }
   # 3. checking the Extended Measurement or Fact data.
   if(!all(is.na(eMoF))){
     has.emof <- TRUE
-    emofQC <- dataQC.DwC_general(DwC.data = eMoF, DwC.type = "emof", ask.input = ask.input)
+    emofQC <- dataQC.DwC_general(dataset = eMoF, DwC.type = "emof", ask.input = ask.input)
   }else{
     has.emof <- FALSE
     emofQC<-data.frame()
@@ -75,7 +75,7 @@ dataQC.DwC <- function(Event=NA, Occurrence=NA, eMoF=NA, EML.url=NA,
       stop(paste("The following EML page does not seem to exist:\n\t", EML.url, sep=""))
     }
   }else{
-    EML.url<-NA
+    EML.url<-as.character(NA)
   }
   
   # 5. check IDs if multiple files provided
@@ -122,7 +122,9 @@ dataQC.DwC <- function(Event=NA, Occurrence=NA, eMoF=NA, EML.url=NA,
   }else{
     stop("out.type conflicts with provided data")
   }
-  warning(warningmessages)
+  if(length(warningmessages)>0){
+    warning(warningmessages)
+  }
   return(DwC_out)
   
 }
