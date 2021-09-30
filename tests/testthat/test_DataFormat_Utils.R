@@ -9,16 +9,20 @@
 library(OmicsMetaData)
 library(testthat)
 
+# generate test data
 sampleNames <- c("sample_1", "sample_2")
 
+# a mock extended measurement or fact (eMoF) table
 test_emof <- data.frame(eventID = c(rep(c("sample_1", "sample_2"), 2)),
                         measurementType = factor(c(rep("var1", 2), rep("var2", 2))), 
                         measurementValue = c(1:4),
                         measurementUnit = c(rep("unit1", 2), rep("unit2", 2)))
+# a mock wide formated table
 test_wideTab <- list(data = data.frame(var1=c(1,2), var2=c(3,4), row.names=sampleNames),
                      units = c(var1="unit1", var2="unit2"),
                      method=NA)
 
+# a mock MIxS.metadata object
 test_MIxS <- new("MIxS.metadata",
                  data   = data.frame(var1=c(1,2), var2=c(3,4), eventID=sampleNames, row.names=sampleNames),
                  section = c(var1="section1", var2="section1", eventID="miscellaneous"),
@@ -27,18 +31,19 @@ test_MIxS <- new("MIxS.metadata",
                  type = "versatile",
                  QC = TRUE)
 
-
+# test the eMoF.to.wideTable function
 test_that("eMoF.to.wideTable gives correct output", {
   expect_equal(eMoF.to.wideTable(test_emof), test_wideTab)
   expect_error(eMoF.to.wideTable(test_emof[2:4]))
 })
 
+#test the wideTable.to.eMoF function
 test_that("wideTable.to.eMoF gives correct output", {
   expect_equal(wideTable.to.eMoF(metadata.object=test_MIxS, variables=c("var1", "var2")), test_emof)
   expect_error(wideTable.to.eMoF(metadata.object=test_wideTab$data, variables=NA))
 })
 
-
+# generate test data
 df01 <- data.frame(var1=1:4, var2=2:5, row.names=paste("r", 1:4, sep=""))
 df02 <- data.frame(var1=5:8, var3=1:4, row.names=paste("t", 1:4, sep=""))
 
@@ -52,6 +57,7 @@ test_that("combine.data.frame gives correct output", {
                                   original_rowName.col=TRUE, merge.rows="df1"), df12)
 })
 
+# generate test data
 sampleNames2 <- c("sample_3", "sample_4")
 
 test_MIxS2 <- new("MIxS.metadata",

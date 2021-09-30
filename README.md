@@ -22,7 +22,10 @@ when the GitHub repo was downloaded to the local machine:
  > devtools::install(_path_to_package_)
 
 install directly from GutHub
- > install_github(_package_repo_)
+
+ > install_github("https://github.com/biodiversity-aq/OmicsMetaData")
+
+or 
  
 Additional installation requirements
   - Some functions require a personal API key to access the INSDC databases. Such an API key can be obtained from NCBI by first registering an NCBI account at https://account.ncbi.nlm.nih.gov/signup/?back_url=, then go to the “Settings” page of your NCBI account, and go to the “API Key Management” area. Click the “Create an API Key” button, and copy the resulting key.
