@@ -1,9 +1,9 @@
 #==============================================================
 # Author Maxime Sweetlove
-# lisence CC-0
+# licence CC-0
 # Part of the POLA3R website (successor or mARS.biodiversity.aq)
 # version 1.0 (2020-01-28)
-# file encdong UTF-8
+# file encding UTF-8
 #
 #==============================================================
 # data Quality Controll (QC) function
@@ -17,6 +17,9 @@
 #' @param date.colnames character vector. a list of potential names for the column with the date. e.g. c("date", "Date", "collection date")
 #' @details The date column is found based on a user-provided list of possible names to look for (data.colnames argument). If a columnname is found that corresponds to a term in the list, the dates will be convered to the YYYY-MM-DD format, if the original format can be recognized.
 #' @return a list of length 2, with "$values" a vactor with the same number of rows as the dataset argument containing the corrected date values, and "$warningmessages" a vector with potential warning messages as character strings.
+#' @examples 
+#' \donttest{
+#' }
 #' @export
 dataQC.dateCheck <- function(dataset, date.colnames=c("date", "Date", "collection_date")){
 

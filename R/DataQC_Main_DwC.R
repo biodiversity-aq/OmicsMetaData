@@ -25,6 +25,13 @@
 #' @param EML.url character. A URL to the Ecological Metadata Language (EML) file.
 #' @details DarwinCore is the biodiversity data standard develloped by TDWG, and is used by the Global Biodiversity Information Facility (GBIF). This function performs a basic and user-supervised quality control. This includes cheking all variables terms adhere to the DarwinCore vocabulary, listing other variables in an eMoF file or in the dynamicProperties field, and checking for obvious errors in the content of the data (typos, different NA values,...). All dataframes are combined into a DwC.event or DwC.occurrence object
 #' @return a DwC.event (event core with occurrence and/or eMoF extensions) or DwC.occurence (occurrence core with eMoF extension) object
+#' @examples 
+#' \donttest{
+#' dataQC.DwC(Event=event_data.frame, out.type="event")
+#' dataQC.DwC(Occurrence=occurrence_data.frame, out.type="occurrence")
+#' dataQC.DwC(Event=event_data.frame, eMoF=emof_data.frame, out.type="event")
+#' dataQC.DwC(Event=event_data.frame, occurrence=occurrence_data.frame, out.type="event")
+#' }
 #' @export
 dataQC.DwC <- function(Event=NA, Occurrence=NA, eMoF=NA, EML.url=NA,
                        out.type="event", ask.input=TRUE){

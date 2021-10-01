@@ -2,16 +2,21 @@
 title: "Perpare_data_for_archiving"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{retrieving_data}
+  %\VignetteIndexEntry{Perpare_data_for_archiving}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 #Perparing data and metadata for online archiving
-This vignete will demonstrate how to standardize a table with sequence metadata following the MIxS standard, and creating a tab separated (TSV) file that can be uploaded directly to the Nucleotide Sequence Archive (ENA-EMBL) without any additional work or formatting required. 
+Data generated during scientific projects need to be made public for several reasons, going from the principle of reproducibility in scientific research, to globally pooling resources (i.e. "used" data) to allow researcher worldwide to compare data, generate bigger datasets of costly data, or have access to annotated reference material. In the case of 'omics data, the most commonly used approach to make sequence data public is to archive it on one of the major databases of the International Nucleotide Sequence Database Consortium (INSDC). In this vignete, we will focus on archiving data on the Nucleotide Sequence Archive (ENA-EMBL, part of INSDC). We will specifically focus on the sequence metadata, and demonstrate how to standardize a table with sequence metadata following the MIxS standard. The standardized data then needs to be formatted in a tab separated (TSV) file to be able to uploaded it directly to the Nucleotide Sequence Archive (ENA-EMBL) without any additional work or formatting required. 
+
+##Before you start
+Before you start, a BioProject will need to be created. More information on how to do this in the ENA user guides: https://ena-docs.readthedocs.io/en/latest/submit/general-guide.html
+
+You will also need to register a submission account: https://ena-docs.readthedocs.io/en/latest/submit/general-guide/registration.html
 
 ##The test dataset
-For the purpose of this vignett, the Alaskan Methanobase dataset (PRJEB36732) will be used as an example. Set up your environment as follows, and download the metadata from the POLA3R website with RCurl. 
+For the purpose of this vignett, the Alaskan Methanobase dataset (PRJEB36732, from the METHANOBASE project) will be used as an example. Set up your environment as follows, and download the metadata from the POLA3R website with RCurl. 
 
 ```{r R-setup, eval = FALSE}
 library(OmicsMetaData)
@@ -23,7 +28,7 @@ main_metadata <- read.table(text = main_metadata, sep =",", header = TRUE, row.n
 ```
 
 ##Converting into a MIxS.metadata object
-The dataset needs to be standardized into MIxS. That is, the variable names must be MIxS terms. This process is covered in detail elsewhere. For the test dataset, a standardization to MIxS was already performed, and it can be converted directly into a MIxS.metadata object. As a note: This dataset also contains a large number of variable that cannot be represented by a MIxS term. These missing terms are in the process of being develloped and ratified by GSC, but untill they are official, the placeholder names can be used as is.
+The dataset needs to be standardized into MIxS. That is, the variable names must be MIxS terms. This process is covered in detail elsewhere. For the test dataset, a standardization to MIxS was already performed, and it can be converted directly into a MIxS.metadata object. As a note: This dataset also contains a large number of variable that cannot be represented by a MIxS term. These missing terms are in the process of being develloped and ratified by GSC, but until they are official, the placeholder names can be used as is.
 
 ```{r standardizing_MIxS, eval = FALSE}
 main_metadata.MIxS <- dataQC.MIxS(dataset=main_metadata)
@@ -67,3 +72,7 @@ prep.metadata.ENA(metadata=main_metadata.MIxS, dest.dir=get.wd(), file.name="vig
 This will create a \*_runinfo.tsv file with the technical information and a \*.tsv file with the sample metadata in the destination directory.
 
 When submitting a dataset to ENA, a Bioproject needs to be made first that will be at the root of all the samples and act as the project-level accession number. After this, it will be possible to submit a completed spreadsheet, which is the \*.tsv file. The \*_runinfo.tsv file is submitted later in the process to complete the technical information of the project.
+
+##The sequences
+Uploading the sequence to ENA is the final step of the archiving process, but this goes beyond the scope of this vignette. There are several ways how to upload and attach the sequences to te metadata you just created, the easiest of which is using the WebinUploader app, see https://ena-docs.readthedocs.io/en/latest/submit/general-guide/webin-cli.html.
+

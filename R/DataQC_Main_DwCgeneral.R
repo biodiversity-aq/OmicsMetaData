@@ -23,6 +23,15 @@
 #' @param complete.data logical. If TRUE, datathat has not been provided, but can be completed automatically will be added to the DarwinCore data.frame. For instance, footprintWKT can be generated from the coordinates, or higher taxonomic level names (like kingdom, phylum,...) can looked up with the species name. Defaut TRUE.
 #' @details DarwinCore is the biodiversity data standard develloped by TDWG, and is used by the Global Biodiversity Information Facility (GBIF). This function performs a basic and user-supervised quality control. This includes cheking all variables terms adhere to the DarwinCore vocabulary, listing other variables in an eMoF file or in the dynamicProperties field, and checking for obvious errors in the content of the data (typos, different NA values,...)
 #' @return a dataframe that is formatted as either: an event or occurrence
+#' @examples 
+#' \donttest{
+#' test_event <- data.frame(eventID=c("sample1", "sample2"),
+#'                          eventDate=c("2021-09-27", "2021-09-28"),
+#'                          decimalLatitude=c("54.7", "33"),
+#'                          decimalLongitude=c("88.9", "-48.4"),
+#'                          row.names=c("sample1", "sample2"))
+#' dataQC.DwC_general(dataset=test_event, DwC.type = "event", complete.data=TRUE)
+#' }
 #' @export
 dataQC.DwC_general<-function(dataset = NA, DwC.type = "event", ask.input = TRUE,
                              complete.data=TRUE){
@@ -280,7 +289,7 @@ dataQC.DwC_general<-function(dataset = NA, DwC.type = "event", ask.input = TRUE,
     warningmessages <- multi.warnings("added scientificNameID and additional species data", warningmessages)
   }
   
-  # retrun the input file with the executed adjustments
+  # return the input file with the executed adjustments
   return(dataset)
 }
 

@@ -2,7 +2,7 @@
 title: "Retrieving_online_data"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{retrieving_data}
+  %\VignetteIndexEntry{Retrieving_online_data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -17,7 +17,7 @@ These data can be cumbersome to obtain from INSDC, so this package offers an eas
 ##Finding a dataset
 The functions in the package are meant to download data based on the BioProject accession number of a dataset. Querying the INSDC databases to look for data based on specific paremeters goes beyond the scope of this package. To find appropriate datasets, search the NCBI databases here: https://www.ncbi.nlm.nih.gov, or the ENA database can be querried here: https://www.ebi.ac.uk/ena/browser/home. Polar and Antarctic nucleotide sequence data can be queried in detail here: https://www.biodiversity.aq/pola3r. Each dataset on INSDC has a single identifier called the BioProject number, which starts with the letters "PRJ". This Bioproject number is at the root of all samples in a project. Samples have their own accession numbers (e.g. starting with SRR, SRS,...).
 
-For the purpose of this vignett, the dataset PRJNA305344 will be used as an example. Set up your environment as follows:
+For the purpose of this vignette, the dataset PRJNA305344 will be used as an example. Set up your environment as follows:
 
 ```{r R-setup, eval = FALSE}
 library(OmicsMetaData)
@@ -40,7 +40,7 @@ main_metadata <- download.sequences.INSDC(BioPrj="PRJNA305344", destination.path
 apiKey=keyINSDC, keep.metadata = TRUE, download.sequences = TRUE)
 ```
 
-Alternatvely, we can also choose only to download the metadata like this:
+Alternatively, we can also choose only to download the metadata like this:
 
 ```{r download_metadata, eval = FALSE}
 main_metadata <- get.sample.attributes.INSDC(apiKey=keyINSDC, BioPrjct="PRJNA305344")

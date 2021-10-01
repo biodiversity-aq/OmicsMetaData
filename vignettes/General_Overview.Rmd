@@ -2,17 +2,17 @@
 title: "General_Overview"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{introduction}
+  %\VignetteIndexEntry{General_Overview}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-# General Overview
+#General Overview
 
 The OmicsMetaData package was develloped as a set of tools to download, standardize and handle 'omics datasets, and more particulary the non-nucleotide sequence metadata components. 
 
 ##Downloading data
-The main objective and focus of the OmicsMetaData package is re-use of 'omics data, as part of the phylosophy of the FAIR principles for data (FAIR standing for Findable Accessible Interoperable and Re-usable data). The International Nucleotide Sequence Database Consortium (INSDC), which unites NCBI, ENA-EMBL and DDBJ, houses the vast majority of the world's publicly available DNA sequence data, including a.o. marker gene, genome, amplicon/metabarcode, and shotgun metagenome data from past scientific projects all over the world. The OmicsMetaData packages contains several functions that can help with downloading data (sequences and metadata) from INSDC. See a detailed example in the [Retrieving_online_data vignette](Retrieving_online_data.Rmd). Note, for some functions, an NCBI API-key will be necessary. This can be created after registering an account at NCBI.
+The main objective and focus of the OmicsMetaData package is re-use of 'omics data, as part of the phylosophy of the FAIR principles for data (FAIR standing for Findable Accessible Interoperable and Re-usable data). The International Nucleotide Sequence Database Consortium (INSDC), which unites NCBI, ENA-EMBL and DDBJ, houses the vast majority of the world's publicly available DNA sequence data, including a.o. marker gene, genome, amplicon/metabarcode, and shotgun metagenome data from past scientific projects all over the world. The OmicsMetaData packages contains several functions that can help with downloading data (sequences and metadata) from INSDC. See a detailed example in the [Retrieving_online_data vignette](Retrieving_online_data.Rmd). Note, for some functions, an NCBI API-key will be necessary. This can be created after registering an account at NCBI. More information on the API client of NCBI can be found here: https://www.ncbi.nlm.nih.gov/home/develop/api/
 
 - downloading individual sequence files on INSDC or all sequence files from a BioProject, use the download.sequences.INSDC function. This will write the sequence files to the destination.path, and if keep.metadata = TRUE, the metadata will be written to the metadata_of_seq object in the R environment.
 
@@ -28,7 +28,7 @@ metadata_of_seq <- get.sample.attributes.INSDC(BioPrjct, apiKey)
 ```
 
 ##Standardizing data
-Another important objective that is embedded in the FAIR principles is data interoperability, which can only be achieved by standardizing datasets over many users. Therfore, this package offers a suite of tools to standardize datasets using the MIxS and DarwinCore data standards. For details on these standards and their implementation, see the [Background vignette](Background.Rmd). More information on MIxS, see https://gensc.org/mixs/ and https://github.com/GenomicsStandardsConsortium/mixs. For more information on DarwinCore, see https://dwc.tdwg.org and https://github.com/tdwg/dwc. For detailed examples on standardizing metadata, see the [Metadata_standardization vignette](Metadata_standardization.Rmd).
+Another important objective that is embedded in the FAIR principles is data interoperability, which can only be achieved by standardizing datasets over many users. Therfore, this package offers a suite of tools to standardize datasets using the MIxS (Yilmaz et al. 2011) and DarwinCore (Darwin Core Task Group. 2009) data standards. For details on these standards and their implementation, see the [Background vignette](Background.Rmd). More information on MIxS, see https://gensc.org/mixs/ and https://github.com/GenomicsStandardsConsortium/mixs. For more information on DarwinCore, see https://dwc.tdwg.org and https://github.com/tdwg/dwc. For detailed examples on standardizing metadata, see the [Metadata_standardization vignette](Metadata_standardization.Rmd).
 
 - A first step in standardizing the metadata part of an 'omics dataset, is implementing a data standard. This means (1) variable names must be those of the standard's terminology, inclusing the use of capitals and type of word spacing, (2) values must adhere to rules attached to some specific terms, like the use of a certain unit, the notation of multiple values with a separator or the use of a vocabulary like ENVO, (3) the minimal set of information to describe a dataset that is specified by the standard must be given. Note, for any additional information that is not covered by any term in the standard, it is better to add it using a non-standard term than to leave it out (=loss of data). This job can't be automated, and must be done manually. The full list of MIxS or DarwinCore terms can be accessed by calling the TermsLib data object. The definition of a term can be called with the term.definition function. Running the dataQC.TermsCheck can also help to find a match for non-standard variable names, but human interpretation and supervision is required.
 
@@ -75,7 +75,7 @@ dataset_QC <- dataQC.generate.footprintWKT(dataset, NA.val=NA)
 dataQC.taxaNames(taxaNames)
 ```
 
-... complete a list of taxonomic names by looking-up missing information on the World Registry of Marine Species (WoRMS), using the WoRMS API and the worrms R-package. More information here: https://www.marinespecies.org/aphia.php?p=webservice&type=r
+... complete a list of taxonomic names by looking-up missing information on the World Registry of Marine Species (WoRMS, Horton et al. 2021), using the WoRMS API and the worrms R-package (Chamberlain, 2020). More information here: https://www.marinespecies.org/aphia.php?p=webservice&type=r
 ```{r worms, eval = FALSE}
 dataQC.completeTaxaNamesFromRegistery("Aulacoseira", taxBackbone="worms")
 
@@ -117,7 +117,7 @@ To be able to work with these dimentions of data, the OmicsMetaData package crea
 
 
 ##Archiving data
-Archiving data, and getting in the right format and standard can be very challenging to say the least. Depending on the platform or database where the sequence data and metadata is archived, different requirements can be set and subtle variations to datastandards implemented.
+Archiving data, and getting in the right format and standard can be very challenging to say the least. Depending on the platform or database where the sequence data and metadata is archived, different requirements can be set and subtle variations to data standards implemented.
 
 Therefore the OmicsMetaData package has a suite of function to format (meta-)data that can be uploaded directly to the European Nucleotide Archive (ENA, part of INSDC). Details on archiving data are set out in the [Perpare_data_for_archiving vignette](Perpare_data_for_archiving.Rmd).
 
@@ -148,9 +148,14 @@ prep.metadata.ENA(metadata=a_metadata.MIxS_object, dest.dir=get.wd(), file.name=
 ```
 
 
+##Citation
+Yilmaz, P., Gilbert, J., Knight, R. et al. The genomic standards consortium: bringing standards to life for microbial ecology. ISME J 5, 1565–1567 (2011). https://doi.org/10.1038/ismej.2011.39
 
+Darwin Core Task Group. 2009. Darwin Core. Biodiversity Information Standards (TDWG) http://www.tdwg.org/standards/450
 
+Chamberlain, S. (2020). worrms: World Register of Marine Species (WoRMS) Client. R package version 0.4.2. https://CRAN.R-project.org/package=worrms
 
+Horton, T., Kroh, A., et al. (2021). World Register of Marine Species. Available from https://www.marinespecies.org at VLIZ. doi:10.14284/170 
 
 
 

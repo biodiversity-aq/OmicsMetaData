@@ -15,6 +15,15 @@
 #' @param dataset a dataframe of the eMoF file
 #' @details Long formated data if great for data arciving, but is difficult to use in day-to-day statistical analyses. This function extracts the data from an eMoF file and puts it in a wide sample x variable table
 #' @return a list of length 3: "$data" the data in a wide formt, "$units" the units, and "$method" the methods
+#' @examples 
+#' \donttest{
+#' sampleNames <- c("sample_1", "sample_2")
+#' test_emof <- data.frame(eventID = c(rep(c("sample_1", "sample_2"), 2)),
+#'                         measurementType = factor(c(rep("var1", 2), rep("var2", 2))), 
+#'                         measurementValue = c(1:4),
+#'                         measurementUnit = c(rep("unit1", 2), rep("unit2", 2)))
+#' eMoF.to.wideTable(test_emof)
+#' }
 #' @export
 eMoF.to.wideTable <- function(dataset){
   ## converts an extended Measurement of Fact table to a regular wide table
@@ -76,6 +85,18 @@ eMoF.to.wideTable <- function(dataset){
 #' @param variables a character vector. a list of the variables that need to be included in the eMoF
 #' @details extended Measurement or Fact (eMoF) as a DarwinCore extension to standardize environmental or other additional data in a computer readable fashon. This standard structures data into a long format (a column with sample name, variable name and value). This function converts more commonly used wide format tables (that is, structured like a matrix, e.g. samples as rows and variables as columns) into the correct long format that complies to eMoF
 #' @return a data.frame formatted as an extended Measurement or Fact table
+#' @examples 
+#' \donttest{
+#' sampleNames <- c("sample_1", "sample_2")
+#' test_MIxS <- new("MIxS.metadata",
+#'              data = data.frame(var1=c(1,2), var2=c(3,4), eventID=sampleNames, row.names=sampleNames),
+#'              section = c(var1="section1", var2="section1", eventID="miscellaneous"),
+#'              units = c(var1="unit1", var2="unit2", eventID="alphanumeric"),
+#'              env_package = "water",
+#'              type = "versatile",
+#'              QC = TRUE)
+#' wideTable.to.eMoF(metadata.object=test_MIxS, variables=c("var1", "var2"))
+#' }
 #' @export
 wideTable.to.eMoF <- function(metadata.object, variables=NA){
   ## converts a regular wide table to an extended Measurement of Fact table 
@@ -140,6 +161,13 @@ wideTable.to.eMoF <- function(metadata.object, variables=NA){
 #' @param merge.rows character. If the data.frames df1 and df2 have common rows, the values for these rows of this dataset must be kept in favor of the other. If NA, both rows will be kept. Either "df1", "df2" or NA. Default "df1"
 #' @details Columns with matching names can or cannot be merged, rows are automatically bound (a wrapper of rbind), not merged. Any missing data as a result of the non-matchng columns will be filled by the fill argument.
 #' @return a data.frame
+#' @examples
+#' \donttest{
+#' df01 <- data.frame(var1=1:4, var2=2:5, row.names=paste("r", 1:4, sep=""))
+#' df02 <- data.frame(var1=5:8, var3=1:4, row.names=paste("t", 1:4, sep=""))
+#' combine.data.frame(df1=df01, df2=df02, fill=NA, merge.cols=TRUE, 
+#'                    original_rowName.col=TRUE, merge.rows="df1")
+#' }
 #' @export
 combine.data.frame <- function(df1, df2, fill=NA, 
                                merge.cols=TRUE, original_rowName.col=TRUE, merge.rows="df1"){
@@ -256,6 +284,10 @@ combine.data.frame <- function(df1, df2, fill=NA,
 #' @param variables.as.cols boolean. If TRUE, the input data is assumed to have rows as samples and variables/parameters as columns. If FALSE the data is formatted the other was around. default TRUE
 #' @details Variables with matching names are merged, if variables.as.cols=TRUE this means columns are merged, if FALSE rows are merged. Any missing data as a result of the non-matchng variable-name will be filled by the fill argument.
 #' @return a MIxS.metadata object
+#' @examples 
+#' \donttest{
+#' combine.data(d1=test_MIxS, d2=test_MIxS2, fill=NA, variables.as.cols=TRUE)
+#' }
 #' @export
 combine.data <- function(d1, d2, fill=NA, variables.as.cols=TRUE){
   if(class(d1) %in% c("data.frame", "matrix") &

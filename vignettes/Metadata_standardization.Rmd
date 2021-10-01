@@ -2,7 +2,7 @@
 title: "Metadata_standardization"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{retrieving_data}
+  %\VignetteIndexEntry{Metadata_standardization}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

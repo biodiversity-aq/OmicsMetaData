@@ -24,6 +24,16 @@
 #' @details Any sequencing project typically has important additional data associated with it. This goes from laboratory protocols, sequencing platform settings or environmental measurements. Thisfunction was develloped to sort through these metadata (provided in a dataframe), and perform a basic quality controll, correcting the most common mistakes, like incorrectly formatting the geographic coordinates, formatting dates, typos or variants of variable names, etc. To do this, the function makes use of a build-in dictionary of (MIxS) terms and their synonyms (that is: spelling errors, writing differences, true synonyms,...). Note that it is possible some terms are not recognized. In that case contact the author of the package to update the dictionary in the upcomming version.
 #' @seealso get.BioProject.metadata.INSDC, get.sample.attributes.INSDC
 #' @return a MIxS.metadata object that is compatible with the MIxS standard
+#' @examples 
+#' \donttest{
+#' test_metadata <- data.frame(sample_name=c("sample1", "sample2"),
+#'                             collection_date=c("2021-09-27", "2021-09-28"),
+#'                             lat_lon=c("54.7 88.9", "33 -48.4"),
+#'                             BioProject=c("PRJXXXX", "PRJXXXX"),
+#'                             investigation_type=c("mimarks-survey", "mimarks-survey"),
+#'                             row.names=c("sample1", "sample2"))
+#' dataQC.MIxS(test_metadata)
+#' }
 #' @export
 dataQC.MIxS <- function(dataset = NA, ask.input=TRUE, add_to = NA, sample.names = NA){
   warningmessages<-c()
@@ -139,10 +149,12 @@ dataQC.MIxS <- function(dataset = NA, ask.input=TRUE, add_to = NA, sample.names 
                                                                  TermsSyn_lat[[1]],
                                                                  TermsSyn_lon[[1]]))
   warningmessages<-c(QClatlon$warningmessages, warningmessages)
-  New_dataset$lat_lon <- QClatlon$values
-  New_dataset$decimalLatitude <- sapply(New_dataset$lat_lon, function(x){strsplit(x, " ")[[1]][1]})
-  New_dataset$decimalLongitude <- sapply(New_dataset$lat_lon, function(x){strsplit(x, " ")[[1]][2]})
-
+  if(!all(is.na(QClatlon$values))){
+    New_dataset$lat_lon <- QClatlon$values
+    New_dataset$decimalLatitude <- sapply(New_dataset$lat_lon, function(x){strsplit(x, " ")[[1]][1]})
+    New_dataset$decimalLongitude <- sapply(New_dataset$lat_lon, function(x){strsplit(x, " ")[[1]][2]})
+  }
+ 
   #change the units for the coordinates
   if(pre_def_units){
     for(unitx in c("lat_lon", "decimalLatitude", "decimalLongitude")){
