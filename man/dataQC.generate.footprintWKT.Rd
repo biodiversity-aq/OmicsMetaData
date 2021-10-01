@@ -20,6 +20,11 @@ generate a footprintWKT column for a dataset (preferably DarwinCore eventCore). 
 \details{
 This function will format the geographic coordinates of an event (in the fields decimalLatitude and decimalLongitude) into the WellKnownText format. For events that are at the lowest level of the hierarchy, it assumes a single point location. Higher level events are desribed by polygons based on the coordinates of the child events.
 }
+\examples{
+\donttest{
+dataQC.generate.footprintWKT(data.frame(decimalLatitude="23", decimalLongitude=45, eventID="sample_1"), NA.val=NA)
+}
+}
 \seealso{
 Other quality control functions: 
 \code{\link{dataQC.LatitudeLongitudeCheck}()},

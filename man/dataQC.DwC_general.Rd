@@ -24,6 +24,16 @@ performs a general QC on a darwinCore file. Desired output is either and event (
 \details{
 DarwinCore is the biodiversity data standard develloped by TDWG, and is used by the Global Biodiversity Information Facility (GBIF). This function performs a basic and user-supervised quality control. This includes cheking all variables terms adhere to the DarwinCore vocabulary, listing other variables in an eMoF file or in the dynamicProperties field, and checking for obvious errors in the content of the data (typos, different NA values,...)
 }
+\examples{
+\donttest{
+test_event <- data.frame(eventID=c("sample1", "sample2"),
+                         eventDate=c("2021-09-27", "2021-09-28"),
+                         decimalLatitude=c("54.7", "33"),
+                         decimalLongitude=c("88.9", "-48.4"),
+                         row.names=c("sample1", "sample2"))
+dataQC.DwC_general(dataset=test_event, DwC.type = "event", complete.data=TRUE)
+}
+}
 \seealso{
 Other standardization functions: 
 \code{\link{coordinate.to.decimal}()},

@@ -26,6 +26,13 @@ checks if all records in the metadata file match with filenames in a given direc
 \details{
 Nucleotide sequence datasets typically contain a large number of samples, too much to check manually. This function will check if all the names that are expected in the sequence data files are actually found. Reasons for mismatches may include typos, accedentally deleting files or records, errors in naming or copying files,...
 }
+\examples{
+\donttrun{
+sync.metadata.sequenceFiles(Names="seq_sample1", file.dir="user/path/to/sequenceFilesFolder",
+                            paired=TRUE, seq.file.extension=".fastq.gz",
+                            pairedEnd.extension=c("_1", "_2"))
+}
+}
 \seealso{
 Other data archiving functions: 
 \code{\link{FileNames.to.Table}()},

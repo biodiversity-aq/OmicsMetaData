@@ -22,6 +22,11 @@ Downloads all sample attributes (that is, additional environmental or other asso
 \details{
 Each sequence data sample ("Run") typically has additional measurements or metadata associated with it. However, these are difficult to find, and cannot be downloaded together with the nucleotide sequence data. The get.sample.attributes.INSDC function will fetch the all the metadata of the samples given to the sampleID (or BioPrjct) argument from the INSDC. To do this, get.sample.attributes.INSDC will use the Entrez Programming Utilities (E-utilities) from NCBI, and will access the databases with the API-key provided by the user. see https://ncbiinsights.ncbi.nlm.nih.gov/2017/11/02/new-api-keys-for-the-e-utilities/ for more info on getting an API-key.
 }
+\examples{
+\donttest{
+get.BioProject.metadata.INSDC(BioPrjct="PRJNA303951", apiKey="YouPersonalAPIKey")
+}
+}
 \seealso{
 Other downloading data functions: 
 \code{\link{download.sequences.INSDC}()},

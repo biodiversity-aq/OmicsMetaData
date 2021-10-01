@@ -19,6 +19,12 @@
 #' @return a list of length 2, with "$values" a vactor with the same number of rows as the dataset argument containing the corrected date values, and "$warningmessages" a vector with potential warning messages as character strings.
 #' @examples 
 #' \donttest{
+#' test_metadata <- data.frame(sample_name=paste("sample", 1:5, sep="_"),
+#'                            collection_date=c("2020-09-23", "2020", "16 Jan. 2020", "November 1998", "12/01/1999"),
+#'                            latitude=c(23, 45, -56.44, "47.5", "-88° 4\' 5\""),
+#'                            longitude=c(24, -57, -107.55, "33.5", "-130° 26\' 9\""),
+#'                            row.names=paste("sample", 1:5, sep="_"))
+#' dataQC.dateCheck(dataset=test_metadata, date.colnames=c("collection_date"))
 #' }
 #' @export
 dataQC.dateCheck <- function(dataset, date.colnames=c("date", "Date", "collection_date")){
@@ -105,6 +111,15 @@ dataQC.dateCheck <- function(dataset, date.colnames=c("date", "Date", "collectio
 #' @param latlon.colnames a list of length 3 with character vectors. Three vectors of potential names for the columns with the latitude-longidude values. The first vector in the list are names if latitude and longitude were to be in the same column (e.g. the MIxS lat_lon format), the second and third are for when latitude and longitude, respectively, are in seperate columns. Example: list(c("lat_lon"), c("latitude"), c("longitude"))
 #' @details The date column is found based on a user-provided list of possible names to look for (latlon.colnames argument). First, a single column is searched where latitude and longitude are noted in a single field, if this returns no result, latitude and longitude are looked for in seperate fields. When found, the coordinates are transformed to decimals and returned as a single field, with values separated by a single space That is: (X Y), with X a numeric decimal latitude value and Y a numeric decimal longitude value.
 #' @return a list of length 2, with "$values" a vector of same length as the number of rows in the dataset argument, and "$warningmessages" a vector with potential warning messages as character strings.
+#' @examples 
+#' \donttest{
+#' test_metadata <- data.frame(sample_name=paste("sample", 1:5, sep="_"),
+#'                            collection_date=c("2020-09-23", "2020", "16 Jan. 2020", "November 1998", "12/01/1999"),
+#'                            latitude=c(23, 45, -56.44, "47.5", "-88° 4\' 5\""),
+#'                            longitude=c(24, -57, -107.55, "33.5", "-130° 26\' 9\""),
+#'                            row.names=paste("sample", 1:5, sep="_"))
+#' dataQC.LatitudeLongitudeCheck(dataset=test_metadata, latlon.colnames=list(c("lat_lon"),c("latitude"), c("longitude")))
+#' }
 #' @export
 dataQC.LatitudeLongitudeCheck <- function(dataset, latlon.colnames=list(c("lat_lon"),c("latitude"), c("longitude"))){
 
@@ -219,8 +234,16 @@ dataQC.LatitudeLongitudeCheck <- function(dataset, latlon.colnames=list(c("lat_l
 #' @usage dataQC.guess.env_package.from.data(dataset, pckge.colnames=c("env_package", "ScientificName"))
 #' @param dataset dataframe. The dataset for which the MIxS environmental package should be found or guessed
 #' @param pckge.colnames a character vector. A vector with the potential names for the column where the environmental package can be found. Place the terms in order of decreasing likeliness.
-#' @details The "Minimul Information on any (x) Sequence" (MIxS) standard requires an appropriate environmental package with MIxS terms to be selected to document the data. Some data and nucleotide archives enforce their users to select such a package. This function is made to automatically either find the package in a dataset, of guess it based on the data that is present.
+#' @details The "Minimum Information on any (x) Sequence" (MIxS) standard requires an appropriate environmental package with MIxS terms to be selected to document the data. Some data and nucleotide archives enforce their users to select such a package. This function is made to automatically either find the package in a dataset, of guess it based on the data that is present.
 #' @return a list of length 2, with "$values" a vector of same length as the number of rows in the dataset argument, and "$warningmessages" a vector with potential warning messages as character strings.
+#' @examples 
+#' \donttest{
+#' test_metadata <- data.frame(sample_name=paste("sample", 1:5, sep="_"),
+#'                            collection_date=c("2020-09-23", "2020", "16 Jan. 2020", "November 1998", "12/01/1999"),
+#'                            env_package=rep("water", 5),
+#'                            row.names=paste("sample", 1:5, sep="_"))
+#' dataQC.guess.env_package.from.data(test_metadata, pckge.colnames=c("env_package"))
+#' }
 #' @export
 dataQC.guess.env_package.from.data <- function(dataset, pckge.colnames=c("env_package", "ScientificName")){
 
@@ -309,6 +332,11 @@ dataQC.guess.env_package.from.data <- function(dataset, pckge.colnames=c("env_pa
 #' @param out.type character. The type of the output. Either "full" (the output is a list of three lists: terms_OK=the correct terms, terms_wrongWithSolution = wrong terms with a proposed solution, and terms_notFound = terms that had no match), "logical" (output is logical vector for exact matches or not) or "best_match" (output returns a vector with the best matching terms). default full
 #' @details For interoperability of data and data archiving, variable names in datasets need to comply to vocabulary standards. This function compares a list of existing terms to the MIxS or DwC standard, and tries to fiend the best matches.
 #' @return depending on out.type, either a boolean, or a list of length 3, with "$terms_OK" (terms that comply to the standard), "$terms_wrongWithSolution" (terms that do not comply to the standard but have a close match), and "$terms_notFound" (terms that do not comply to the standard, and that not match any term in it)
+#' @examples 
+#' \donttest{
+#' dataQC.TermsCheck(observed="ph", exp.standard="MIxS", exp.section=NA, fuzzy.match=TRUE,out.type="full")
+#' dataQC.TermsCheck(observed="cond", exp.standard="MIxS", exp.section=NA, fuzzy.match=TRUE,out.type="full")
+#' }
 #' @export
 dataQC.TermsCheck <- function(observed=NA, exp.standard="MIxS", exp.section=NA, fuzzy.match=TRUE,
                         out.type="full"){
@@ -437,6 +465,10 @@ dataQC.TermsCheck <- function(observed=NA, exp.standard="MIxS", exp.section=NA, 
 #' @usage dataQC.generate.footprintWKT(dataset, NA.val=NA)
 #' @details This function will format the geographic coordinates of an event (in the fields decimalLatitude and decimalLongitude) into the WellKnownText format. For events that are at the lowest level of the hierarchy, it assumes a single point location. Higher level events are desribed by polygons based on the coordinates of the child events.
 #' @return a vector with a footprintWKT value for each row in the dataset
+#' @examples 
+#' \donttest{
+#' dataQC.generate.footprintWKT(data.frame(decimalLatitude="23", decimalLongitude=45, eventID="sample_1"), NA.val=NA)
+#' }
 #' @export
 dataQC.generate.footprintWKT <- function(dataset, NA.val=NA){
   #requires Orcs
@@ -525,6 +557,15 @@ dataQC.generate.footprintWKT <- function(dataset, NA.val=NA){
 #' @usage dataQC.findNames(dataset, ask.input=TRUE, sample.names=NA)
 #' @return a list of length 3 with: "$Names" a named vector with the most likely sample names, "$Names.column" the column name where the sample names were found, "$warningmessages" a vector with warning messages
 #' @details It is often not clear where the sample names are in a dataset. This function makes an educated guess, based on rownames or tags that are often used to indicate sample names. If ask.input, then the process happens user-supervised.
+#' @examples 
+#' \donttest{
+#' test_metadata <- data.frame(sample_name=paste("sample", 1:5, sep="_"),
+#'                            collection_date=c("2020-09-23", "2020", "16 Jan. 2020", "November 1998", "12/01/1999"),
+#'                            latitude=c(23, 45, -56.44, "47.5", "-88° 4\' 5\""),
+#'                            longitude=c(24, -57, -107.55, "33.5", "-130° 26\' 9\""),
+#'                            row.names=paste("sample", 1:5, sep="_"))
+#' dataQC.findNames(dataset=test_metadata, ask.input=TRUE, sample.names="sample_name")
+#' }
 #' @export
 dataQC.findNames <- function(dataset = NA, ask.input=TRUE, sample.names=NA){
   orig_names <- data.frame(matrix(data=NA, ncol=5, nrow=nrow(dataset)))
@@ -631,6 +672,13 @@ dataQC.findNames <- function(dataset = NA, ask.input=TRUE, sample.names=NA){
 #' @usage find.sampleTaxon(dataset)
 #' @param dataset a data.frame. The dataset with samples as rows, and taxonomy information in the columns. using the MIxS or DarwinCore taxonomy terms, the taxonomy information will be extracted
 #' @return a vector with the highest level taxonomic name found, with genus and species epithet separated by a space.
+#' @examples 
+#' \donttest{
+#' test_metadata <- data.frame(sample_name=paste("sample", 1:5, sep="_"),
+#'                            genus=c("Aulacoseira", "Calothrix confervicola", "unknown species", "Micrasterias cf. denticulata", "Calothrix sp."),
+#'                            row.names=paste("sample", 1:5, sep="_"))
+#' dataQC.TaxonListFromData(test_metadata)
+#' }
 #' @export
 dataQC.TaxonListFromData <- function(dataset){
   taxaTerms<-c("specificEpithet", "subgenus", "genus", "family",
@@ -687,6 +735,10 @@ dataQC.TaxonListFromData <- function(dataset){
 #' @param taxaNames character vector. a list of scientific taxonomic names
 #' @details looks for trailing spaces or common typos in taxonomic names.
 #' @return a vector with the checked taxon names
+#' @examples 
+#' \donttest{
+#' dataQC.taxaNames(c("Aulacoseira", "Calothrix confervicola", "unknown species", "Micrasterias cf. denticulata", "Calothrix sp."))
+#' }
 #' @export
 dataQC.taxaNames <- function(taxaNames){
   taxaNamesQC <- data.frame(matrix(data=NA, ncol=3, nrow=length(taxaNames)), stringsAsFactors = FALSE)
@@ -730,81 +782,67 @@ dataQC.taxaNames <- function(taxaNames){
 #' @family quality control functions
 #' @description complete a list of taxonomic names by looking-up missing information on an accepted taxonomic registery
 #' @param taxaNames a character vector. A list with the taxonomic names to look for
-#' @param taxBackbone a character string. The taxonomic backbone to querry. At present only "worms" is allowed.
-#' @usage dataQC.completeTaxaNamesFromRegistery(taxaNames, taxBackbone="worms")
+#' @param taxBackbone a character string. The taxonomic backbone to query. At present only "worms" is allowed.
+#' @usage dataQC.completeTaxaNamesFromRegistery(taxaNames)
 #' @details using the API-client connection to the World Registry of Marine Species (WORMS), additional taxonomic information can be added to an existing list of taxa. This function is a wrapper of the wm_name2id and wm_record functions in the worrms package
 #' @return a dataframe with the following fields:scientificName, scientificNameID, aphID, kingdom, phylum, class, order, family, genus, specificEpithet, scientificNameAuthorship, namePublishedInYear
+#' @examples 
+#' \donttest{
+#' dataQC.completeTaxaNamesFromRegistery("Aulacoseira")
+#' }
 #' @export
-dataQC.completeTaxaNamesFromRegistery <- function(taxaNames, taxBackbone="worms"){
+dataQC.completeTaxaNamesFromRegistery <- function(taxaNames){
   #requires worrms and rgbif
 
   taxid_key <- data.frame(scientificName = unique(taxaNames), scientificNameID=NA,
                           aphID=NA, kingdom=NA, phylum=NA, class=NA, order=NA, family=NA,
                           genus=NA, specificEpithet=NA, scientificNameAuthorship=NA,
                           namePublishedInYear=NA)
-
-  if(tolower(taxBackbone) == "worms"){
-    for(nc in 1:nrow(taxid_key)){
-      taxon<-as.character(taxid_key[nc,]$scientificName)
-      if(!taxon %in% c("", "NA", NA)){
-        taxid <- tryCatch({
-          tx <- worrms::wm_name2id(taxon)
-        }, error = function(e){
-          tx <- NA
-        }
-        )
-
-        if(!is.na(taxid)){
-          taxnum <- taxid
-          taxid<-paste("urn:lsid:marinespecies.org:taxname:", taxid, sep="")
-          taxdata <- data.frame(worrms::wm_record(taxnum))
-
-          #fill the taxid_key table
-          taxid_key[nc,]$aphID <- taxnum
-          taxid_key[nc,]$scientificNameID <- taxid
-          taxid_key[nc,]$kingdom<-taxdata$kingdom
-          taxid_key[nc,]$phylum<-taxdata$phylum
-          taxid_key[nc,]$class<-taxdata$class
-          taxid_key[nc,]$order<-taxdata$order
-          taxid_key[nc,]$family<-taxdata$family
-          taxid_key[nc,]$genus<-taxdata$genus
-          if(!is.na(taxdata$scientificname)){
-            taxid_key[nc,]$specificEpithet<-strsplit(taxdata$scientificname, " ")[[1]][2]
-          }else{
-            taxid_key[nc,]$specificEpithet <- NA
-          }
-
-          if(!is.na(taxdata$authority)){
-            authoryear<-strsplit(taxdata$authority, ", ")[[1]]
-            taxid_key[nc,]$scientificNameAuthorship<-gsub("\\(", "", authoryear[1], fixed=FALSE)
-            taxid_key[nc,]$namePublishedInYear<-gsub("\\)", "", authoryear[2], fixed=FALSE)
-          }else{
-            taxid_key[nc,]$scientificNameAuthorship <- NA
-            taxid_key[nc,]$namePublishedInYear <- NA
-          }
-
+  
+  for(nc in 1:nrow(taxid_key)){
+    taxon<-as.character(taxid_key[nc,]$scientificName)
+    if(!taxon %in% c("", "NA", NA)){
+      taxid <- tryCatch({
+        tx <- worrms::wm_name2id(taxon)
+      }, error = function(e){
+        tx <- NA
+      }
+      )
+      
+      if(!is.na(taxid)){
+        taxnum <- taxid
+        taxid<-paste("urn:lsid:marinespecies.org:taxname:", taxid, sep="")
+        taxdata <- data.frame(worrms::wm_record(taxnum))
+        
+        #fill the taxid_key table
+        taxid_key[nc,]$aphID <- taxnum
+        taxid_key[nc,]$scientificNameID <- taxid
+        taxid_key[nc,]$kingdom<-taxdata$kingdom
+        taxid_key[nc,]$phylum<-taxdata$phylum
+        taxid_key[nc,]$class<-taxdata$class
+        taxid_key[nc,]$order<-taxdata$order
+        taxid_key[nc,]$family<-taxdata$family
+        taxid_key[nc,]$genus<-taxdata$genus
+        if(!is.na(taxdata$scientificname)){
+          taxid_key[nc,]$specificEpithet<-strsplit(taxdata$scientificname, " ")[[1]][2]
         }else{
-          taxid_key[nc,]$scientificNameID <- taxid
-          taxid_key[nc,]$aphID <- taxid
+          taxid_key[nc,]$specificEpithet <- NA
         }
+        
+        if(!is.na(taxdata$authority)){
+          authoryear<-strsplit(taxdata$authority, ", ")[[1]]
+          taxid_key[nc,]$scientificNameAuthorship<-gsub("\\(", "", authoryear[1], fixed=FALSE)
+          taxid_key[nc,]$namePublishedInYear<-gsub("\\)", "", authoryear[2], fixed=FALSE)
+        }else{
+          taxid_key[nc,]$scientificNameAuthorship <- NA
+          taxid_key[nc,]$namePublishedInYear <- NA
+        }
+        
+      }else{
+        taxid_key[nc,]$scientificNameID <- taxid
+        taxid_key[nc,]$aphID <- taxid
       }
     }
-  }else if(tolower(taxBackbone) == "gbif"){
-    for(nc in 1:nrow(taxid_key)){
-      taxon<-as.character(taxid_key[nc,]$scientificName)
-      if(!taxon %in% c("", "NA", NA)){
-        taxid <- tryCatch({
-          tx <- rgbif::name_backbone(name="taxon")
-        }, error = function(e){
-          tx <- NA
-        }
-        )
-      }
-      ### to be finished
-    }
-
-  }else{
-    stop("invalid taxBackbone argument")
   }
 
   return(taxid_key)
@@ -825,6 +863,20 @@ dataQC.completeTaxaNamesFromRegistery <- function(taxaNames, taxBackbone="worms"
 #' @usage dataQC.eventStructure(dataset, eventID.col = "eventID", parentEventID.col = NA, project.col = NA, project = NA, event.prefix = NA, complete.hierarchy=FALSE)
 #' @details An event structure is a hierarchical grouping of (sub-) samples (events, that is, something that occurs at a place and time) into higher parentEvents, like expeditions, projects,... This interlinked structure is for instance used in the DarwinCore Event standard. The algorithm here looks for specific columnames that may give an indication to the event structure (e.g. a column with sampe names, projects,...). If disered, the user can complete the event structure by rooting it into an over-arching project.
 #' @return a dataframe with 2 columns: eventID and parentEventID
+#' @examples 
+#' \donttest{
+#' test_metadata <- data.frame(sample_name=paste("sample", 1:5, sep="_"),
+#'                             eventID=paste("sample", 1:5, sep="_"),
+#'                             row.names=paste("sample", 1:5, sep="_"))
+#' dataQC.eventStructure(dataset=test_metadata, eventID.col = "eventID", 
+#'                       parentEventID.col = NA, project.col = NA, 
+#'                       project = NA, event.prefix = NA,
+#'                       complete.hierarchy=FALSE)
+#' dataQC.eventStructure(dataset=test_metadata, eventID.col = "eventID", 
+#'                       parentEventID.col = NA, project.col = NA, 
+#'                       project = "project_1", event.prefix = NA,
+#'                       complete.hierarchy=TRUE)
+#' }
 #' @export
 dataQC.eventStructure <- function(dataset, eventID.col = "eventID", parentEventID.col = NA,
                                   project.col = NA, project = NA, event.prefix = NA,

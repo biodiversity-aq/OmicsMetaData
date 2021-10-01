@@ -56,6 +56,33 @@ converts metadata into the right format (a tab separated text file) to submit da
 \details{
 This function will reformat metadata for submission to ENA. Specifically made for ecological environmental studies (e.g. amplicon sequencing, shotgun metagenomics,...), with additional QCs build in for Antarctic and Southern Ocean data. The assumption is taken that the dataset has already been subjected a quality controll.
 }
+\examples{
+\donttest{
+sampleNames <- c("sample_1", "sample_2")
+test_MIxS <- new("MIxS.metadata",
+                  data = data.frame(var1=c(1,2), var2=c(3,4), 
+                                    eventID=sampleNames, 
+                                    target_gene=c("16S", "18S"), 
+                                    subspecf_gen_lin=c("Bacteria", "Eukaryota"),
+                                    seq_meth=c("Illumina MiSeq", "Illumina MiSeq"),
+                                    row.names=sampleNames),
+                  section = c(var1="section1", var2="section1", eventID="miscellaneous",
+                              target_gene="miscellaneous", subspecf_gen_lin="miscellaneous",
+                              seq_meth="miscellaneous"),
+                  units = c(var1="unit1", var2="unit2", eventID="alphanumeric",
+                            target_gene="alphanumeric", subspecf_gen_lin="alphanumeric",
+                            seq_meth="alphanumeric"),
+                  env_package = "water",
+                  type = "versatile",
+                  QC = TRUE)
+prep.metadata.ENA(metadata=test_MIxS, dest.dir=getwd(), file.name="testthat",
+                  sample_unique_name_prefix=NA, checklist_accession=NA,
+                  tax_name=NA, ask.input=FALSE,
+                  insert.size=NA, library.layout=NA,
+                  library.strategy=NA, library.selection=NA,
+                  seq.file.extension=".fastq.gz", pairedEnd.extension=c("_1", "_2"))
+}
+}
 \seealso{
 Other data archiving functions: 
 \code{\link{FileNames.to.Table}()},

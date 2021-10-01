@@ -22,6 +22,16 @@ find the sample names in a given (meta-)dataset where at least an attempt has be
 \details{
 It is often not clear where the sample names are in a dataset. This function makes an educated guess, based on rownames or tags that are often used to indicate sample names. If ask.input, then the process happens user-supervised.
 }
+\examples{
+\donttest{
+test_metadata <- data.frame(sample_name=paste("sample", 1:5, sep="_"),
+                           collection_date=c("2020-09-23", "2020", "16 Jan. 2020", "November 1998", "12/01/1999"),
+                           latitude=c(23, 45, -56.44, "47.5", "-88° 4\' 5\""),
+                           longitude=c(24, -57, -107.55, "33.5", "-130° 26\' 9\""),
+                           row.names=paste("sample", 1:5, sep="_"))
+dataQC.findNames(dataset=test_metadata, ask.input=TRUE, sample.names="sample_name")
+}
+}
 \seealso{
 Other quality control functions: 
 \code{\link{dataQC.LatitudeLongitudeCheck}()},

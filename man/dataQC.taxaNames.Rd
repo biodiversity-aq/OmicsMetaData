@@ -18,6 +18,11 @@ checks a list of taxonomic names, and perform a basic quality control
 \details{
 looks for trailing spaces or common typos in taxonomic names.
 }
+\examples{
+\donttest{
+dataQC.taxaNames(c("Aulacoseira", "Calothrix confervicola", "unknown species", "Micrasterias cf. denticulata", "Calothrix sp."))
+}
+}
 \seealso{
 Other quality control functions: 
 \code{\link{dataQC.LatitudeLongitudeCheck}()},

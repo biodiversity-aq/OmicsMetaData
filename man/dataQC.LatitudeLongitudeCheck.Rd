@@ -20,6 +20,16 @@ looks in the columns of a dataset (dataframe) for a column with coordinates and 
 \details{
 The date column is found based on a user-provided list of possible names to look for (latlon.colnames argument). First, a single column is searched where latitude and longitude are noted in a single field, if this returns no result, latitude and longitude are looked for in seperate fields. When found, the coordinates are transformed to decimals and returned as a single field, with values separated by a single space That is: (X Y), with X a numeric decimal latitude value and Y a numeric decimal longitude value.
 }
+\examples{
+\donttest{
+test_metadata <- data.frame(sample_name=paste("sample", 1:5, sep="_"),
+                           collection_date=c("2020-09-23", "2020", "16 Jan. 2020", "November 1998", "12/01/1999"),
+                           latitude=c(23, 45, -56.44, "47.5", "-88° 4\' 5\""),
+                           longitude=c(24, -57, -107.55, "33.5", "-130° 26\' 9\""),
+                           row.names=paste("sample", 1:5, sep="_"))
+dataQC.LatitudeLongitudeCheck(dataset=test_metadata, latlon.colnames=list(c("lat_lon"),c("latitude"), c("longitude")))
+}
+}
 \seealso{
 Other quality control functions: 
 \code{\link{dataQC.TaxonListFromData}()},

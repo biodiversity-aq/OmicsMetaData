@@ -28,6 +28,14 @@ Takes one or more dataframes or a DarwinCore Archive and performs a basic Qualit
 \details{
 DarwinCore is the biodiversity data standard develloped by TDWG, and is used by the Global Biodiversity Information Facility (GBIF). This function performs a basic and user-supervised quality control. This includes cheking all variables terms adhere to the DarwinCore vocabulary, listing other variables in an eMoF file or in the dynamicProperties field, and checking for obvious errors in the content of the data (typos, different NA values,...). All dataframes are combined into a DwC.event or DwC.occurrence object
 }
+\examples{
+\donttest{
+dataQC.DwC(Event=event_data.frame, out.type="event")
+dataQC.DwC(Occurrence=occurrence_data.frame, out.type="occurrence")
+dataQC.DwC(Event=event_data.frame, eMoF=emof_data.frame, out.type="event")
+dataQC.DwC(Event=event_data.frame, occurrence=occurrence_data.frame, out.type="event")
+}
+}
 \seealso{
 Other standardization functions: 
 \code{\link{coordinate.to.decimal}()},

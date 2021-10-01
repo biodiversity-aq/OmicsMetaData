@@ -28,6 +28,14 @@ combine.data.frame merges two dataframes, completing the rows and columns that a
 \details{
 Columns with matching names can or cannot be merged, rows are automatically bound (a wrapper of rbind), not merged. Any missing data as a result of the non-matchng columns will be filled by the fill argument.
 }
+\examples{
+\donttest{
+df01 <- data.frame(var1=1:4, var2=2:5, row.names=paste("r", 1:4, sep=""))
+df02 <- data.frame(var1=5:8, var3=1:4, row.names=paste("t", 1:4, sep=""))
+combine.data.frame(df1=df01, df2=df02, fill=NA, merge.cols=TRUE, 
+                   original_rowName.col=TRUE, merge.rows="df1")
+}
+}
 \seealso{
 Other formating functions: 
 \code{\link{combine.data}()},

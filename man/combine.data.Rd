@@ -24,6 +24,11 @@ combine.data combines two MIxS.metadata objects into one, merging all common var
 \details{
 Variables with matching names are merged, if variables.as.cols=TRUE this means columns are merged, if FALSE rows are merged. Any missing data as a result of the non-matchng variable-name will be filled by the fill argument.
 }
+\examples{
+\donttest{
+combine.data(d1=test_MIxS, d2=test_MIxS2, fill=NA, variables.as.cols=TRUE)
+}
+}
 \seealso{
 Other formating functions: 
 \code{\link{combine.data.frame}()},

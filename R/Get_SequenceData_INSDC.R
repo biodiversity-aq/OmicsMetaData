@@ -3,7 +3,7 @@
 # lisence CC-0
 # Part of the POLA3R website (successor or mARS.biodiversity.aq)
 # version 1.0 (2019-09-20)
-# file encdong UTF-8
+# file encding UTF-8
 #
 #==============================================================
 # Tools for downloading data
@@ -20,6 +20,10 @@
 #' @seealso get.sample.attributes.INSDC
 #' @return if get.BioProject.metadata.INSDC(just.names=FALSE) (default) a data.frame with n rows an m columns is returned, n being the number of samples in the BioProject, and m being the number of variables found. If get.BioProject.metadata.INSDC(just.names=TRUE), a character vector of length n is returned with the sample numbers ("Run numbers", SRR numbers)
 #' @references Sayers, E. (2009) The E-utilities In-Depth: Parameters, Syntax and More, https://www.ncbi.nlm.nih.gov/books/NBK25499/
+#' @examples 
+#' \donttest{
+#' get.BioProject.metadata.INSDC(BioPrjct="PRJNA303951", just.names=FALSE)
+#' }
 #' @export
 get.BioProject.metadata.INSDC <- function(BioPrjct=NA, just.names=FALSE){
   if(! is.character(BioPrjct) | c(NULL,NA) %in% BioPrjct | length(BioPrjct)>1){
@@ -53,6 +57,10 @@ get.BioProject.metadata.INSDC <- function(BioPrjct=NA, just.names=FALSE){
 #' @param BioPrjct a character string or a vector with character strings. Providing the associated BioProject numbers helps to give more understandable error messages. Alternativey, if the sampleID argument is empty, all sample IDs from the given BioProject numbers will be given to the sampleID argument.
 #' @details Each sequence data sample ("Run") typically has additional measurements or metadata associated with it. However, these are difficult to find, and cannot be downloaded together with the nucleotide sequence data. The get.sample.attributes.INSDC function will fetch the all the metadata of the samples given to the sampleID (or BioPrjct) argument from the INSDC. To do this, get.sample.attributes.INSDC will use the Entrez Programming Utilities (E-utilities) from NCBI, and will access the databases with the API-key provided by the user. see https://ncbiinsights.ncbi.nlm.nih.gov/2017/11/02/new-api-keys-for-the-e-utilities/ for more info on getting an API-key.
 #' @return a dataframe with the data found
+#' @examples 
+#' \donttest{
+#' get.BioProject.metadata.INSDC(BioPrjct="PRJNA303951", apiKey="YouPersonalAPIKey")
+#' }
 #' @export
 get.sample.attributes.INSDC <- function(sampleID=NA, apiKey=NA, BioPrjct=NA){
   #requires xml2 to parse the xml file, reshape2 long to wide format
@@ -156,6 +164,12 @@ get.sample.attributes.INSDC <- function(sampleID=NA, apiKey=NA, BioPrjct=NA){
 #' @param download.sequences boolean. If TRUE, the sequences will be downloaded to the destination.path. If FALSE, no sequences are downloaded. Default TRUE
 #' @details download.sequences.INSDC will write the sequence data (*.fastq.gz files) to a destiation path (e.g. a designated file), the metadata (if it should be kept) is written to the Console and should be caught in an R-varaiable that can be later written to a csv file by the user. Point of entry to INSDC is the SRA database from NCBI.
 #' @return the sequence data are written to the destination.path, the metadata is returned as a data.frame to the console.
+#' @examples 
+#' \donttest{
+#' download.sequences.INSDC(BioPrjct="PRJNA303951", destination.path=getwd(),
+#'                          apiKey="YouPersonalAPIKey", unzip=FALSE,
+#'                          eep.metadata = TRUE, download.sequences = TRUE)
+#' }
 #' @export
 download.sequences.INSDC <- function(BioPrj = c(), destination.path = NA, apiKey=NA,
                                      unzip = FALSE, keep.metadata = TRUE, download.sequences = TRUE){

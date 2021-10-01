@@ -4,12 +4,12 @@
 \alias{dataQC.completeTaxaNamesFromRegistery}
 \title{Complete a list of taxonomic names with information form an authorotive taxonomic backbone}
 \usage{
-dataQC.completeTaxaNamesFromRegistery(taxaNames, taxBackbone="worms")
+dataQC.completeTaxaNamesFromRegistery(taxaNames)
 }
 \arguments{
 \item{taxaNames}{a character vector. A list with the taxonomic names to look for}
 
-\item{taxBackbone}{a character string. The taxonomic backbone to querry. At present only "worms" is allowed.}
+\item{taxBackbone}{a character string. The taxonomic backbone to query. At present only "worms" is allowed.}
 }
 \value{
 a dataframe with the following fields:scientificName, scientificNameID, aphID, kingdom, phylum, class, order, family, genus, specificEpithet, scientificNameAuthorship, namePublishedInYear
@@ -19,6 +19,11 @@ complete a list of taxonomic names by looking-up missing information on an accep
 }
 \details{
 using the API-client connection to the World Registry of Marine Species (WORMS), additional taxonomic information can be added to an existing list of taxa. This function is a wrapper of the wm_name2id and wm_record functions in the worrms package
+}
+\examples{
+\donttest{
+dataQC.completeTaxaNamesFromRegistery("Aulacoseira")
+}
 }
 \seealso{
 Other quality control functions: 

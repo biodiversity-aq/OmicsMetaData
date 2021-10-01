@@ -28,6 +28,13 @@ Downloads (high throughput) nucleotide sequence datasets that are deposited on t
 \details{
 download.sequences.INSDC will write the sequence data (*.fastq.gz files) to a destiation path (e.g. a designated file), the metadata (if it should be kept) is written to the Console and should be caught in an R-varaiable that can be later written to a csv file by the user. Point of entry to INSDC is the SRA database from NCBI.
 }
+\examples{
+\donttest{
+download.sequences.INSDC(BioPrjct="PRJNA303951", destination.path=getwd(),
+                         apiKey="YouPersonalAPIKey", unzip=FALSE,
+                         eep.metadata = TRUE, download.sequences = TRUE)
+}
+}
 \seealso{
 Other downloading data functions: 
 \code{\link{get.BioProject.metadata.INSDC}()},

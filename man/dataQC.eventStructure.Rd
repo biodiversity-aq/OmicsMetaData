@@ -30,6 +30,21 @@ checks if an eventID is present in a (QC'd) dataset, and generates one if not. D
 \details{
 An event structure is a hierarchical grouping of (sub-) samples (events, that is, something that occurs at a place and time) into higher parentEvents, like expeditions, projects,... This interlinked structure is for instance used in the DarwinCore Event standard. The algorithm here looks for specific columnames that may give an indication to the event structure (e.g. a column with sampe names, projects,...). If disered, the user can complete the event structure by rooting it into an over-arching project.
 }
+\examples{
+\donttest{
+test_metadata <- data.frame(sample_name=paste("sample", 1:5, sep="_"),
+                            eventID=paste("sample", 1:5, sep="_"),
+                            row.names=paste("sample", 1:5, sep="_"))
+dataQC.eventStructure(dataset=test_metadata, eventID.col = "eventID", 
+                      parentEventID.col = NA, project.col = NA, 
+                      project = NA, event.prefix = NA,
+                      complete.hierarchy=FALSE)
+dataQC.eventStructure(dataset=test_metadata, eventID.col = "eventID", 
+                      parentEventID.col = NA, project.col = NA, 
+                      project = "project_1", event.prefix = NA,
+                      complete.hierarchy=TRUE)
+}
+}
 \seealso{
 Other quality control functions: 
 \code{\link{dataQC.LatitudeLongitudeCheck}()},

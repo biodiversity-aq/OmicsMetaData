@@ -20,6 +20,16 @@ looks in the columns of a dataset for a column with dates and transforms them to
 \details{
 The date column is found based on a user-provided list of possible names to look for (data.colnames argument). If a columnname is found that corresponds to a term in the list, the dates will be convered to the YYYY-MM-DD format, if the original format can be recognized.
 }
+\examples{
+\donttest{
+test_metadata <- data.frame(sample_name=paste("sample", 1:5, sep="_"),
+                           collection_date=c("2020-09-23", "2020", "16 Jan. 2020", "November 1998", "12/01/1999"),
+                           latitude=c(23, 45, -56.44, "47.5", "-88° 4\' 5\""),
+                           longitude=c(24, -57, -107.55, "33.5", "-130° 26\' 9\""),
+                           row.names=paste("sample", 1:5, sep="_"))
+dataQC.dateCheck(dataset=test_metadata, date.colnames=c("collection_date"))
+}
+}
 \seealso{
 Other quality control functions: 
 \code{\link{dataQC.LatitudeLongitudeCheck}()},

@@ -20,6 +20,11 @@ find a column in a dataframe where it is a priori unkown wether the column is pr
 \details{
 An internal function to find information in incomming data of which the format and content is unknown
 }
+\examples{
+\donttest{
+find.dataset(dataset=data.frame(var1=1:3, var2=1:3), "var2")
+}
+}
 \author{
 Maxime Sweetlove CC-0 2020
 }

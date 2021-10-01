@@ -24,12 +24,12 @@ extended Measurement or Fact (eMoF) as a DarwinCore extension to standardize env
 \donttest{
 sampleNames <- c("sample_1", "sample_2")
 test_MIxS <- new("MIxS.metadata",
-data   = data.frame(var1=c(1,2), var2=c(3,4), eventID=sampleNames, row.names=sampleNames),
-section = c(var1="section1", var2="section1", eventID="miscellaneous"),
-units = c(var1="unit1", var2="unit2", eventID="alphanumeric"),
-env_package = "water",
-type = "versatile",
-QC = TRUE)
+             data = data.frame(var1=c(1,2), var2=c(3,4), eventID=sampleNames, row.names=sampleNames),
+             section = c(var1="section1", var2="section1", eventID="miscellaneous"),
+             units = c(var1="unit1", var2="unit2", eventID="alphanumeric"),
+             env_package = "water",
+             type = "versatile",
+             QC = TRUE)
 wideTable.to.eMoF(metadata.object=test_MIxS, variables=c("var1", "var2"))
 }
 }

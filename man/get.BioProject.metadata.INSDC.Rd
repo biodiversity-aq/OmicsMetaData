@@ -20,6 +20,11 @@ downloads a minimal set of sample metadata of all samples ("Runs") within a BioP
 \details{
 BioProjects combine all biological nucleotide sequence data related to a single initiative, originating from a single organization. With each sample ("Run") within a BioProject, there is additional data associated that is crucial to the correct interpretation of the nucleotide sequence data, but is not automatically downloaded along with it. The get.BioProject.metadata.INSDC function will fetch the most basic metadata of a BioProject from the INSDC repositories to complete the nucleotide sequence dataset, using E-utils API function of NCBI. These basic metadata typically include Run number, relsease date, load date, spots, bases, av_MB and download path. Note that the data returned by get.BioProject.metadata.INSDC does not include all the metadata associated with a BioProject. Other information, like coordinates, sampling dates or environmental measurements may also be available, but require the user to register at NCBI and request a personal API-key (this is required by NCBI to acces their data since 2017). The complete set of additional data can be downloaded using the get.sample.attributes.INSDC function, given a user-specified API-key. see https://ncbiinsights.ncbi.nlm.nih.gov/2017/11/02/new-api-keys-for-the-e-utilities/
 }
+\examples{
+\donttest{
+get.BioProject.metadata.INSDC(BioPrjct="PRJNA303951", just.names=FALSE)
+}
+}
 \references{
 Sayers, E. (2009) The E-utilities In-Depth: Parameters, Syntax and More, https://www.ncbi.nlm.nih.gov/books/NBK25499/
 }

@@ -18,6 +18,12 @@ Turns a latutude or longitude value in a degrees-minutes-seconds (DMS) format in
 \details{
 N-S-W-E wind directions as well as degrees, minutes and seconds are recognized and turned into a numeric decimal coordinate value
 }
+\examples{
+\donttest{
+coordinate.to.decimal("40.33S")
+coordinate.to.decimal("40<U+00B0>33S")
+}
+}
 \seealso{
 Other standardization functions: 
 \code{\link{dataQC.DwC_general}()},

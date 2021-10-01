@@ -26,6 +26,12 @@ checks a set of terms (e.g. columnnames) to a Standard, and flags inconsistencie
 \details{
 For interoperability of data and data archiving, variable names in datasets need to comply to vocabulary standards. This function compares a list of existing terms to the MIxS or DwC standard, and tries to fiend the best matches.
 }
+\examples{
+\donttest{
+dataQC.TermsCheck(observed="ph", exp.standard="MIxS", exp.section=NA, fuzzy.match=TRUE,out.type="full")
+dataQC.TermsCheck(observed="cond", exp.standard="MIxS", exp.section=NA, fuzzy.match=TRUE,out.type="full")
+}
+}
 \seealso{
 Other quality control functions: 
 \code{\link{dataQC.LatitudeLongitudeCheck}()},

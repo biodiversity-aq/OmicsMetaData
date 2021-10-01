@@ -79,6 +79,10 @@ get.ENAName <- function(variable){
 #' @param TermsList a character vector with the columnnames to look for. They will be handled in the order given, and the search will stop at the first match
 #' @details An internal function to find information in incomming data of which the format and content is unknown
 #' @return a character vactor with the content of the matching column (or the first match), or an empty vector
+#' @examples 
+#' \donttest{
+#' find.dataset(dataset=data.frame(var1=1:3, var2=1:3), "var2")
+#' }
 #' @export
 find.dataset <- function(dataset, TermsList=c()){
 
@@ -111,6 +115,11 @@ find.dataset <- function(dataset, TermsList=c()){
 #' @param val a character string. A single latitude or longitude value to be transformed. Can include non-numeric character like the degree symbol, N-S-E-W wind directions,...
 #' @details N-S-W-E wind directions as well as degrees, minutes and seconds are recognized and turned into a numeric decimal coordinate value
 #' @return a numeric value
+#' @examples 
+#' \donttest{
+#' coordinate.to.decimal("40.33S")
+#' coordinate.to.decimal("40<U+00B0>33S")
+#' }
 #' @export
 coordinate.to.decimal<-function(val){
   val<-as.character(val)
@@ -205,6 +214,10 @@ coordinate.to.decimal<-function(val){
 #' @param longitudes numeric vector. one ore more decimal longitude values
 #' @details Documenting data with metadata on an Integrated Publishing Toolkit (IPT) typically requires a bounding box to simplify the goegraphic content of the dataset. This function is made to quickly calculate this.
 #' @return a character string with the boundingbox printed to the console
+#' @examples 
+#' \donttest{
+#' get.boundingBox(c(22.4, 23.7), c(98.7, -44.7))
+#' }
 #' @export
 get.boundingBox<-function(latitudes, longitudes){
 
@@ -226,6 +239,9 @@ get.boundingBox<-function(latitudes, longitudes){
 #' @param file_path the full file path to the file
 #' @details submitting sequence to a database of the Nucleotide Sequence Database Consortium typically requires to give the insert size of the sequences. This function gets the length of the first sequence in a file, assuming all sequences are of the same length.
 #' @return a numeric value
+#' @examples \donttest{
+#' get.insertSize("/user/path/to/sequenceFileFolder")
+#' }
 #' @export
 get.insertSize <- function(file_path=NA){
   con <- file(file_path,"r")

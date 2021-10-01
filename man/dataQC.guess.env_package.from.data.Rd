@@ -18,7 +18,16 @@ a list of length 2, with "$values" a vector of same length as the number of rows
 looks in the columns of a dataset for clues to what the most appropriate MIxS environmental could be for each sample.
 }
 \details{
-The "Minimul Information on any (x) Sequence" (MIxS) standard requires an appropriate environmental package with MIxS terms to be selected to document the data. Some data and nucleotide archives enforce their users to select such a package. This function is made to automatically either find the package in a dataset, of guess it based on the data that is present.
+The "Minimum Information on any (x) Sequence" (MIxS) standard requires an appropriate environmental package with MIxS terms to be selected to document the data. Some data and nucleotide archives enforce their users to select such a package. This function is made to automatically either find the package in a dataset, of guess it based on the data that is present.
+}
+\examples{
+\donttest{
+test_metadata <- data.frame(sample_name=paste("sample", 1:5, sep="_"),
+                           collection_date=c("2020-09-23", "2020", "16 Jan. 2020", "November 1998", "12/01/1999"),
+                           env_package=rep("water", 5),
+                           row.names=paste("sample", 1:5, sep="_"))
+dataQC.guess.env_package.from.data(test_metadata, pckge.colnames=c("env_package"))
+}
 }
 \seealso{
 Other quality control functions: 

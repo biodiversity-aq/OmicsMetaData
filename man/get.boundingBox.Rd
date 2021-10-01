@@ -20,6 +20,11 @@ finds the (rectangular) bounding box given decimal latitudes and longitudes
 \details{
 Documenting data with metadata on an Integrated Publishing Toolkit (IPT) typically requires a bounding box to simplify the goegraphic content of the dataset. This function is made to quickly calculate this.
 }
+\examples{
+\donttest{
+get.boundingBox(c(22.4, 23.7), c(98.7, -44.7))
+}
+}
 \author{
 Maxime Sweetlove CC-0 2019
 }
