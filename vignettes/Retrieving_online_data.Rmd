@@ -23,7 +23,7 @@ For the purpose of this vignette, the dataset PRJNA305344 will be used as an exa
 library(OmicsMetaData)
 
 workingDir <- "_path_to_a_working_directory_" #the directory you'll be working from and download the data to
-keyINSDC <- "****************" #your personal NCBI API key
+keyINSDC <- "****************" #insert here your personal NCBI API key, see https://www.ncbi.nlm.nih.gov/home/develop/api/ or the "General_Overview" vignette
 
 ```
 

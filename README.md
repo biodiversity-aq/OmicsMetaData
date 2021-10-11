@@ -7,10 +7,14 @@
 
 ## Package details
 ### Description
-This R-package provides a suite of tools to help format and standardize metadata and environmental data of 'omics datasets. The aim is to help improve data interoperability and re-use in biodiversity 'omics fields, such as metabarcoding (e.g. eDNA, amplicon sequencing of microbes) and metagenomics (e.g. shotgun meta genome sequencing). More specifically, this package offers the users tools to help them integrate online open access data and metadata into their analyses, and standardize their de novo data and metadata following the Minimum Information about any (x) sequence (MIxS) or the DarwinCore (DwC) standards to use it in integrated analyses with other data, or archive it on online nucleotide sequence data repositories (e.g. ENA, SRA, GenBank,..) in accordance to the FAIR principles.
+This R-package provides a suite of tools to help format and standardize metadata and environmental data of 'omics datasets. The aim is to help improve data interoperability and re-use in biodiversity 'omics fields, such as metabarcoding (e.g. eDNA, amplicon sequencing of microbes) and metagenomics (e.g. shotgun meta genome sequencing). 
 
 
-Therefore, the tools in the package cover (1) data (DNA sequences) and metadata (any other linked information or measurements that describe the environment from where the DNA was extracted) retrieval from INSDC database, (2) basic quality control on metadata (i.e. detecting violations against the rules of the data standards and ensuring the minimal metadata is provided), and (3) format data following the MIxS or DarwinCore data standards, including the use of the vocabularies and adherence to the rules set out the the data standards. 
+####Improving the re-use of data
+There are functions to retrieve metadata from sequences stored at the INSDC databases, together with the sequences themselves. Metadata can be downloaded into the R-environment or passed-on into files. Sequences are downloaded as fastq.tar.gz files, and are written to a folder, as the volume of data would likely be to big for an everyday computer. As such, this package offers the users tools to help them integrate online open access data and metadata into their analyses.
+
+####Improving data interoperability
+There are also tools that guide users into standardizing metadata (assuming the sequences are already standardized following the FASTA or FASTQ format). User-provided data can be standardized with MIxS or DwC in a supervised way, and can be readied for upload and archiving on one of the INSDC databases. The formatted and standardized metadata has the advantage of passing the INSDC quality control much quicker and easier than formatting data by hand using the INSDC templates. Finally, there are several tools for common manipulations in ecological molecular data, such as easy conversion between wide and long formats.
 
 
 ## Installation instructions
@@ -19,10 +23,10 @@ Therefore, the tools in the package cover (1) data (DNA sequences) and metadata 
  > install.packages("devtools")
  > library(devtools)
 
-when the GitHub repo was downloaded to the local machine:
+when the GitHub repo was downloaded to the local machine (with _path_to_package_ the quoted path to the local location of the package source files):
  > devtools::install(_path_to_package_)
 
-install directly from GutHub
+install directly from GitHub at https://github.com/biodiversity-aq/OmicsMetaData
 
  > devtools::install_github("https://github.com/biodiversity-aq/OmicsMetaData")
 
@@ -32,10 +36,12 @@ install directly from GutHub
 
 
 ## Resources
+The OmicsMetaData R-package can be used to access sequence data and any associated metadata on INSDC, or the Lifewatch taxonomic backbone at marinespecies.org. Below these and other resources that can be consulted are described in detail. 
+
 ###International Nucleotide Sequence Database Consortium (INSDC)
 This package connects to the API of INSDC (via NCBI) to download sequence data and associated metadata from the world's leading nucleotide sequence databases. INSDC is a consortium of European, American and Japanese interconnected databases that house all sorts of nucleotide sequence data. More information on the API client of NCBI can be found here: https://www.ncbi.nlm.nih.gov/home/develop/api/
 
-###World Registry of Marine Species (WoRMS) and worrms
+###World Registry of Marine Species (WoRMS) and the worrms R-package
 This packages also contains function that wrap and integrates several worrms package (Chamberlain, 2020; Horton et al. 2021) functions to obtain taxonomy information from the WoRMS database in a better structured way. The WoRMS (World Registry of Marine Species) is a LifeWatch database that houses the (near) complete taxonomic backbone of Marine and Antarctic (marine and terrestrial) species. In the database, each taxonomic unit, whether it is a species, genus or phylum, is identified by a unique ID (aphID) that is unchainable, even when taxonomic names are updated and changed. The aphID helps to identify synonym names and older names that are no longer in use. As such, each taxon is unambiguously identifiable, now and in the future as well. Extensive documentation can be found at this link: http://www.marinespecies.org/about.php.
 
 ###Minimum on Any (x) Sequence (MIxS)
