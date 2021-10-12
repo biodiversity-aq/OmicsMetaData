@@ -7,8 +7,9 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-#Rationale and background information
+#OmicsMetaData: an R-package for interoperable and re-usable biodiversity 'omics data
 
+#Rationale and background information
 The OmicsMetaData package was developed as a set of tools to download, standardize and handle 'omics datasets, and more particulary the non-nucleotide sequence metadata components. The goal of this package is to improve the interoperability (cf. data standardization) and re-use of biodiveristy 'omics datasets.
 
 ##Improving the re-use of data

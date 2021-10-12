@@ -7,6 +7,8 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+#OmicsMetaData: an R-package for interoperable and re-usable biodiversity 'omics data
+
 #General Overview
 The OmicsMetaData package was developed as a set of tools to download, standardize and handle 'omics datasets, and more particulary the non-nucleotide sequence metadata components. The aim is to help improve data interoperability and re-use in biodiversity 'omics fields, such as metabarcoding (e.g. eDNA, amplicon sequencing of microbes) and metagenomics (e.g. shotgun meta genome sequencing). More specifically, this package offers the users tools to help them integrate online open access data and metadata into their analyses, and standardize their de novo data and metadata following the Minimum Information about any (x) sequence (MIxS) or the DarwinCore (DwC) standards to use it in integrated analyses with other data, or archive it on online nucleotide sequence data repositories (e.g. ENA, SRA, GenBank,..) in accordance to the FAIR principles.
 

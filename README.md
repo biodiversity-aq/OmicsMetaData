@@ -1,6 +1,6 @@
 # README
 
-##The OmicsMetaData R-package
+##OmicsMetaData: an R-package for interoperable and re-usable biodiversity 'omics data
 
 ## Badges
 
