@@ -1,5 +1,5 @@
 Package: OmicsMetaData
-Title: Tools standardizing ‘omics metadata.
+Title: OmicsMetaData: an R-package for interoperable and re-usable biodiversity 'omics (meta)data.
 Version: 0.0.1
 Authors@R: 
 	person("Maxime",
@@ -7,8 +7,8 @@ Authors@R:
 		role = c("aut", "cre"),
 		email = "msweetlove@naturalsciences.be")
 Description: 
-	OmicsMetaData was developed by the SCAR biodiversity data management team to provide a toolbox to retrieve, standardize and quality control metadata and chemo-physical measurement data that is associated with nucleotide sequences.
-License: CC-0 2021
+	OmicsMetaData: tools to re-use biodiversity 'omics datasets or standardize them to make them globally interoperable
+License: GNU General Public License v3 (GLP-3.0) https://www.gnu.org/licenses/gpl-3.0.en.html
 Encoding: UTF-8
 LazyData: true
 Imports:
