@@ -189,3 +189,96 @@ term.definition <- function(term){
   message(out_message)
   
 }
+
+# documentation for the data objects
+
+#' central library with mapped terms of DwC, MIxS and miscellaneous missing terms
+#' 
+#' @author Maxime Sweetlove CC-0 2021
+#' @name TermsLib
+#' @docType data
+#' @references \url{https://gensc.org/mixs/} \url{https://dwc.tdwg.org}
+#' @keywords data, MIxS, DarwinCore
+NULL
+
+#' library with synonyms for standard terms
+#' 
+#' @author Maxime Sweetlove CC-0 2021
+#' @name TermsSyn
+#' @docType data
+#' @references \url{https://gensc.org/mixs/} \url{https://dwc.tdwg.org}
+#' @keywords data, MIxS, DarwinCore, INSDC, ENA, NCBI, POLA3R
+NULL
+
+#' library with synonyms for DwC terms
+#' 
+#' @author Maxime Sweetlove CC-0 2021
+#' @name TermsSyn_DwC
+#' @docType data
+#' @references \url{https://dwc.tdwg.org}
+#' @keywords data, DarwinCore
+NULL
+
+#' non-exaustive library with some common INSDC taxon IDs
+#' 
+#' @author Maxime Sweetlove CC-0 2021
+#' @name TaxIDLib
+#' @docType data
+#' @references \url{https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi}
+#' @keywords data, INSDC, NCBI, taxonomy
+NULL
+
+#' terms accepted by ENA-EMBL
+#' 
+#' @author Maxime Sweetlove CC-0 2021
+#' @name ENA_allowed_terms
+#' @docType data
+#' @references \url{https://www.ebi.ac.uk/ena/browser/home}
+#' @keywords data, INSDC, ENA
+NULL
+
+#' checklist accessions accepted by ENA-EMBL
+#' 
+#' @author Maxime Sweetlove CC-0 2021
+#' @name ENA_checklistAccession
+#' @docType data
+#' @references \url{https://www.ebi.ac.uk/ena/browser/home}
+#' @keywords data, INSDC, ENA
+NULL
+
+#' geographic locations names accepted by ENA-EMBL
+#' 
+#' @author Maxime Sweetlove CC-0 2021
+#' @name ENA_geoloc
+#' @docType data
+#' @references \url{https://www.ebi.ac.uk/ena/browser/home}
+#' @keywords data, INSDC, ENA
+NULL
+
+#' instrument names accepted by ENA-EMBL
+#' 
+#' @author Maxime Sweetlove CC-0 2021
+#' @name ENA_instrument
+#' @docType data
+#' @references \url{https://www.ebi.ac.uk/ena/browser/home}
+#' @keywords data, INSDC, ENA
+NULL
+
+#' experiment names accepted by ENA-EMBL
+#' 
+#' @author Maxime Sweetlove CC-0 2021
+#' @name ENA_select
+#' @docType data
+#' @references \url{https://www.ebi.ac.uk/ena/browser/home}
+#' @keywords data, INSDC, ENA
+NULL
+
+#' sequencing method names accepted by ENA-EMBL
+#' 
+#' @author Maxime Sweetlove CC-0 2021
+#' @name ENA_strat
+#' @docType data
+#' @references \url{https://www.ebi.ac.uk/ena/browser/home}
+#' @keywords data, INSDC, ENA
+NULL
+

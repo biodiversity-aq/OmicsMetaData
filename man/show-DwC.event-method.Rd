@@ -6,6 +6,9 @@
 \usage{
 \S4method{show}{DwC.event}(object)
 }
+\arguments{
+\item{object}{a DwC.event object}
+}
 \description{
 the show method for DwC.event
 }

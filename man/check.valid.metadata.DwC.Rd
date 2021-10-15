@@ -15,6 +15,12 @@ a boolean, TRUE when valid, FALSE when not
 \description{
 validates if a DwC.event or DwC.occurrence object is implemented correctly
 }
+\examples{
+\donttest{
+test_metadata <- data.frame()
+check.valid.metadata.DwC(test_metadata)
+}
+}
 \author{
 Maxime Sweetlove CC-0 2020
 }

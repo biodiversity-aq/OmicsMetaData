@@ -1,0 +1,8 @@
+note <- sprintf("R package version %s", meta$Version)
+
+bibentry(bibtype = "Manual",
+         title = "{OmicsMetaData}: an R-package for interoperable and re-usable biodiversity 'omics (meta)data",
+         author = c(person("Maxime", "Sweetlove")),
+         year = 2021,
+         note = note,
+         url = "https://github.com/biodiversity-aq/OmicsMetaData")

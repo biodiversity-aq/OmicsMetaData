@@ -8,8 +8,6 @@ dataQC.completeTaxaNamesFromRegistery(taxaNames)
 }
 \arguments{
 \item{taxaNames}{a character vector. A list with the taxonomic names to look for}
-
-\item{taxBackbone}{a character string. The taxonomic backbone to query. At present only "worms" is allowed.}
 }
 \value{
 a dataframe with the following fields:scientificName, scientificNameID, aphID, kingdom, phylum, class, order, family, genus, specificEpithet, scientificNameAuthorship, namePublishedInYear

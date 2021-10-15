@@ -4,7 +4,7 @@
 \alias{dataQC.TaxonListFromData}
 \title{extract the finest resolution taxonomy from a dataset}
 \usage{
-find.sampleTaxon(dataset)
+dataQC.TaxonListFromData(dataset)
 }
 \arguments{
 \item{dataset}{a data.frame. The dataset with samples as rows, and taxonomy information in the columns. using the MIxS or DarwinCore taxonomy terms, the taxonomy information will be extracted}

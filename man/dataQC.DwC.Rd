@@ -4,7 +4,7 @@
 \alias{dataQC.DwC}
 \title{format dataframes into a DarwinCore object}
 \usage{
-DataQC.DwC(Event=NA, Occurrence=NA, eMoF=NA, EML.url=NA, out.type="event", ask.input=TRUE))
+dataQC.DwC(Event=NA, Occurrence=NA, eMoF=NA, EML.url=NA, out.type="event", ask.input=TRUE)
 }
 \arguments{
 \item{Event}{data.frame. A dataframe with the event data, structured with DarwinCore terms}
@@ -29,7 +29,7 @@ Takes one or more dataframes or a DarwinCore Archive and performs a basic Qualit
 DarwinCore is the biodiversity data standard develloped by TDWG, and is used by the Global Biodiversity Information Facility (GBIF). This function performs a basic and user-supervised quality control. This includes cheking all variables terms adhere to the DarwinCore vocabulary, listing other variables in an eMoF file or in the dynamicProperties field, and checking for obvious errors in the content of the data (typos, different NA values,...). All dataframes are combined into a DwC.event or DwC.occurrence object
 }
 \examples{
-\donttest{
+\dontrun{
 dataQC.DwC(Event=event_data.frame, out.type="event")
 dataQC.DwC(Occurrence=occurrence_data.frame, out.type="occurrence")
 dataQC.DwC(Event=event_data.frame, eMoF=emof_data.frame, out.type="event")

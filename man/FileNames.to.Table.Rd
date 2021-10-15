@@ -4,7 +4,7 @@
 \alias{FileNames.to.Table}
 \title{collect the names of sequence files in a folder}
 \usage{
-FileNames.to.Table (file.dir, paired=TRUE, seq.file.extension=".fastq.gz", pairedEnd.extension=c("_1", "_2")
+FileNames.to.Table(file.dir, paired=TRUE, seq.file.extension=".fastq.gz", pairedEnd.extension=c("_1", "_2"))
 }
 \arguments{
 \item{file.dir}{a character string. The path to the directory where the sequence files are stored}
@@ -14,8 +14,6 @@ FileNames.to.Table (file.dir, paired=TRUE, seq.file.extension=".fastq.gz", paire
 \item{seq.file.extension}{a character string. The file-extension of the sequence files}
 
 \item{pairedEnd.extension}{a character vector of length 2. If the data is paired-end data, specify the forward (first element of te vector) and reverse (second) extension tags here. Default is c("_1", "_2")}
-
-\item{ask.input}{boolean. Will give a warning message before continuing.}
 }
 \value{
 a data frame with a column "OldName" that list the sequence file names, an empty column "NewName" to be filled in by the user and a column "FileName" with the full file name.

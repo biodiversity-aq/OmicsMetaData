@@ -9,7 +9,7 @@ get.sample.attributes.INSDC(sampleID, apiKey, BioPrjct)
 \arguments{
 \item{sampleID}{a list. a list of one ore more SRA sample IDs (that is "Run" numbers). This argument can be left blank if input is provided for the BioPrjct argument (see further)}
 
-\item{apiKey}{a character string. A personal API-key to the acces the NCBI databases, and required to use the Entrez Programming Utilities (E-utilities). An API-key (API stands for application programming interface) is a unique identifier used to authenticate a user. A personal API-key can easily be generated at requested at https://ncbiinsights.ncbi.nlm.nih.gov/2017/11/02/new-api-keys-for-the-e-utilities/}
+\item{apiKey}{a character string. A personal API-key to the access the NCBI databases, and required to use the Entrez Programming Utilities (E-utilities). An API-key (API stands for application programming interface) is a unique identifier used to authenticate a user. A personal API-key can easily be generated at requested at https://ncbiinsights.ncbi.nlm.nih.gov/2017/11/02/new-api-keys-for-the-e-utilities/}
 
 \item{BioPrjct}{a character string or a vector with character strings. Providing the associated BioProject numbers helps to give more understandable error messages. Alternativey, if the sampleID argument is empty, all sample IDs from the given BioProject numbers will be given to the sampleID argument.}
 }
@@ -24,7 +24,7 @@ Each sequence data sample ("Run") typically has additional measurements or metad
 }
 \examples{
 \donttest{
-get.BioProject.metadata.INSDC(BioPrjct="PRJNA303951", apiKey="YouPersonalAPIKey")
+get.sample.attributes.INSDC(BioPrjct="PRJNA303951", apiKey="YouPersonalAPIKey")
 }
 }
 \seealso{

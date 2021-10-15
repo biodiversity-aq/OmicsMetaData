@@ -108,6 +108,7 @@ find.dataset <- function(dataset, TermsList=c()){
 #==============================================================
 
 #' convert a coordinate in degrees to decimal
+#' 
 #' @author Maxime Sweetlove CC-0 2019
 #' @family standardization functions
 #' @description Turns a latutude or longitude value in a degrees-minutes-seconds (DMS) format into a decimal value
@@ -151,7 +152,8 @@ coordinate.to.decimal<-function(val){
   # DEGREE == DDD
   val <- gsub('??', "DDD", val, fixed=TRUE)[[1]]
 
-  val <- gsub('\302\260', "DDD", val, fixed=TRUE)[[1]]
+  val <- gsub('\302\260', "DDD", val, fixed=FALSE)[[1]]
+  val <- gsub('\194\176', "DDD", val, fixed=FALSE)[[1]]
   val <- gsub("\\241", "DDD", val, fixed=TRUE)[[1]]
   #val <- gsub("\241", "DDD", val, fixed=TRUE)[[1]] #single slash gave error...
   val <- gsub("\u00b0", "DDD", val, fixed=TRUE)[[1]]
@@ -165,18 +167,19 @@ coordinate.to.decimal<-function(val){
   # MINUTE == MMM
   val <- gsub('\'', "MMM", val, fixed=TRUE)[[1]]
   val <- gsub("'", "MMM", val, fixed=TRUE)[[1]]
-  val <- gsub("′", "MMM", val, fixed=TRUE)[[1]]
 
-  val <- gsub('\342\200\262', "MMM", val, fixed=TRUE)[[1]]
+  val <- gsub('\226\128\178', "MMM", val, fixed=FALSE)[[1]]  
+  val <- gsub('\342\200\262', "MMM", val, fixed=FALSE)[[1]]
   val <- gsub('\u00b4', "MMM", val, fixed=TRUE)[[1]]
+  val <- gsub('\u2032', "MMM", val, fixed=TRUE)[[1]]
 
   val <- gsub('<U+00B4>', "MMM", val, fixed=TRUE)[[1]]
-  
+  val <- gsub('<U+2032>', "MMM", val, fixed=TRUE)[[1]]
 
   # SECOND == SSS
   val <- gsub('\"', "SSS", val, fixed=TRUE)[[1]]
   val <- gsub("MMMMMM", "SSS", val, fixed=TRUE)[[1]]
-  val <- gsub('\342\200\263', "SSS", val, fixed=TRUE)[[1]]
+  val <- gsub('\342\200\263', "SSS", val, fixed=FALSE)[[1]]
   
   #case of x DDD y.z (no MMM, but has MMM value)
   if(grepl("DDD", val) & !grepl("DDD$", val) & !grepl("MMM", val) & !grepl("SSS", val)){
@@ -239,7 +242,8 @@ get.boundingBox<-function(latitudes, longitudes){
 #' @param file_path the full file path to the file
 #' @details submitting sequence to a database of the Nucleotide Sequence Database Consortium typically requires to give the insert size of the sequences. This function gets the length of the first sequence in a file, assuming all sequences are of the same length.
 #' @return a numeric value
-#' @examples \donttest{
+#' @examples 
+#' \dontrun{
 #' get.insertSize("/user/path/to/sequenceFileFolder")
 #' }
 #' @export

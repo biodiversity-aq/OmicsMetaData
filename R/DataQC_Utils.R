@@ -558,7 +558,7 @@ dataQC.generate.footprintWKT <- function(dataset, NA.val=NA){
 #' @return a list of length 3 with: "$Names" a named vector with the most likely sample names, "$Names.column" the column name where the sample names were found, "$warningmessages" a vector with warning messages
 #' @details It is often not clear where the sample names are in a dataset. This function makes an educated guess, based on rownames or tags that are often used to indicate sample names. If ask.input, then the process happens user-supervised.
 #' @examples 
-#' \donttest{
+#' \dontrun{
 #' test_metadata <- data.frame(sample_name=paste("sample", 1:5, sep="_"),
 #'                            collection_date=c("2020-09-23", "2020", "16 Jan. 2020", "November 1998", "12/01/1999"),
 #'                            latitude=c(23, 45, -56.44, "47.5", "-88° 4\' 5\""),
@@ -669,7 +669,7 @@ dataQC.findNames <- function(dataset = NA, ask.input=TRUE, sample.names=NA){
 #' @author Maxime Sweetlove CC-0 2020
 #' @family quality control functions
 #' @description tries to find taxonomic names for samples (rows) in a dataset (data.frame),
-#' @usage find.sampleTaxon(dataset)
+#' @usage dataQC.TaxonListFromData(dataset)
 #' @param dataset a data.frame. The dataset with samples as rows, and taxonomy information in the columns. using the MIxS or DarwinCore taxonomy terms, the taxonomy information will be extracted
 #' @return a vector with the highest level taxonomic name found, with genus and species epithet separated by a space.
 #' @examples 
@@ -782,7 +782,6 @@ dataQC.taxaNames <- function(taxaNames){
 #' @family quality control functions
 #' @description complete a list of taxonomic names by looking-up missing information on an accepted taxonomic registery
 #' @param taxaNames a character vector. A list with the taxonomic names to look for
-#' @param taxBackbone a character string. The taxonomic backbone to query. At present only "worms" is allowed.
 #' @usage dataQC.completeTaxaNamesFromRegistery(taxaNames)
 #' @details using the API-client connection to the World Registry of Marine Species (WORMS), additional taxonomic information can be added to an existing list of taxa. This function is a wrapper of the wm_name2id and wm_record functions in the worrms package
 #' @return a dataframe with the following fields:scientificName, scientificNameID, aphID, kingdom, phylum, class, order, family, genus, specificEpithet, scientificNameAuthorship, namePublishedInYear

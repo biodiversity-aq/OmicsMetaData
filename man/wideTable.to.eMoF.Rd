@@ -4,7 +4,7 @@
 \alias{wideTable.to.eMoF}
 \title{convert dataframe to a DarwinCore extended Measurement or Fact (eMoF) file}
 \usage{
-wideTable.to.eMoF(dataset)
+wideTable.to.eMoF(metadata.object, variables)
 }
 \arguments{
 \item{metadata.object}{a MIxS.metadata object}

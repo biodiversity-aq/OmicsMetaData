@@ -6,6 +6,9 @@
 \usage{
 \S4method{show}{MIxS.metadata}(object)
 }
+\arguments{
+\item{object}{a MIxS.metadata object}
+}
 \description{
 the show method for MIxS.metadata
 }

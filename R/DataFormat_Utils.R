@@ -14,6 +14,7 @@
 #' @usage eMoF.to.wideTable(dataset)
 #' @param dataset a dataframe of the eMoF file
 #' @details Long formated data if great for data arciving, but is difficult to use in day-to-day statistical analyses. This function extracts the data from an eMoF file and puts it in a wide sample x variable table
+#' @importFrom methods new
 #' @return a list of length 3: "$data" the data in a wide formt, "$units" the units, and "$method" the methods
 #' @examples 
 #' \donttest{
@@ -35,10 +36,10 @@ eMoF.to.wideTable <- function(dataset){
 
   if("eventID" %in% colnames(dataset)){
     dataLong<-dataset[,colnames(dataset) %in% c("eventID", "measurementType", "measurementValue")]
-    dataWide <- tidyr::spread(dataLong, eventID, measurementValue)
+    dataWide <- tidyr::spread(data=dataLong, "eventID", "measurementValue")
   }else if("occurrenceID" %in% colnames(dataLong)){
     dataLong<-dataset[,colnames(dataset) %in% c("occurrenceID", "measurementType", "measurementValue")]
-    dataWide <- tidyr::spread(dataLong, occurrenceID, measurementValue)
+    dataWide <- tidyr::spread(dataLong, "occurrenceID", "measurementValue")
   }else{
     stop("Invalid DwC eMoF file.")
   }
@@ -80,9 +81,10 @@ eMoF.to.wideTable <- function(dataset){
 #' @family formating functions
 #' @author Maxime Sweetlove CC-0 2020
 #' @description converts a dataframe to a DarwinCore extended Measurement Or Fact (eMOF) file
-#' @usage wideTable.to.eMoF(dataset)
+#' @usage wideTable.to.eMoF(metadata.object, variables)
 #' @param metadata.object a MIxS.metadata object
 #' @param variables a character vector. a list of the variables that need to be included in the eMoF
+#' @importFrom tidyr gather
 #' @details extended Measurement or Fact (eMoF) as a DarwinCore extension to standardize environmental or other additional data in a computer readable fashon. This standard structures data into a long format (a column with sample name, variable name and value). This function converts more commonly used wide format tables (that is, structured like a matrix, e.g. samples as rows and variables as columns) into the correct long format that complies to eMoF
 #' @return a data.frame formatted as an extended Measurement or Fact table
 #' @examples 
@@ -123,7 +125,8 @@ wideTable.to.eMoF <- function(metadata.object, variables=NA){
     stop("no valid samplenames found (eventID or occurrenceID)")
   }
   
-  data_long <- suppressWarnings(gather(dataset, measurementType, measurementValue, variables, factor_key=TRUE))
+  data_long <- suppressWarnings(gather(dataset, "measurementType", "measurementValue", 
+                                       variables, factor_key=TRUE))
   
   # measurementUnit
   if(length(metadata.object@units)>0){
@@ -282,10 +285,11 @@ combine.data.frame <- function(df1, df2, fill=NA,
 #' @param d2 a MIxS.metadata object
 #' @param fill character or NA. A value to put into the cells that have no data.
 #' @param variables.as.cols boolean. If TRUE, the input data is assumed to have rows as samples and variables/parameters as columns. If FALSE the data is formatted the other was around. default TRUE
+#' @importFrom methods new
 #' @details Variables with matching names are merged, if variables.as.cols=TRUE this means columns are merged, if FALSE rows are merged. Any missing data as a result of the non-matchng variable-name will be filled by the fill argument.
 #' @return a MIxS.metadata object
 #' @examples 
-#' \donttest{
+#' \dontrun{
 #' combine.data(d1=test_MIxS, d2=test_MIxS2, fill=NA, variables.as.cols=TRUE)
 #' }
 #' @export

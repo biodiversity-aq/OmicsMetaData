@@ -25,7 +25,7 @@ takes a dataframe with contextual data and metadata from a sequencing dataset an
 Any sequencing project typically has important additional data associated with it. This goes from laboratory protocols, sequencing platform settings or environmental measurements. Thisfunction was develloped to sort through these metadata (provided in a dataframe), and perform a basic quality controll, correcting the most common mistakes, like incorrectly formatting the geographic coordinates, formatting dates, typos or variants of variable names, etc. To do this, the function makes use of a build-in dictionary of (MIxS) terms and their synonyms (that is: spelling errors, writing differences, true synonyms,...). Note that it is possible some terms are not recognized. In that case contact the author of the package to update the dictionary in the upcomming version.
 }
 \examples{
-\donttest{
+\dontrun{
 test_metadata <- data.frame(sample_name=c("sample1", "sample2"),
                             collection_date=c("2021-09-27", "2021-09-28"),
                             lat_lon=c("54.7 88.9", "33 -48.4"),

@@ -8,6 +8,14 @@
 #==============================================================
 
 #--------------------------------------------------------------
+# declare global variables
+#--------------------------------------------------------------
+utils::globalVariables(c("TaxIDLib", "TermsLib", "TermsSyn", 
+                         "ENA_checklistAccession", "ENA_geoloc", 
+                         "ENA_instrument", "ENA_select", "ENA_strat"))
+
+
+#--------------------------------------------------------------
 # classes for metadata formatted as MIxS
 #--------------------------------------------------------------
 # The Minimum Information on any Sequence (MIxS) standard was designed by the Genomics Standards Consortium to archive metadata and environmental data that is associated with sequence data.
@@ -33,6 +41,8 @@ setClass("MIxS.metadata", slots=list(data="data.frame",
 #' the show method for MIxS.metadata
 #' @author Maxime Sweetlove CC-0 2020
 #' @method show MIxS.metadata
+#' @param object a MIxS.metadata object
+#' @importFrom methods show
 #' @export
 setMethod("show",
           "MIxS.metadata",
@@ -55,6 +65,11 @@ setMethod("show",
 #' @usage check.valid.MIxS.metadata(d)
 #' @param d a MIxS.metadata object
 #' @return a boolean, TRUE when valid, FALSE when not
+#' @examples
+#' \donttest{
+#' test_metadata <- data.frame()
+#' check.valid.MIxS.metadata(test_metadata)
+#' }
 #' @export
 check.valid.MIxS.metadata <- function(d){
   valid <- TRUE
@@ -130,6 +145,8 @@ setClass("DwC.occurrence", slots=list(core="data.frame", #a dataframe with the D
 #' the show method for DwC.event
 #' @author Maxime Sweetlove ccBY 4.0 2020
 #' @method show DwC.event
+#' @param object a DwC.event object
+#' @importFrom methods show
 #' @export
 setMethod("show",
           "DwC.event",
@@ -144,9 +161,9 @@ setMethod("show",
             }else{ E <- ""}
             message(paste("a  DwC.event class  object with a core of ", as.character(N),
                       " events", as.character(E), ".\n", sep=""))
-            if(!is.na(EML.url)){
-              if(length(EML.url)>5){
-                message(paste("\tThe metadata can be found at", EML.url,
+            if(!is.na(object@EML.url)){
+              if(length(object@EML.url)>5){
+                message(paste("\tThe metadata can be found at", object@EML.url,
                               "\n", sep=""))
               }
             }
@@ -161,6 +178,8 @@ setMethod("show",
 #' the show method for DwC.occurrence
 #' @author Maxime Sweetlove CC-0 2020
 #' @method show DwC.occurrence
+#' @param object a DwC.occurrence object
+#' @importFrom methods show
 #' @export
 setMethod("show",
           "DwC.occurrence",
@@ -171,9 +190,9 @@ setMethod("show",
             }else{ E <- ""}
             message(paste("a  DwC.occurrence  class object with a core of ", as.character(N),
                       " occurrences", as.character(E), ".\n", sep=""))
-            if(!is.na(EML.url)){
-              if(length(EML.url)>5){
-                message(paste("\tThe metadata can be found at", EML.url,
+            if(!is.na(object@EML.url)){
+              if(length(object@EML.url)>5){
+                message(paste("\tThe metadata can be found at", object@EML.url,
                               "\n", sep=""))
               }
             }
@@ -192,6 +211,11 @@ setMethod("show",
 #' @usage check.valid.metadata.DwC(d)
 #' @param d a DwC.event or DwC.occurrence object
 #' @return a boolean, TRUE when valid, FALSE when not
+#' @examples
+#' \donttest{
+#' test_metadata <- data.frame()
+#' check.valid.metadata.DwC(test_metadata)
+#' }
 #' @export
 check.valid.metadata.DwC <- function(d){
   valid <- TRUE
@@ -226,6 +250,20 @@ check.valid.metadata.DwC <- function(d){
 #' @usage write.MIxS(x, file="")
 #' @param x the MIxS.metadata class object to be written.
 #' @param file either a character string naming a file or a connection open for writing. "" indicates output to the console.
+#' @importFrom utils write.csv
+#' @examples
+#' \dontrun{
+#' sampleNames <- c("sample_1", "sample_2")
+#' test_MIxS <- new("MIxS.metadata",
+#'                  data = data.frame(var1=c(1,2), var2=c(3,4), eventID=sampleNames, 
+#'                                    row.names=sampleNames),
+#'                  section = c(var1="section1", var2="section1", eventID="miscellaneous"),
+#'                  units      = c(var1="unit1", var2="unit2", eventID="alphanumeric"),
+#'                  env_package = "water",
+#'                  type = "versatile",
+#'                  QC = TRUE)
+#' write.MIxS(x=test_MIxS, file="test.csv")
+#' }
 #' @export
 write.MIxS <- function(x, file = ""){
   if(!check.valid.MIxS.metadata(x)){

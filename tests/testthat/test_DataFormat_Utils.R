@@ -9,6 +9,9 @@
 library(OmicsMetaData)
 library(testthat)
 
+#outputs are the correct format (including dimensions and components)
+#sample input produces the correct sample output
+
 # generate test data
 sampleNames <- c("sample_1", "sample_2")
 

@@ -16,7 +16,7 @@
 #' @author Maxime Sweetlove CC-0 2020
 #' @family standardization functions
 #' @description Takes one or more dataframes or a DarwinCore Archive and performs a basic Quality Controll. (see details)
-#' @usage DataQC.DwC(Event=NA, Occurrence=NA, eMoF=NA, EML.url=NA, out.type="event", ask.input=TRUE))
+#' @usage dataQC.DwC(Event=NA, Occurrence=NA, eMoF=NA, EML.url=NA, out.type="event", ask.input=TRUE)
 #' @param Event data.frame. A dataframe with the event data, structured with DarwinCore terms
 #' @param Occurrence data.frame. A dataframe with the occurrence data, structured with DarwinCore terms
 #' @param eMoF data.frame. A dataframe with the extended MeasurementOrFact (eMoF) data, structured with DarwinCore terms
@@ -26,7 +26,7 @@
 #' @details DarwinCore is the biodiversity data standard develloped by TDWG, and is used by the Global Biodiversity Information Facility (GBIF). This function performs a basic and user-supervised quality control. This includes cheking all variables terms adhere to the DarwinCore vocabulary, listing other variables in an eMoF file or in the dynamicProperties field, and checking for obvious errors in the content of the data (typos, different NA values,...). All dataframes are combined into a DwC.event or DwC.occurrence object
 #' @return a DwC.event (event core with occurrence and/or eMoF extensions) or DwC.occurence (occurrence core with eMoF extension) object
 #' @examples 
-#' \donttest{
+#' \dontrun{
 #' dataQC.DwC(Event=event_data.frame, out.type="event")
 #' dataQC.DwC(Occurrence=occurrence_data.frame, out.type="occurrence")
 #' dataQC.DwC(Event=event_data.frame, eMoF=emof_data.frame, out.type="event")

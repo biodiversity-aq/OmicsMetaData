@@ -25,7 +25,7 @@
 #' @seealso get.BioProject.metadata.INSDC, get.sample.attributes.INSDC
 #' @return a MIxS.metadata object that is compatible with the MIxS standard
 #' @examples 
-#' \donttest{
+#' \dontrun{
 #' test_metadata <- data.frame(sample_name=c("sample1", "sample2"),
 #'                             collection_date=c("2021-09-27", "2021-09-28"),
 #'                             lat_lon=c("54.7 88.9", "33 -48.4"),

@@ -4,21 +4,7 @@
 \alias{prep.metadata.ENA}
 \title{Formatting metadata and environmental data to upload to EMBL-ENA}
 \usage{
-prep.metadata.ENA(
-  metadata,
-  dest.dir = NULL,
-  file.name = NULL,
-  sample_unique_name_prefix = NA,
-  checklist_accession = NA,
-  tax_name = NA,
-  ask.input = TRUE,
-  insert.size = NA,
-  library.layout = NA,
-  library.strategy = NA,
-  library.selection = NA,
-  seq.file.extension = ".fastq.gz",
-  pairedEnd.extension = c("_1", "_2")
-)
+prep.metadata.ENA(metadata, dest.dir, file.name, sample_unique_name_prefix=NA, checklist_accession=NA, tax_name=NA, ask.input=TRUE, insert.size=NA, library.layout=NA, library.strategy=NA, library.selection=NA, seq.file.extension=".fastq.gz", pairedEnd.extension=c("_1", "_2"))
 }
 \arguments{
 \item{metadata}{a MIxS.metadata class object. The object to be written as text file suited for submission to ENA.}
@@ -37,15 +23,15 @@ prep.metadata.ENA(
 
 \item{insert.size}{a character string. The size of the reads (in number of basepairs), if applicable to all samples.}
 
+\item{library.layout}{a character string. The layout of the library, either PAIRED or SINGLE, if applicable to all samples.}
+
+\item{library.strategy}{a character string. The library strategy (e.g. AMPLICON, WGS,...), if applicable to all samples.}
+
+\item{library.selection}{a character string. The method used to select for, enrich or or screen the material being sequenced (e.g. PCR)?, if applicable to all samples.}
+
 \item{seq.file.extension}{a character string. The extension for the sequence files. Default is .fastq.gz}
 
-\item{pairedEnd.extension}{a character vector of length 2. If the data is paired-end data, specify the forward (first element of te vector) and reverse (second) extension tags here. Default is c("_1", "_2")}
-
-\item{library_layout}{a character string. The layout of the library, either PAIRED or SINGLE, if applicable to all samples.}
-
-\item{library_strategy}{a character string. The library strategy (e.g. AMPLICON, WGS,...), if applicable to all samples.}
-
-\item{library_selection}{a character string. The method used to select for, enrich or or screen the material being sequenced (e.g. PCR)?, if applicable to all samples.}
+\item{pairedEnd.extension}{a character vector of length 2. If the data is paired-end data, specify the forward (first element of the vector) and reverse (second) extension tags here. Default is c("_1", "_2")}
 }
 \value{
 a *.tsv file with the sample metadata, and a \*_runInfo.tsv file with the technical data, written to the destination directory.
@@ -57,7 +43,7 @@ converts metadata into the right format (a tab separated text file) to submit da
 This function will reformat metadata for submission to ENA. Specifically made for ecological environmental studies (e.g. amplicon sequencing, shotgun metagenomics,...), with additional QCs build in for Antarctic and Southern Ocean data. The assumption is taken that the dataset has already been subjected a quality controll.
 }
 \examples{
-\donttest{
+\dontrun{
 sampleNames <- c("sample_1", "sample_2")
 test_MIxS <- new("MIxS.metadata",
                   data = data.frame(var1=c(1,2), var2=c(3,4), 

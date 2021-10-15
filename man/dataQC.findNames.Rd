@@ -23,7 +23,7 @@ find the sample names in a given (meta-)dataset where at least an attempt has be
 It is often not clear where the sample names are in a dataset. This function makes an educated guess, based on rownames or tags that are often used to indicate sample names. If ask.input, then the process happens user-supervised.
 }
 \examples{
-\donttest{
+\dontrun{
 test_metadata <- data.frame(sample_name=paste("sample", 1:5, sep="_"),
                            collection_date=c("2020-09-23", "2020", "16 Jan. 2020", "November 1998", "12/01/1999"),
                            latitude=c(23, 45, -56.44, "47.5", "-88° 4\' 5\""),

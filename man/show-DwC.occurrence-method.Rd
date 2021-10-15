@@ -6,6 +6,9 @@
 \usage{
 \S4method{show}{DwC.occurrence}(object)
 }
+\arguments{
+\item{object}{a DwC.occurrence object}
+}
 \description{
 the show method for DwC.occurrence
 }

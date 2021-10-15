@@ -4,7 +4,7 @@
 \alias{sync.metadata.sequenceFiles}
 \title{Check if all samples in a dataframe have sequence data}
 \usage{
-sync.metadata.sequenceFiles <- function(Names, file.dir=NULL, paired=TRUE, seq.file.extension=".fastq.gz", pairedEnd.extension=c("_1", "_2"))
+sync.metadata.sequenceFiles(Names, file.dir=NULL, paired=TRUE, seq.file.extension=".fastq.gz", pairedEnd.extension=c("_1", "_2"))
 }
 \arguments{
 \item{Names}{a vector or a MIxS.metadata class object. A character vector with the sample names (without a file extension) or the MIxS.metadata object of which the sample names (original_name) should be compared to the sequence file names}
@@ -27,7 +27,7 @@ checks if all records in the metadata file match with filenames in a given direc
 Nucleotide sequence datasets typically contain a large number of samples, too much to check manually. This function will check if all the names that are expected in the sequence data files are actually found. Reasons for mismatches may include typos, accedentally deleting files or records, errors in naming or copying files,...
 }
 \examples{
-\donttrun{
+\donttest{
 sync.metadata.sequenceFiles(Names="seq_sample1", file.dir="user/path/to/sequenceFilesFolder",
                             paired=TRUE, seq.file.extension=".fastq.gz",
                             pairedEnd.extension=c("_1", "_2"))

@@ -19,7 +19,7 @@ get the insert size (i.e. number of bases) of a fastq or fastq.gz file
 submitting sequence to a database of the Nucleotide Sequence Database Consortium typically requires to give the insert size of the sequences. This function gets the length of the first sequence in a file, assuming all sequences are of the same length.
 }
 \examples{
-\donttest{
+\dontrun{
 get.insertSize("/user/path/to/sequenceFileFolder")
 }
 }
