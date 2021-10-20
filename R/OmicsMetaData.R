@@ -162,10 +162,12 @@ term.definition <- function(term){
     potential_match <- c()
     def_out <- c()
     for(ls in TermsSyn){
-      if(grepl(term, ls)){
+      if(any(grepl(term, ls))){
         lst <- names(TermsSyn[ls[1]])
-        potential_match <- c(potential_match, lst)
-        def_out <- c(def_out, as.character(TermsLib[TermsLib$name==lst,]$definition))
+        if(!is.na(lst)){
+          potential_match <- c(potential_match, lst)
+          def_out <- c(def_out, as.character(TermsLib[TermsLib$name==lst,]$definition))
+        }
       }
     }
     

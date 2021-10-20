@@ -19,10 +19,36 @@ test_event <- data.frame(eventID=c("sample1", "sample2"),
 test_that("dataQC.DwC_general works for event data", {
   expect_s3_class(dataQC.DwC_general(dataset=test_event, DwC.type = "event", ask.input = FALSE,
                                      complete.data=TRUE), "data.frame")
+  expect_s3_class(dataQC.DwC_general(dataset=test_event, DwC.type = "event", ask.input = FALSE,
+                                     complete.data=FALSE), "data.frame")
+  expect_s3_class(dataQC.DwC_general(dataset=test_event, DwC.type = "event", ask.input = TRUE,
+                                     complete.data=FALSE), "data.frame")
+  expect_s3_class(dataQC.DwC_general(dataset=test_event, DwC.type = "occurrence", ask.input = FALSE,
+                                     complete.data=TRUE), "data.frame")
   expect_equal(dataQC.DwC_general(dataset=test_event, DwC.type = "event", ask.input = FALSE,
                                   complete.data=TRUE), test_event)
 })
 
+test_that("dataQC.DwC_general throws error", {
+  expect_error(dataQC.DwC_general(dataset=NULL, DwC.type = "event", ask.input = FALSE,
+                                  complete.data=FALSE))
+  expect_error(dataQC.DwC_general(dataset=NULL, DwC.type = "event", ask.input = TRUE,
+                                  complete.data=FALSE))
+  expect_error(dataQC.DwC_general(dataset=NULL, DwC.type = "event", ask.input = FALSE,
+                                  complete.data=TRUE))
+  expect_error(dataQC.DwC_general(dataset=NULL, DwC.type = "event", ask.input = TRUE,
+                                  complete.data=TRUE))
+  expect_error(dataQC.DwC_general(dataset=NULL, DwC.type = "occurrence", ask.input = FALSE,
+                                  complete.data=FALSE))
+  expect_error(dataQC.DwC_general(dataset=NA, DwC.type = "event", ask.input = TRUE,
+                                  complete.data=TRUE))
+  expect_error(dataQC.DwC_general(dataset=data.frame, DwC.type = "event", ask.input = TRUE,
+                                  complete.data=TRUE))
+  expect_error(dataQC.DwC_general(dataset=test_event, DwC.type = NA, ask.input = FALSE,
+                                  complete.data=TRUE))
+  expect_error(dataQC.DwC_general(dataset=test_event, DwC.type = "random", ask.input = FALSE,
+                                  complete.data=TRUE))
+})
 
 test_occur1 <- data.frame(occurrenceID=c("sp1", "sp2"),
                           eventDate=c("2021-09-27", NA),
@@ -32,6 +58,10 @@ test_occur1 <- data.frame(occurrenceID=c("sp1", "sp2"),
                           row.names=c("sp1", "sp2"))
 
 test_that("dataQC.DwC_general works for occurrence data", {
+  expect_s3_class(dataQC.DwC_general(dataset=test_occur1, DwC.type = "occurrence", ask.input = FALSE,
+                                     complete.data=TRUE), "data.frame")
+  expect_s3_class(dataQC.DwC_general(dataset=test_occur1, DwC.type = "occurrence", ask.input = FALSE,
+                                     complete.data=FALSE), "data.frame")
   expect_equal(dataQC.DwC_general(dataset=test_occur1, DwC.type = "occurrence", ask.input = FALSE,
                                   complete.data=TRUE), 
                data.frame(occurrenceID=c("sp1", "sp2"),
@@ -73,11 +103,48 @@ test_emof1 <- data.frame(eventID=c("sample1", "sample2"),
                          row.names=c("sample1", "sample2"))
 
 test_that("dataQC.DwC_general works for emof data", {
+  expect_s3_class(dataQC.DwC_general(dataset=test_emof1, DwC.type = "emof", ask.input = FALSE,
+                                  complete.data=FALSE), "data.frame")
+  expect_s3_class(dataQC.DwC_general(dataset=test_emof1, DwC.type = "emof", ask.input = FALSE,
+                                     complete.data=TRUE), "data.frame")
   expect_equal(dataQC.DwC_general(dataset=test_emof1, DwC.type = "emof", ask.input = FALSE,
                                   complete.data=FALSE), test_emof1)
+  expect_equal(dataQC.DwC_general(dataset=test_emof1, DwC.type = "EMOF", ask.input = FALSE,
+                                  complete.data=FALSE), test_emof1)
+  expect_equal(dataQC.DwC_general(dataset=test_emof1, DwC.type = "emof", ask.input = FALSE,
+                                     complete.data=NA), test_emof1)
+  expect_error(dataQC.DwC_general(dataset=data.frame(), DwC.type = "emof", ask.input = FALSE,
+                                  complete.data=NA))
 })
 
 
+test_emof2 <- data.frame(eventID=c("sample1", "sample2"),
+                         date=c("2021-09-27", "2021-09-06"),
+                         row.names=c("sample1", "sample2"))
+
+test_that("dataQC.DwC_general works for emof data", {
+  expect_error(dataQC.DwC_general(dataset=test_emof2, DwC.type = "emof", ask.input = FALSE,
+                                  complete.data=NA))
+  expect_error(dataQC.DwC_general(dataset=test_emof2, DwC.type = "event", ask.input = FALSE,
+                                  complete.data=NA))
+  expect_error(dataQC.DwC_general(dataset=test_emof2, DwC.type = "occurrence", ask.input = FALSE,
+                                  complete.data=NA))
+  expect_error(dataQC.DwC_general(dataset=test_emof2, DwC.type = "unkown", ask.input = FALSE,
+                                  complete.data=NA))
+})
+
+dataQC.DwC_general(dataset=test_emof2, DwC.type = "emof", ask.input = TRUE,
+                   complete.data=NA)
+
+
+dataQC.DwC_general(dataset=test_emof2, DwC.type = "EMOF", ask.input = FALSE,
+                   complete.data=FALSE)
+
+test_that("dataQC.DwC_general works for emof data", {
+  expect_equal(dataQC.DwC_general(dataset=test_emof2, DwC.type = "emof", ask.input = FALSE,
+                                  complete.data=FALSE), test_emof1)
+
+})
 
 test_that("dataQC.DwC works for event data", {
   expect_s4_class(dataQC.DwC(Event=test_event, ask.input = FALSE, out.type="event"), 
