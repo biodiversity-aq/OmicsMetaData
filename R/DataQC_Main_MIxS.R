@@ -194,14 +194,14 @@ dataQC.MIxS <- function(dataset = NA, ask.input=TRUE, add_to = NA, sample.names 
   if(!"env_package" %in% colnames(dataset)){
     if(ask.input){
       message("No env_package was specified.\nPlease specify what to do next:\n1) Make an educated guess based on the data\n2) Ask user for the package name\n3) stop executing\n(type 1, 2 or 3)\n")
-      doNext <- readline()
+      doNext <- readLines(con = getOption("mypkg.connection"), n=1)
       if(doNext==1){
         env_package <- dataQC.guess.env_package.from.data(dataset)
         warningmessages<-c(warningmessages, env_package$warningmessages)
         env_package <- env_package$values
       }else if(doNext==2){
         message("Please provide a single MIxS environmental package\nThe choices are: air, built_environment, host_associated, human_associated,human_gut,\nhuman_oral, human_skin, human_vaginal,microbial_mat_biofilm,\nmiscellaneous_natural_or_artificial_environment,\nplant_associated, soil, sediment, wastewater_sludge, water\n")
-        env_package <- readline()
+        env_package <- readLines(con = getOption("mypkg.connection"), n=1)
         if(!env_package %in% colnames(TermsLib)){
           stop("incorrect environmental package provided. Be sure to use underscores and lowercase letters")
         } else{
@@ -279,7 +279,7 @@ dataQC.MIxS <- function(dataset = NA, ask.input=TRUE, add_to = NA, sample.names 
                     "\n\t\tType \"y\" to add all /",
                     #"\n\t\tGive a comma-separated vector with the numbers to add /",
                     "\n\t\tType \"n\" to add none", sep=""))
-      ctu <- readline()
+      ctu <- readLines(con = getOption("mypkg.connection"), n=1)
       if(ctu %in% c("y", "Y", "yes", "YES", "Yes")){
         for(t in 1:nrow(unknown_termsLib)){
           newcolnum <- ncol(New_dataset)+1
@@ -306,7 +306,7 @@ dataQC.MIxS <- function(dataset = NA, ask.input=TRUE, add_to = NA, sample.names 
   }else{
     if(ask.input){
       message("No investigation_type was found...\n\tPlease provide an investigation_type. Common ones include mimarks-survey or metagenome. Type n to ignore.\n")
-      invtype <- readline()
+      invtype <- readLines(con = getOption("mypkg.connection"), n=1)
       if(! invtype %in% c("n", "N")){
         New_dataset$investigation_type <- rep(invtype, nrow(New_dataset))
       }
@@ -331,7 +331,7 @@ dataQC.MIxS <- function(dataset = NA, ask.input=TRUE, add_to = NA, sample.names 
   #if("eventID" %in% colnames(New_dataset)){
   #  if(length(unique(New_dataset$eventID))==nrow(New_dataset)){
   #    message("There are the same number of events as there are samples...\n\tkeep $eventID? (y/n)\n")
-  #    ctu <- readline()
+  #    ctu <- readLines(con = getOption("mypkg.connection"), n=1)
   #    if(ctu %in% c("n", "N", "no", "NO", "No")){
   #      New_dataset <- New_dataset[,!colnames(New_dataset) %in% "eventID"]
   #    }

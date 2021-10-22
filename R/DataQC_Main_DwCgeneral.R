@@ -20,8 +20,8 @@
 #' @param dataset data.frame. A dataframe with the data, structured with DarwinCore terms
 #' @param DwC.type character. The type of DarwinCore of the output, either event or occurrence. If event, the output will have an event core with possible occurrence and eMoF extensions. If occurrence, the output will have an occurrence core with possibly an eMoF extension. Default event, if the parameter Event is not NA, out.type will be fixed as event.
 #' @param ask.input logical. If TRUE, console input will be requested to the user when a problem occurs. Default TRUE
-#' @param complete.data logical. If TRUE, datathat has not been provided, but can be completed automatically will be added to the DarwinCore data.frame. For instance, footprintWKT can be generated from the coordinates, or higher taxonomic level names (like kingdom, phylum,...) can looked up with the species name. Defaut TRUE.
-#' @details DarwinCore is the biodiversity data standard develloped by TDWG, and is used by the Global Biodiversity Information Facility (GBIF). This function performs a basic and user-supervised quality control. This includes cheking all variables terms adhere to the DarwinCore vocabulary, listing other variables in an eMoF file or in the dynamicProperties field, and checking for obvious errors in the content of the data (typos, different NA values,...)
+#' @param complete.data logical. If TRUE, data that has not been provided, but can be completed automatically will be added to the DarwinCore data.frame. For instance, footprintWKT can be generated from the coordinates, or higher taxonomic level names (like kingdom, phylum,...) can looked up with the species name. Defaut TRUE.
+#' @details DarwinCore is the biodiversity data standard developed by TDWG, and is used by the Global Biodiversity Information Facility (GBIF). This function performs a basic and user-supervised quality control. This includes cheking all variables terms adhere to the DarwinCore vocabulary, listing other variables in an eMoF file or in the dynamicProperties field, and checking for obvious errors in the content of the data (typos, different NA values,...)
 #' @return a dataframe that is formatted as either: an event or occurrence
 #' @examples 
 #' \dontrun{
@@ -51,6 +51,18 @@ dataQC.DwC_general<-function(dataset = NA, DwC.type = "event", ask.input = TRUE,
     DwC.type<-"emof"
     DwcType <- "eMoF"
     DwCLib<-"DwC_eMoF"
+    
+    #emof needs to be formatted correctly, too complex to do it automatically with unkown input
+    cond1 <- "eventID" %in% colnames(dataset)
+    cond2 <- "measurementValueID" %in% colnames(dataset)
+    cond3 <- "measurementUnitID" %in% colnames(dataset)
+    cond4 <- "measurementTypeID" %in% colnames(dataset)
+    
+    if(!all(c(cond1, cond2, cond3, cond4))){
+      stop("the eMoF file is not correctly formatted. expected eventID, measurementValueID, measurementUnitID and measurementTypeID")
+    } else{
+      ask.input <- FALSE
+    }
   }else{
     stop("invalid input for DwC.type")
   }
@@ -61,7 +73,7 @@ dataQC.DwC_general<-function(dataset = NA, DwC.type = "event", ask.input = TRUE,
   # remove rows with all NA values
   dataset <- dataset[rowSums(is.na(dataset))<ncol(dataset),]
   
-  # check columnnames
+  # check colunmnames
   termsQC <- dataQC.TermsCheck(observed=colnames(dataset),
                                exp.standard = "DwC", exp.section = DwC.type,
                                fuzzy.match = TRUE, out.type = "full")
@@ -74,7 +86,7 @@ dataQC.DwC_general<-function(dataset = NA, DwC.type = "event", ask.input = TRUE,
       tm_match <- unname((termsQC$terms_wrongWithSolution)[tm])
       message(paste("The column name \"", tm_obs,"\" is not a DarwinCore ", DwC.type, " term...\n", sep=""))
       message(paste("\tdid you mean \"", tm_match,"\"? (y/n)\n", sep=""))
-      doNext <- tolower(readline())
+      doNext <- tolower(readLines(con = getOption("mypkg.connection"), n=1))
       if(doNext %in% c("y", "yes")){
         colnames(dataset)[colnames(dataset)==tm_obs] <- tm_match
       }else if(!doNext %in% c("n", "no")){
@@ -83,18 +95,21 @@ dataQC.DwC_general<-function(dataset = NA, DwC.type = "event", ask.input = TRUE,
     }
   }
   
+  
   # run over non-matched terms
   if(length(termsQC$terms_notFound)>0 & ask.input){
     for(tm in termsQC$terms_notFound){
-      message(paste("The column name \"", tm,"\" is not a DarwinCore ", DwC.type, " term...\nPlease choose what to do:\n", sep=""))
-      
-      if(DwcType=="Event"){
-        message(paste("\t1) drop the term\n\t2) add to dynamicProperties\n\t3) add to eventRemarks\n\t4) add to fieldNotes\n", sep=""))
-      }else if(DwcType=="Occurrence"){
-        message(paste("\t1) drop the term\n\t2) add to dynamicProperties\n\t3) add to eventRemarks\n\t4) add to fieldNotes",
-                      "\n\t5) add to identificationRemarks\n\t6) add to taxonRemarks\n\t7) add to measurementRemarks\n\t8) add to occurrenceRemarks\n", sep=""))
+      if(DwcType %in% c("Event", "Occurrence")){
+        message(paste("The column name \"", tm,"\" is not a DarwinCore ", DwC.type, " term...\nPlease choose what to do:\n", sep=""))
+        if(DwcType=="Event"){
+          message(paste("\t1) drop the term\n\t2) add to dynamicProperties\n\t3) add to eventRemarks\n\t4) add to fieldNotes\n", sep=""))
+        }else if(DwcType=="Occurrence"){
+          message(paste("\t1) drop the term\n\t2) add to dynamicProperties\n\t3) add to eventRemarks\n\t4) add to fieldNotes",
+                        "\n\t5) add to identificationRemarks\n\t6) add to taxonRemarks\n\t7) add to measurementRemarks\n\t8) add to occurrenceRemarks\n", sep=""))
+        }
+        doNext <- tolower(readLines(con = getOption("mypkg.connection"), n=1))
       }
-      doNext <- tolower(readline())
+      
       if(doNext == 1){
         # drop the term
         dataset <- dataset[,!colnames(dataset) %in% tm]
@@ -170,7 +185,7 @@ dataQC.DwC_general<-function(dataset = NA, DwC.type = "event", ask.input = TRUE,
     ## user input for basisOfRecord
     if("basisOfRecord" %in% terms_short & ask.input){
       message("No basisOfRecord found. Please specify if the data is:\n\t1)HumanObservation\n\t2)MachineObservation\n\t3)LivingSpecimen\n\t4)PreservedSpecimen\n\t5)FossilSpecimen")
-      doNext <- tolower(readline())
+      doNext <- tolower(readLines(con = getOption("mypkg.connection"), n=1))
       if(doNext == 1){
         dataset$basisOfRecord <- rep("HumanObservation", nrow(dataset))
       }else if(doNext == 2){
@@ -188,26 +203,26 @@ dataQC.DwC_general<-function(dataset = NA, DwC.type = "event", ask.input = TRUE,
     ## user input for eventID
     if("eventID" %in% terms_short & ask.input){
       message("No eventID found.\n\tPlease type an eventID prefix, which will be used to generate a unique ID per event")
-      doNext <- readline()
+      doNext <- readLines(con = getOption("mypkg.connection"), n=1)
       if(doNext == ""){
         prefix<-"event_"
       }else{
         prefix<-paste(doNext, "_", sep="")
       }
-      dataset$eventID <- paste("prefix",
+      dataset$eventID <- paste(prefix,
                                 stringr::str_pad(1:nrow(dataset), nchar(nrow(dataset)), pad = "0"),
                                 sep="")
     }
     ## user input for occurrenceID
     if("occurrenceID" %in% terms_short & ask.input){
       message("No occurrenceID found.\n\tPlease type an occurrenceID prefix, which will be used to generate a unique ID per event")
-      doNext <- readline()
+      doNext <- readLines(con = getOption("mypkg.connection"), n=1)
       if(doNext == ""){
         prefix<-"occ_"
       }else{
         prefix<-paste(doNext, "_", sep="")
       }
-      dataset$occurrenceID <- paste("prefix",
+      dataset$occurrenceID <- paste(prefix,
                                      stringr::str_pad(1:nrow(dataset), nchar(nrow(dataset)), pad = "0"),
                                      sep="")
     }
@@ -234,7 +249,7 @@ dataQC.DwC_general<-function(dataset = NA, DwC.type = "event", ask.input = TRUE,
     if("year" %in% colnames(dataset) && !grepl("/", dataset$year)){
       dataset$eventDate <- dataset$year
       if("month" %in% colnames(dataset)){
-        for(i in nrow(dataset)){
+        for(i in 1:nrow(dataset)){
           if(dataset[i,]$eventDate!="" &
              !is.na(dataset[i,]$eventDate)){
             if(dataset[i,]$month!="" &
@@ -246,7 +261,7 @@ dataQC.DwC_general<-function(dataset = NA, DwC.type = "event", ask.input = TRUE,
           }
         }
         if("day" %in% colnames(dataset)){
-          for(i in nrow(dataset)){
+          for(i in 1:nrow(dataset)){
             if(dataset[i,]$eventDate!="" & !is.na(dataset[i,]$eventDate)){
               if(dataset[i,]$day!="" &
                  !is.na(dataset[i,]$day)){
@@ -261,11 +276,12 @@ dataQC.DwC_general<-function(dataset = NA, DwC.type = "event", ask.input = TRUE,
   
   if("eventDate" %in% colnames(dataset)){
     QCDate <- dataQC.dateCheck(dataset, "eventDate")
+    warningmessages<-c(QCDate$warningmessages, warningmessages)
+    if(length(QCDate$values)==nrow(dataset)){
+      dataset$eventDate <- QCDate$values
+    }
   }
-  warningmessages<-c(QCDate$warningmessages, warningmessages)
-  if(length(QCDate$values)==nrow(dataset)){
-    dataset$eventDate <- QCDate$values
-  }
+
   
   #check taxa and look for scientificNameID
   if(DwC.type == "occurrence" & complete.data){

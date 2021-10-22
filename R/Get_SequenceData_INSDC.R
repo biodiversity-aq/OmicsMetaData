@@ -208,7 +208,7 @@ download.sequences.INSDC <- function(BioPrj = c(), destination.path = NA, apiKey
       return(TRUE)
     })
 
-    if(! is.null(faultyBioPrj) && faultyBioPrj){
+    if(!is.null(faultyBioPrj) && faultyBioPrj){
       downloads_failed <- downloads_failed+1
       message(paste("\t No data found for ", BP,". Could not download the data.\n", sep=""))
     } else{
@@ -237,7 +237,12 @@ download.sequences.INSDC <- function(BioPrj = c(), destination.path = NA, apiKey
       RawMetadata <- RawMetadata[order(row.names(RawMetadata)),]
       rownames(env_data) <- env_data$attr_name
       env_data <- env_data[order(row.names(env_data)),]
-      MetaData <- cbind(RawMetadata, env_data)
+      if(nrow(env_data)>0){
+        MetaData <- cbind(RawMetadata, env_data)
+      }else{
+        MetaData <- RawMetadata
+      }
+
 
       # uses old code, disfunctional now
       #if(nrow(metadata_all)>0){

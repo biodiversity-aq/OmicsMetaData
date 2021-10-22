@@ -128,7 +128,7 @@ renameSequenceFiles <- function(name_df, colNameOld="OldName", colNameNew="NewNa
                                  ask.input=TRUE, pairedEnd.extension=c("_1", "_2")){
   if(ask.input){
     message("Warnings:\n\t- This function will rename files, this is irreversible.\n\t- This function assumes the provided old names correspond with the files in the given directory.\n\t\tThis can be checked with checked sync.metadata.sequenceFiles()\nContinue? (y/n)")
-    ctu <- readline()
+    ctu <- readLines(con = getOption("mypkg.connection"), n=1)
     if(tolower(ctu) %in% c("n", "no")){
       stop("you chose to stop the function")
     }
@@ -415,7 +415,7 @@ prep.metadata.ENA <- function(metadata, dest.dir=NULL, file.name=NULL,
   if(c(NULL,NA) %in% sample_unique_name_prefix | length(sample_unique_name_prefix)>1){
     if(ask.input){
       message("Please provide a unique name prefix (sample_unique_name_prefix argument)\n")
-      sample_unique_name_prefix <- readline()
+      sample_unique_name_prefix <- readLines(con = getOption("mypkg.connection"), n=1)
     }else{
       sample_unique_name_prefix <- temp_unique_name_prefix
     }
@@ -463,7 +463,7 @@ prep.metadata.ENA <- function(metadata, dest.dir=NULL, file.name=NULL,
     }else{
       if(ask.input){
         message("No Target taxon found:\n\tPlease type a taxon name (e.g. Bacteria, Cyanobacteria, Synechococcus,...). Or type n to ignore.\n")
-        tax_name <- readline()
+        tax_name <- readLines(con = getOption("mypkg.connection"), n=1)
         if(!tax_name %in% c("n", "N")){
           tax_name <- rep(tax_name, nrow(metadata))
         } else{
@@ -541,7 +541,7 @@ prep.metadata.ENA <- function(metadata, dest.dir=NULL, file.name=NULL,
   }else{
     if(ask.input){
       message("No sample description was found:\n\tPlease type a sample description. Or type n to ignore.\n")
-      descr <- readline()
+      descr <- readLines(con = getOption("mypkg.connection"), n=1)
       if(!descr %in% c("n", "N")){
         ena_metadata$sample_description<-rep(descr, nrow(metadata))
       }else{
@@ -594,7 +594,7 @@ prep.metadata.ENA <- function(metadata, dest.dir=NULL, file.name=NULL,
             if(ask.input){
               while(bad_input){
                 message(paste("Illegal geographic location name found for \"",geoloc_data[l,1],"\".\n\tPlease type the correct name.\n\tType n to ignore.\n\tType h to see the allowed terms first.", sep=""))
-                loc_input <- readline()
+                loc_input <- readLines(con = getOption("mypkg.connection"), n=1)
                 if(!loc_input %in% c("n", "N", "h", "H") & loc_input %in% ENA_geoloc){
                   i_loc<- loc_input
                   bad_input <- FALSE
@@ -653,18 +653,21 @@ prep.metadata.ENA <- function(metadata, dest.dir=NULL, file.name=NULL,
   redundant_cols <- which(colnames(metadata) %in% c("sample_description", "lat_lon", "decimalLatitude",
                                                     "decimalLongitude", "geo_loc_name",
                                                     "original_name", "subspecf_gen_lin", "scientific_name"))
-  metadata_reduced <- metadata[,-redundant_cols]
-  metaunits <- metaunits[-redundant_cols]
-  for(cl in 1:ncol(metadata_reduced)){
-    clName <- colnames(metadata_reduced[cl])
-    ena_name <- get.ENAName(clName)
-    if(length(ena_name) == 0 || ena_name==""){
-      ena_name <- clName
+  if(length(redundant_cols)>0){
+    metadata_reduced <- metadata[,-redundant_cols]
+    metaunits <- metaunits[-redundant_cols]
+    for(cl in 1:ncol(metadata_reduced)){
+      clName <- colnames(metadata_reduced[cl])
+      ena_name <- get.ENAName(clName)
+      if(length(ena_name) == 0 || ena_name==""){
+        ena_name <- clName
+      }
+      ena_metadata[,clName] <- c(as.character(metadata_reduced[,colnames(metadata_reduced) %in% clName]))
+      ena_variable <- c(ena_variable, ena_name)
+      ena_units <- c(ena_units, gsub("alphanumeric", "", metaunits[cl]))
     }
-    ena_metadata[,clName] <- c(as.character(metadata_reduced[,colnames(metadata_reduced) %in% clName]))
-    ena_variable <- c(ena_variable, ena_name)
-    ena_units <- c(ena_units, gsub("alphanumeric", "", metaunits[cl]))
   }
+
 
   # 6. convert missing data for required fields to ENA accepted term "not collected"
   #ENArequired_terms <- c("lat_lon", "decimalLatitude", "decimalLongitude", "geo_loc_name",
@@ -708,7 +711,7 @@ prep.metadata.ENA <- function(metadata, dest.dir=NULL, file.name=NULL,
     bad_input <- TRUE
     while(bad_input){
       message("No valid sequencing instrument model found:\n\tPlease type the correct instrument model.\n\tType n to ignore.\n\tType h to see the allowed instrument models first.\n")
-      descr <- readline()
+      descr <- readLines(con = getOption("mypkg.connection"), n=1)
       if(!descr %in% c("n", "N", "h", "H") & descr %in% ENA_instrument){
         ena_runInfo$instrument_model <- rep(descr, nrow(ena_runInfo))
         bad_input <- FALSE
@@ -734,7 +737,7 @@ prep.metadata.ENA <- function(metadata, dest.dir=NULL, file.name=NULL,
     bad_input<-TRUE
     while(bad_input){
       message("Could the data be cathegorized as:\n\ta) metagenomic\n\tb) metatranscriptomic\n\tc) genomic\n\td)viral RNA\n\te)other\n\tType one of the letters (a-e) or n to ignore.\n")
-      descr <- readline()
+      descr <- readLines(con = getOption("mypkg.connection"), n=1)
       if(tolower(descr) %in% c("a", "b", "c", "d", "e")){
         if(tolower(descr)=="a"){
           descr <- "METAGENOMIC"
@@ -774,7 +777,7 @@ prep.metadata.ENA <- function(metadata, dest.dir=NULL, file.name=NULL,
     bad_input <- TRUE
     while(bad_input){
       message("What method was used to select for, enrich or or screen the material being sequenced (e.g. PCR)?\n\tType the appropriate method.\n\tType n to ignore.\n\tType h to see all the allowed methods.\n")
-      descr <- readline()
+      descr <- readLines(con = getOption("mypkg.connection"), n=1)
       if(!descr %in% c("n", "N", "h", "H") & descr %in% ENA_select){
         ena_runInfo$library_selection <- rep(descr, nrow(ena_runInfo))
         bad_input <- FALSE
@@ -800,7 +803,7 @@ prep.metadata.ENA <- function(metadata, dest.dir=NULL, file.name=NULL,
     bad_input <- TRUE
     while(bad_input){
       message("No valid library strategy found:\n\tPlease type the correct strategy (e.g. AMPLICON, WGS,...).\n\tType n to ignore.\n\tType h to see the allowed strategies.\n")
-      descr <- readline()
+      descr <- readLines(con = getOption("mypkg.connection"), n=1)
       if(!descr %in% c("n", "N", "h", "H") & descr %in% ENA_strat){
         ena_runInfo$library_strategy <- rep(descr, nrow(ena_runInfo))
         bad_input <- FALSE
@@ -822,7 +825,7 @@ prep.metadata.ENA <- function(metadata, dest.dir=NULL, file.name=NULL,
     bad_input<-TRUE
     while(bad_input){
       message("What was the library layout?.\n\ta) paired-end\n\tb) single-end\n\tType the appropriate letter (a-b).\n")
-      descr <- readline()
+      descr <- readLines(con = getOption("mypkg.connection"), n=1)
       if(descr %in% c("a", "A", "b", "B")){
         descr <- gsub("a", "PAIRED", tolower(descr))
         descr <- gsub("b", "SINGLE", tolower(descr))
@@ -852,7 +855,7 @@ prep.metadata.ENA <- function(metadata, dest.dir=NULL, file.name=NULL,
     ena_runInfo$insert_size <- metadata$insert_size
   }else if(ask.input){
     message("What was the insert size of the reads?.\n\tType the appropriate number, or type n to ignore.\n")
-    descr <- readline()
+    descr <- readLines(con = getOption("mypkg.connection"), n=1)
     if(grepl("[0-9]",descr)){
       ena_runInfo$insert_size <- rep(descr, nrow(ena_runInfo))
     }

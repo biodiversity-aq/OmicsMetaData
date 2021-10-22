@@ -13,7 +13,7 @@ dataQC.DwC_general(dataset = NA, DwC.type = "event", ask.input = TRUE, complete.
 
 \item{ask.input}{logical. If TRUE, console input will be requested to the user when a problem occurs. Default TRUE}
 
-\item{complete.data}{logical. If TRUE, datathat has not been provided, but can be completed automatically will be added to the DarwinCore data.frame. For instance, footprintWKT can be generated from the coordinates, or higher taxonomic level names (like kingdom, phylum,...) can looked up with the species name. Defaut TRUE.}
+\item{complete.data}{logical. If TRUE, data that has not been provided, but can be completed automatically will be added to the DarwinCore data.frame. For instance, footprintWKT can be generated from the coordinates, or higher taxonomic level names (like kingdom, phylum,...) can looked up with the species name. Defaut TRUE.}
 }
 \value{
 a dataframe that is formatted as either: an event or occurrence
@@ -22,7 +22,7 @@ a dataframe that is formatted as either: an event or occurrence
 performs a general QC on a darwinCore file. Desired output is either and event (core) file, occurrence (core or extension) or extended Measurement or Fact (eMoF; extension) file. Not an Ecological dataset Language (EML) file.
 }
 \details{
-DarwinCore is the biodiversity data standard develloped by TDWG, and is used by the Global Biodiversity Information Facility (GBIF). This function performs a basic and user-supervised quality control. This includes cheking all variables terms adhere to the DarwinCore vocabulary, listing other variables in an eMoF file or in the dynamicProperties field, and checking for obvious errors in the content of the data (typos, different NA values,...)
+DarwinCore is the biodiversity data standard developed by TDWG, and is used by the Global Biodiversity Information Facility (GBIF). This function performs a basic and user-supervised quality control. This includes cheking all variables terms adhere to the DarwinCore vocabulary, listing other variables in an eMoF file or in the dynamicProperties field, and checking for obvious errors in the content of the data (typos, different NA values,...)
 }
 \examples{
 \dontrun{

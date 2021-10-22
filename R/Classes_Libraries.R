@@ -230,9 +230,9 @@ check.valid.metadata.DwC <- function(d){
       valid <- FALSE
     }
     #type must be occurence or event
-    if(class(d) == "DwC.occurrence" &
+    if(class(d) == "DwC.occurrence" & (
        !"occurrenceID" %in% colnames(d@core) |
-       !"basisOfRecord" %in% colnames(d@core)){
+       !"basisOfRecord" %in% colnames(d@core))){
       valid <- FALSE
     }else if(class(d) == "DwC.event" &
              !"eventID" %in% colnames(d@core)){

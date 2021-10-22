@@ -22,15 +22,19 @@ test_that("get.BioProject.metadata.INSDC works", {
 test_that("get.BioProject.metadata.INSDC works", {
   expect_error(get.sample.attributes.INSDC(sampleID="SRR3087847", apiKey=NA))
   expect_error(get.sample.attributes.INSDC(BioPrjct="PRJNA303951", apiKey=NA))
+  
+  expect_s3_class(get.sample.attributes.INSDC(sampleID="SRR3087847", apiKey="test"),
+                  "data.frame")
+  closeAllConnections()
+  expect_s3_class(get.sample.attributes.INSDC(BioPrjct="PRJNA303951", apiKey="test"),
+                  "data.frame")
+  closeAllConnections()
 })
 
 
-test_that("download.sequences.INSDC works", {
+test_that("download.sequences.INSDC works 1", {
   expect_message(download.sequences.INSDC(BioPrj = "PRJNA303951", destination.path = NA, 
                                           apiKey=NA, unzip = FALSE, keep.metadata = FALSE, 
-                                          download.sequences = FALSE))
-  expect_error(download.sequences.INSDC(BioPrj = "PRJNA303951", destination.path = NA, 
-                                          apiKey="test", unzip = FALSE, keep.metadata = TRUE, 
                                           download.sequences = FALSE))
   expect_error(download.sequences.INSDC(BioPrj = "nonsens_DezeNaamBestaatNiet_mooiweervandaag", destination.path = NA, 
                                           apiKey=NA, unzip = FALSE, keep.metadata = TRUE, 
@@ -38,8 +42,19 @@ test_that("download.sequences.INSDC works", {
   expect_error(download.sequences.INSDC(BioPrj = "nonsens_DezeNaamBestaatNiet_mooiweervandaag", destination.path = NA, 
                                         apiKey=NA, unzip = TRUE, keep.metadata = TRUE, 
                                         download.sequences = FALSE))
+  closeAllConnections()
+})
+
+test_that("download.sequences.INSDC works 2", {
+  expect_s3_class(download.sequences.INSDC(BioPrj = "PRJNA303951", destination.path = NA, 
+                                          apiKey="test", unzip = FALSE, keep.metadata = TRUE, 
+                                          download.sequences = FALSE), 
+                  "data.frame")
+  closeAllConnections()
   
 })
+
+
 # clean up
 closeAllConnections()
 

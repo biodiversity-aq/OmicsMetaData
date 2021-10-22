@@ -58,17 +58,62 @@ test_that("dataQC.generate.footprintWKT gives correct output", {
 test_metadata2 <- test_metadata
 colnames(test_metadata2)[1]<-"eventID"
 
-test_that("dataQC.findNames gives correct output", {
-  expect_equal(dataQC.findNames(dataset=test_metadata, ask.input=TRUE, sample.names="sample_name"),
-               list(Names=data.frame(original_names=sampleNames, eventID=NA, parentEventID=NA, 
-                                     occurrenceID=NA, INSDC_SampleID=NA, row.names=rownames(test_metadata)),
-                    Names.column="sample_name", 
-                    warningmessages = ""))
-  expect_equal(dataQC.findNames(dataset=test_metadata2, ask.input=F, sample.names=NA),
-               list(Names=data.frame(original_names=sampleNames, eventID=sampleNames, parentEventID=NA, 
-                                     occurrenceID=NA, INSDC_SampleID=NA, row.names=rownames(test_metadata2)),
-                    Names.column="eventID", 
-                    warningmessages = "assumed the \"eventID\" column contained the original sample names"))
+test_that("dataQC.findNames gives correct output without user input", {
+  dates <- c("2020-09-23", "2020", "16 Jan. 2020", "November 1998", "12/01/1999")
+  latitudes <- c(23, 45, -56.44, "47.5", "-88° 4\' 5\"")
+  longitudes <- c(23, 45, -56.44, "47.5", "-88° 4\' 5\"")
+  sampleNames <- paste("sample", 1:5, sep="_")
+  test_metadata <- data.frame(sample_name=sampleNames,
+                              collection_date=dates,
+                              latitude=latitudes,
+                              longitude=longitudes)
+  test_metadata2 <- test_metadata
+  colnames(test_metadata2)[1]<-"eventID"
+  
+  test_metadata_OUT1 <- list(Names=data.frame(original_names=sampleNames, eventID=NA, 
+                                             parentEventID=NA, 
+                                             occurrenceID=NA, INSDC_SampleID=NA, 
+                                             row.names=rownames(test_metadata)),
+                            Names.column="sample_name", 
+                            warningmessages = "")
+  test_metadata_OUT2 <- list(Names=data.frame(original_names=sampleNames, eventID=sampleNames, parentEventID=NA, 
+                                              occurrenceID=NA, INSDC_SampleID=NA, row.names=rownames(test_metadata2)),
+                             Names.column="eventID", 
+                             warningmessages = "assumed the \"eventID\" column contained the original sample names")
+  
+  expect_equal(dataQC.findNames(dataset=test_metadata, ask.input=FALSE, 
+                                sample.names="sample_name"),
+               test_metadata_OUT1)
+  expect_equal(dataQC.findNames(dataset=test_metadata2, ask.input=FALSE, sample.names=NA),
+               test_metadata_OUT2)
+})
+
+test_that("dataQC.findNames gives correct output WITH user input", {
+  dates <- c("2020-09-23", "2020", "16 Jan. 2020", "November 1998", "12/01/1999")
+  latitudes <- c(23, 45, -56.44, "47.5", "-88° 4\' 5\"")
+  longitudes <- c(23, 45, -56.44, "47.5", "-88° 4\' 5\"")
+  sampleNames <- paste("sample", 1:5, sep="_")
+  test_metadata <- data.frame(sample_names=sampleNames,
+                              collection_date=dates,
+                              latitude=latitudes,
+                              longitude=longitudes,
+                              row.names=sampleNames)
+  #turn of user connection
+  f<-file()
+  options(mypkg.connection = f)
+  ans <- c("y", "n", "sample_names") #test 1
+  write(ans, f)
+
+  expect_type(dataQC.findNames(dataset=test_metadata, ask.input=TRUE, 
+                                sample.names=NA), "list")
+  expect_type(dataQC.findNames(dataset=test_metadata, ask.input=TRUE, 
+                               sample.names=NA), "list")
+  expect_error(dataQC.findNames(dataset=test_metadata, ask.input=TRUE, 
+                                sample.names="randomname"))
+  
+  #reset connection
+  options(mypkg.connection = stdin())
+  close(f)
 })
 
 tax_sample <- c("Aulacoseira", "Calothrix confervicola", "unknown species", "Micrasterias cf. denticulata", "Calothrix sp.")

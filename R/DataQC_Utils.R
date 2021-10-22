@@ -586,7 +586,7 @@ dataQC.findNames <- function(dataset = NA, ask.input=TRUE, sample.names=NA){
                         paste(dataset[1:5,tolower(colnames(dataset))==likely_sampNames], collapse="\n\t\t"), 
                         " ...\n\tDoes this seems correct? (y/n)\n",
                         sep=""))
-          doNext <- readline()
+          doNext <- readLines(con = getOption("mypkg.connection"), n=1)
           if(tolower(doNext) %in% c("y", "yes")){
             orig_names$original_names <- as.character(dataset[,tolower(colnames(dataset))==likely_sampNames])
             warningmessages <- paste("assumed the \"",likely_sampNames_orig,"\" column contained the original sample names", sep="")
@@ -614,13 +614,13 @@ dataQC.findNames <- function(dataset = NA, ask.input=TRUE, sample.names=NA){
                         paste(rownames_to_ask, collapse="\n\t\t"), 
                         " ...\n\tuse rownames as sample names? (y/n)\n",
                         sep=""))
-          doNext <- readline()
+          doNext <- readLines(con = getOption("mypkg.connection"), n=1)
           if(tolower(doNext) %in% c("y", "yes")){
             orig_names$original_names <- row.names(dataset)
             warningmessages <- "no original sample names found, used the rownames instead"
           }else if(tolower(doNext) %in% c("n","no")){
             message("you chose no.\n\t Can you give the columnname with the original sample names instead? Leave blank and hit enter to ignore\n")
-            doNext2 <- readline()
+            doNext2 <- readLines(con = getOption("mypkg.connection"), n=1)
             if(doNext2!=""){
               if (doNext2 %in% colnames(dataset)){
                 orig_names$original_name <- dataset[,doNext2]
