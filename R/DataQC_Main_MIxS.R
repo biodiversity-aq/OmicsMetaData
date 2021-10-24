@@ -297,7 +297,7 @@ dataQC.MIxS <- function(dataset = NA, ask.input=TRUE, add_to = NA, sample.names 
     }
   }
 
-  # 8. some additional quality controll
+  # 8. some additional quality control
   if("investigation_type" %in% colnames(New_dataset)){
     New_dataset$investigation_type <- sapply(New_dataset$investigation_type, FUN=function(x){
       if(x %in% c("AMPLICON", "amplicon", "metabarcode")){x<-"mimarks-survey"

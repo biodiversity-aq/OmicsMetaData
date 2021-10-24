@@ -47,22 +47,42 @@ test_that("dataQC.MIxS works with user input", {
                               collection_date=c("2021-09-27", "2021-09-28"),
                               lat_lon=c("54.7 88.9", "33 -48.4"),
                               row.names=c("sample1", "sample2"))
+  test_metadata_2 <- data.frame(original_name=c("unit","sample1", "sample2"),
+                              collection_date=c("UTC","2021-09-27", "2021-09-28"),
+                              lat_lon=c("decimal degrees","54.7 88.9", "33 -48.4"),
+                              temp=c("degrees f", NA, NA),
+                              ph=c("pH", 4, 7),
+                              depth=c("cm", 4000, 6000),
+                              librarylayout=c("alphanumeric", "PAIRED", "PAIRED"),
+                              row.names=c("unit","sample1", "sample2"))
+  test_metadata_3 <- data.frame(original_name=c("sample1", "sample2"),
+                              collection_date=c("2021-09-27", "2021-09-28"),
+                              decimalLatitude=c("54.7", "33"),
+                              decimalLongitude=c("88.9", "-48.4"),
+                              env_package=c("water", "soil"),
+                              target_gene=c("16S", "ITS-1"),
+                              extravar1=c("tt", "pp"),
+                              depth=c(3, 200),
+                              row.names=c("sample1", "sample2"))
   
   #turn of user connection
   f<-file()
   options(mypkg.connection = f)
-  ans <- c("1", "mimarks-survey") #test 1
+  ans <- c("3", #test 1
+           "y", "2", "soil", "n", #test 2
+           "y", "1", "mimarks-survey", #test 3
+           "n", "1", "n", "n") #test 3
   write(ans, f)
   
-  expect_s4_class(dataQC.MIxS(dataset=test_metadata, 
-                              sample.names="original_name",  
-                              ask.input=TRUE),
-                  "MIxS.metadata")
+  expect_error(dataQC.MIxS(dataset=test_metadata, ask.input=TRUE))
+  expect_warning(dataQC.MIxS(dataset=test_metadata, ask.input=TRUE))
+  expect_warning(dataQC.MIxS(dataset=test_metadata_2, ask.input=TRUE))
+  expect_warning(dataQC.MIxS(dataset=test_metadata_3, ask.input=TRUE))
   
   #reset connection
   options(mypkg.connection = stdin())
   close(f)
-  
+  closeAllConnections()
 })
 
 
