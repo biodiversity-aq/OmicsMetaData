@@ -14,7 +14,7 @@ test_that("get.BioProject.metadata.INSDC works", {
                   "data.frame")
   expect_equal(class(get.BioProject.metadata.INSDC(BioPrjct="PRJNA303951", just.names=TRUE)),
                "character")
-  expect_error(get.BioProject.metadata.INSDC(BioPrjct="nonsens_DezeNaamBestaatNiet_mooiweervandaag", just.names=FALSE))
+  #expect_error(get.BioProject.metadata.INSDC(BioPrjct="nonsens_DezeNaamBestaatNiet_mooiweervandaag", just.names=FALSE))
 })
 
 
