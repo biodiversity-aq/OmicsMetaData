@@ -132,7 +132,6 @@ test_that("dataQC.DwC_general throws an error on bad input", {
   close(f)
 })
 
-
 test_that("dataQC.DwC_general works for occurrence data, no user input", {
   test_occur <- data.frame(occurrenceID=c("sp1", "sp2"),
                             eventDate=c("2021-09-27", NA),
@@ -280,7 +279,6 @@ test_that("dataQC.DwC_general works for emof data", {
                                   complete.data=NA))
 })
 
-
 test_that("dataQC.DwC_general fails on bad data", {
   test_emof <- data.frame(eventID=c("sample1", "sample2"),
                            date=c("2021-09-27", "2021-09-06"),
@@ -293,10 +291,6 @@ test_that("dataQC.DwC_general fails on bad data", {
   expect_error(dataQC.DwC_general(dataset=test_emof, DwC.type = "unkown", ask.input = FALSE,
                                   complete.data=NA))
 })
-
-
-
-
 
 
 #dataQC.DwC_general(dataset=test_emof2, DwC.type = "event", ask.input = TRUE,

@@ -41,6 +41,6 @@ Other formating functions:
 \code{\link{wideTab.to.hierarchicalTab}()}
 }
 \author{
-Maxime Sweetlove CC-0 2020
+Maxime Sweetlove
 }
 \concept{formating functions}

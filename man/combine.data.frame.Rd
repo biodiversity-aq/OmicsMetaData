@@ -44,6 +44,6 @@ Other formating functions:
 \code{\link{wideTable.to.eMoF}()}
 }
 \author{
-Maxime Sweetlove CC-0 2019
+Maxime Sweetlove
 }
 \concept{formating functions}

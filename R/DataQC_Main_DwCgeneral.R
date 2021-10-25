@@ -246,7 +246,7 @@ dataQC.DwC_general<-function(dataset = NA, DwC.type = "event", ask.input = TRUE,
   
   # dealing with the collection date, and putting it in the YYYY-MM-DD format
   if(!"eventDate" %in% colnames(dataset)){
-    if("year" %in% colnames(dataset) && !grepl("/", dataset$year)){
+    if("year" %in% colnames(dataset) && !any(grepl("/", dataset$year))){
       dataset$eventDate <- dataset$year
       if("month" %in% colnames(dataset)){
         for(i in 1:nrow(dataset)){

@@ -1,15 +1,14 @@
 #==============================================================
 # Author Maxime Sweetlove
-# lisence CC-0
 # Part of the POLA3R website (successor or mARS.biodiversity.aq)
 # version 1.0 (2019-09-20)
-# file encdong UTF-8
+# file encding UTF-8
 #
 #==============================================================
 
 #' convert a DarwinCore extended Measurement or Fact (eMoF) file to a wide tabular format
 #' @family formating functions
-#' @author Maxime Sweetlove CC-0 2020
+#' @author Maxime Sweetlove
 #' @description converts a DarwinCore extended Measurement Or Fact (eMOF) file, which is has a "long" file format into a wide tabular format
 #' @usage eMoF.to.wideTable(dataset)
 #' @param dataset a dataframe of the eMoF file
@@ -37,7 +36,7 @@ eMoF.to.wideTable <- function(dataset){
   if("eventID" %in% colnames(dataset)){
     dataLong<-dataset[,colnames(dataset) %in% c("eventID", "measurementType", "measurementValue")]
     dataWide <- tidyr::spread(data=dataLong, "eventID", "measurementValue")
-  }else if("occurrenceID" %in% colnames(dataLong)){
+  }else if("occurrenceID" %in% colnames(dataset)){
     dataLong<-dataset[,colnames(dataset) %in% c("occurrenceID", "measurementType", "measurementValue")]
     dataWide <- tidyr::spread(dataLong, "occurrenceID", "measurementValue")
   }else{
@@ -79,7 +78,7 @@ eMoF.to.wideTable <- function(dataset){
 
 #' convert dataframe to a DarwinCore extended Measurement or Fact (eMoF) file
 #' @family formating functions
-#' @author Maxime Sweetlove CC-0 2020
+#' @author Maxime Sweetlove
 #' @description converts a dataframe to a DarwinCore extended Measurement Or Fact (eMOF) file
 #' @usage wideTable.to.eMoF(metadata.object, variables)
 #' @param metadata.object a MIxS.metadata object
@@ -152,7 +151,7 @@ wideTable.to.eMoF <- function(metadata.object, variables=NA){
 }
 
 #' merge dataframes
-#' @author Maxime Sweetlove CC-0 2019
+#' @author Maxime Sweetlove
 #' @family formating functions
 #' @description combine.data.frame merges two dataframes, completing the rows and columns that are not shared by the dataframes.
 #' @usage combine.data.frame(df1, df2, fill=NA, merge.cols=TRUE, original_rowName.col=TRUE, merge.rows="df1")
@@ -263,7 +262,7 @@ combine.data.frame <- function(df1, df2, fill=NA,
       df_x <- data.frame(matrix(nrow = nrow(df2)-length(shared_rows), ncol = ncol(df11), data=fill))
       colnames(df_x) <- colnames(df11)
       rownames(df_x) <- setdiff(rownames(df2), shared_rows)
-      df_notshared_1 <- cbind(df_x, df2[setdiff(rownames(df2), shared_rows),])
+      df_notshared_2 <- cbind(df_x, df2[setdiff(rownames(df2), shared_rows),])
     }else{
       df_notshared_2 <- data.frame()
     }
@@ -277,7 +276,7 @@ combine.data.frame <- function(df1, df2, fill=NA,
 }
 
 #' merge MIxS.metadata objects
-#' @author Maxime Sweetlove CC-0 2019
+#' @author Maxime Sweetlove
 #' @family formating functions
 #' @description combine.data combines two MIxS.metadata objects into one, merging all common variables (columns as default).
 #' @usage combine.data(d1, d2, fill=NA, variables.as.cols=TRUE)
@@ -427,13 +426,17 @@ combine.data <- function(d1, d2, fill=NA, variables.as.cols=TRUE){
   }
 
 #' convert a wide table to hierarchical table
-#' @author Maxime Sweetlove CC-0 2019
+#' @author Maxime Sweetlove
 #' @family formating functions
 #' @description turns a regular wide table into a hierarchical recursive table.
 #' @param dataset a data.frame. The wide table to be transformed, with columns as hierarchical variables. T
 #' @param col_hierarchy a data.frame with two columns named "child" and "parent". The hierarchical relations between the columns formatted in a child-parent table listing the column names. Use "root" or NA for columns with no parent.
 #' @usage wideTab.to.hierarchicalTab(dataset, col_hierarchy)
 #' @details Columns in the input data with different levels of a hierarchy are poolled into one column with values and a second column indicating the parent of the value.
+#' @examples 
+#' \dontrun{
+#' wideTab.to.hierarchicalTab(dataset=test_MIxS)
+#' }
 #' @return a data.frame with three columns: one for the value (cell content in the origical data.frame), it's rank (the original column name), and parent (cell content of the column that is one up in the hierarchy)
 wideTab.to.hierarchicalTab <- function(dataset, col_hierarchy){
   if(!all(colnames(col_hierarchy) %in% c("child", "parent"))){

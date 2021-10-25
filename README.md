@@ -3,7 +3,8 @@
 ##OmicsMetaData: an R-package for interoperable and re-usable biodiversity 'omics (meta)data
 
 ## Badges
-
+<!-- badges: start -->
+[![R build status](https://github.com/biodiversity-aq/OmicsMetaData/workflows/R-CMD-check/badge.svg)](https://github.com/biodiversity-aq/OmicsMetaData/actions)<!-- badges: end -->
 
 ## Package details
 ### Description
