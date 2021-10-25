@@ -162,7 +162,7 @@ get.sample.attributes.INSDC <- function(sampleID=NA, apiKey=NA, BioPrjct=NA){
 #'   keep.metadata = TRUE, download.sequences = TRUE)
 #' @param BioPrj a list with character strings. A list of one or more BioProject numbers to be downloaded. Required argument.
 #' @param destination.path a character string. The path to the directory where all the downloaded sequence data needs to go
-#' @param apiKey a character string. Only required if download.sequences.INSDC(keep.metadata=TRUE). A personal API-key to the acces the NCBI databases, and required to use the Entrez Programming Utilities (E-utilities). An API-key (API stands for application programming interface) is a unique identifier used to authenticate a user. You can easily generate an API-key: see https://ncbiinsights.ncbi.nlm.nih.gov/2017/11/02/new-api-keys-for-the-e-utilities/
+#' @param apiKey a character string. Only required if download.sequences.INSDC(keep.metadata=TRUE). A personal API-key to the access the NCBI databases, and required to use the Entrez Programming Utilities (E-utilities). An API-key (API stands for application programming interface) is a unique identifier used to authenticate a user. You can easily generate an API-key: see https://ncbiinsights.ncbi.nlm.nih.gov/2017/11/02/new-api-keys-for-the-e-utilities/
 #' @param unzip boolean. If TRUE, the all *.fastq.gz files in the destination.path will unzipped. Default FALSE
 #' @param keep.metadata boolean. If TRUE, the downloaded metadata can be saved to a file (Console), if FALSE it is discarded. Default TRUE
 #' @param download.sequences boolean. If TRUE, the sequences will be downloaded to the destination.path. If FALSE, no sequences are downloaded. Default TRUE
