@@ -4,7 +4,10 @@
 \alias{renameSequenceFiles}
 \title{renames sequence files in a directory}
 \usage{
-renameSequenceFiles(name_df, colNameOld="OldName", colNameNew="NewName", file.dir=NULL, paired=TRUE, seq.file.extension=".fastq.gz", ask.input=TRUE, pairedEnd.extension=c("_1", "_2"))
+renameSequenceFiles(name_df, colNameOld="OldName", 
+  colNameNew="NewName", file.dir=NULL, paired=TRUE, 
+  seq.file.extension=".fastq.gz", ask.input=TRUE, 
+  pairedEnd.extension=c("_1", "_2"))
 }
 \arguments{
 \item{name_df}{a data.frame. The dataframe that lists the original sample same (without file extension) alongside the new file names (also without their file extension)}
@@ -51,6 +54,6 @@ Other data archiving functions:
 \code{\link{sync.metadata.sequenceFiles}()}
 }
 \author{
-Maxime Sweetlove CC-0 2020
+Maxime Sweetlove
 }
 \concept{data archiving functions}

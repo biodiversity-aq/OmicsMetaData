@@ -4,7 +4,9 @@
 \alias{sync.metadata.sequenceFiles}
 \title{Check if all samples in a dataframe have sequence data}
 \usage{
-sync.metadata.sequenceFiles(Names, file.dir=NULL, paired=TRUE, seq.file.extension=".fastq.gz", pairedEnd.extension=c("_1", "_2"))
+sync.metadata.sequenceFiles(Names, file.dir=NULL, 
+  paired=TRUE, seq.file.extension=".fastq.gz", 
+  pairedEnd.extension=c("_1", "_2"))
 }
 \arguments{
 \item{Names}{a vector or a MIxS.metadata class object. A character vector with the sample names (without a file extension) or the MIxS.metadata object of which the sample names (original_name) should be compared to the sequence file names}
@@ -42,6 +44,6 @@ Other data archiving functions:
 \code{\link{renameSequenceFiles}()}
 }
 \author{
-Maxime Sweetlove CC-0 2020
+Maxime Sweetlove
 }
 \concept{data archiving functions}

@@ -157,7 +157,9 @@ get.sample.attributes.INSDC <- function(sampleID=NA, apiKey=NA, BioPrjct=NA){
 #' @author Maxime Sweetlove CC-0 2019
 #' @family downloading data functions
 #' @description Downloads (high throughput) nucleotide sequence datasets that are deposited on the International Nucleotide Sequence Database Consortium (INSDC, e.g. SRA, ENA, GenBank,...). Any possible metadata and environmental data is also downloaded.
-#' @usage download.sequences.INSDC(BioPrj = c(), destination.path = NA, apiKey=NA, unzip = FALSE, keep.metadata = TRUE, download.sequences = TRUE)
+#' @usage download.sequences.INSDC(BioPrj = c(), 
+#'   destination.path = NA, apiKey=NA, unzip = FALSE, 
+#'   keep.metadata = TRUE, download.sequences = TRUE)
 #' @param BioPrj a list with character strings. A list of one or more BioProject numbers to be downloaded. Required argument.
 #' @param destination.path a character string. The path to the directory where all the downloaded sequence data needs to go
 #' @param apiKey a character string. Only required if download.sequences.INSDC(keep.metadata=TRUE). A personal API-key to the acces the NCBI databases, and required to use the Entrez Programming Utilities (E-utilities). An API-key (API stands for application programming interface) is a unique identifier used to authenticate a user. You can easily generate an API-key: see https://ncbiinsights.ncbi.nlm.nih.gov/2017/11/02/new-api-keys-for-the-e-utilities/

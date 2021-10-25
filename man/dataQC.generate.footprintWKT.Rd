@@ -18,11 +18,15 @@ a vector with a footprintWKT value for each row in the dataset
 generate a footprintWKT column for a dataset (preferably DarwinCore eventCore). Lowest level events must be point locations.
 }
 \details{
-This function will format the geographic coordinates of an event (in the fields decimalLatitude and decimalLongitude) into the WellKnownText format. For events that are at the lowest level of the hierarchy, it assumes a single point location. Higher level events are desribed by polygons based on the coordinates of the child events.
+This function will format the geographic coordinates of an event (in the fields decimalLatitude and decimalLongitude) into the WellKnownText format. 
+  For events that are at the lowest level of the hierarchy, it assumes a single point location. Higher level events are desribed by polygons based on the coordinates of the child events.
 }
 \examples{
 \donttest{
-dataQC.generate.footprintWKT(data.frame(decimalLatitude="23", decimalLongitude=45, eventID="sample_1"), NA.val=NA)
+dataQC.generate.footprintWKT(data.frame(decimalLatitude="23", 
+                                        decimalLongitude=45, 
+                                        eventID="sample_1"), 
+                             NA.val=NA)
 }
 }
 \seealso{

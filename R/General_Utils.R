@@ -4,10 +4,9 @@
 #       They allow to download, structure, quqlity-controll and standardize microbial datasets
 #==============================================================
 # Author Maxime Sweetlove
-# lisence CC-0
 # Part of the POLA3R website (successor or mARS.biodiversity.aq)
 # version 1.0 (2019-09-20)
-# file encdong UTF-8
+# file encding UTF-8
 #
 #==============================================================
 # Tools for general use
@@ -15,7 +14,7 @@
 # internal tools
 #==============================================================
 #' collect warning messages troughout a running function
-#' @author Maxime Sweetlove CC-0 2019
+#' @author Maxime Sweetlove
 #' @description collect warning messages troughout a running function
 #' @usage multi.warnings(message_text, warningmessages)
 #' @param message_text a character string. The error message to be added
@@ -29,7 +28,7 @@ multi.warnings <- function(message_text, warningmessages){
 }
 
 #' Convert a taxon name to an NCBI taxon ID
-#' @author Maxime Sweetlove CC-0 2019
+#' @author Maxime Sweetlove
 #' @family data archiving functions
 #' @description converts taxon names of common taxa (superkingdom and phylum level) to it's NCBI taxID using an internal library. For taxa not in the internal library, please see https://www.ncbi.nlm.nih.gov/Taxonomy/TaxIdentifier/tax_identifier.cgi
 #' @param taxon character or character vector. The taxon names to be converted to NCBI tax IDs.
@@ -63,7 +62,7 @@ commonTax.to.NCBI.TaxID<-function(taxon, fill.unknown="12908"){
 
 #' convert a MIxS term into it's ENA variant
 #' @family data archiving functions
-#' @author Maxime Sweetlove CC-0 2019
+#' @author Maxime Sweetlove
 #' @description get the ENA variant a MIxS term
 #' @param variable character a MIxS term.
 #' @return a character
@@ -73,7 +72,7 @@ get.ENAName <- function(variable){
 }
 
 #' find a column in a dataframe
-#' @author Maxime Sweetlove CC-0 2020
+#' @author Maxime Sweetlove
 #' @description find a column in a dataframe where it is a priori unkown wether the column is present or not.
 #' @param dataset data.frame. A dataframe where to find a column based on the columnames
 #' @param TermsList a character vector with the columnnames to look for. They will be handled in the order given, and the search will stop at the first match
@@ -109,7 +108,7 @@ find.dataset <- function(dataset, TermsList=c()){
 
 #' convert a coordinate in degrees to decimal
 #' 
-#' @author Maxime Sweetlove CC-0 2019
+#' @author Maxime Sweetlove
 #' @family standardization functions
 #' @description Turns a latutude or longitude value in a degrees-minutes-seconds (DMS) format into a decimal value
 #' @usage coordinate.to.decimal(val)
@@ -210,7 +209,7 @@ coordinate.to.decimal<-function(val){
 
 
 #' get a rectagular bounding box from a set of coordinates
-#' @author Maxime Sweetlove CC-0 2019
+#' @author Maxime Sweetlove
 #' @description finds the (rectangular) bounding box given decimal latitudes and longitudes
 #' @usage get.boundingBox(latitudes, longitudes)
 #' @param latitudes numeric vector. one ore more decimal latitude values
@@ -237,7 +236,7 @@ get.boundingBox<-function(latitudes, longitudes){
   }
 
 #' Get the sequence length of the first sequence in a fastq or fastq.gz file
-#' @author Maxime Sweetlove CC-0 2020
+#' @author Maxime Sweetlove
 #' @description get the insert size (i.e. number of bases) of a fastq or fastq.gz file
 #' @param file_path the full file path to the file
 #' @details submitting sequence to a database of the Nucleotide Sequence Database Consortium typically requires to give the insert size of the sequences. This function gets the length of the first sequence in a file, assuming all sequences are of the same length.

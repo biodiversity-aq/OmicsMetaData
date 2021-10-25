@@ -18,7 +18,9 @@ tries to find taxonomic names for samples (rows) in a dataset (data.frame),
 \examples{
 \donttest{
 test_metadata <- data.frame(sample_name=paste("sample", 1:5, sep="_"),
-                           genus=c("Aulacoseira", "Calothrix confervicola", "unknown species", "Micrasterias cf. denticulata", "Calothrix sp."),
+                           genus=c("Aulacoseira", "Calothrix confervicola", 
+                           "unknown species", "Micrasterias cf. denticulata", 
+                           "Calothrix sp."),
                            row.names=paste("sample", 1:5, sep="_"))
 dataQC.TaxonListFromData(test_metadata)
 }

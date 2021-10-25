@@ -12,7 +12,8 @@
 #' @description converts a DarwinCore extended Measurement Or Fact (eMOF) file, which is has a "long" file format into a wide tabular format
 #' @usage eMoF.to.wideTable(dataset)
 #' @param dataset a dataframe of the eMoF file
-#' @details Long formated data if great for data arciving, but is difficult to use in day-to-day statistical analyses. This function extracts the data from an eMoF file and puts it in a wide sample x variable table
+#' @details Long formated data if great for data arciving, but is difficult to use in day-to-day statistical analyses. 
+#'   This function extracts the data from an eMoF file and puts it in a wide sample x variable table
 #' @importFrom methods new
 #' @return a list of length 3: "$data" the data in a wide formt, "$units" the units, and "$method" the methods
 #' @examples 
@@ -84,15 +85,21 @@ eMoF.to.wideTable <- function(dataset){
 #' @param metadata.object a MIxS.metadata object
 #' @param variables a character vector. a list of the variables that need to be included in the eMoF
 #' @importFrom tidyr gather
-#' @details extended Measurement or Fact (eMoF) as a DarwinCore extension to standardize environmental or other additional data in a computer readable fashon. This standard structures data into a long format (a column with sample name, variable name and value). This function converts more commonly used wide format tables (that is, structured like a matrix, e.g. samples as rows and variables as columns) into the correct long format that complies to eMoF
+#' @details extended Measurement or Fact (eMoF) as a DarwinCore extension to standardize environmental or other additional data in a computer readable fashion. 
+#'   This standard structures data into a long format (a column with sample name, variable name and value). This function converts more commonly used wide format tables 
+#'   (that is, structured like a matrix, e.g. samples as rows and variables as columns) into the correct long format that complies to eMoF
 #' @return a data.frame formatted as an extended Measurement or Fact table
 #' @examples 
 #' \donttest{
 #' sampleNames <- c("sample_1", "sample_2")
 #' test_MIxS <- new("MIxS.metadata",
-#'              data = data.frame(var1=c(1,2), var2=c(3,4), eventID=sampleNames, row.names=sampleNames),
-#'              section = c(var1="section1", var2="section1", eventID="miscellaneous"),
-#'              units = c(var1="unit1", var2="unit2", eventID="alphanumeric"),
+#'              data = data.frame(var1=c(1,2), var2=c(3,4), 
+#'                                eventID=sampleNames, 
+#'                                row.names=sampleNames),
+#'              section = c(var1="section1", var2="section1", 
+#'                          eventID="miscellaneous"),
+#'              units = c(var1="unit1", var2="unit2", 
+#'                        eventID="alphanumeric"),
 #'              env_package = "water",
 #'              type = "versatile",
 #'              QC = TRUE)
@@ -153,15 +160,22 @@ wideTable.to.eMoF <- function(metadata.object, variables=NA){
 #' merge dataframes
 #' @author Maxime Sweetlove
 #' @family formating functions
-#' @description combine.data.frame merges two dataframes, completing the rows and columns that are not shared by the dataframes.
-#' @usage combine.data.frame(df1, df2, fill=NA, merge.cols=TRUE, original_rowName.col=TRUE, merge.rows="df1")
+#' @description combine.data.frame merges two dataframes, 
+#'   completing the rows and columns that are not shared by the dataframes.
+#' @usage combine.data.frame(df1, df2, fill=NA, merge.cols=TRUE, 
+#'   original_rowName.col=TRUE, merge.rows="df1")
 #' @param df1 a dataframe
 #' @param df2 a dataframe
-#' @param fill character or NA. A value to put into the cells that have no data. Default NA
+#' @param fill character or NA. A value to put into the cells that have no data. 
+#'   Default NA
 #' @param merge.cols logical. Merge colomns with common name. Default TRUE
 #' @param original_rowName.col logical. if TRUE, add a column with the original rownames. Default TRUE
-#' @param merge.rows character. If the data.frames df1 and df2 have common rows, the values for these rows of this dataset must be kept in favor of the other. If NA, both rows will be kept. Either "df1", "df2" or NA. Default "df1"
-#' @details Columns with matching names can or cannot be merged, rows are automatically bound (a wrapper of rbind), not merged. Any missing data as a result of the non-matchng columns will be filled by the fill argument.
+#' @param merge.rows character. If the data.frames df1 and df2 have common rows, 
+#'   the values for these rows of this dataset must be kept in favor of the other. 
+#'   If NA, both rows will be kept. Either "df1", "df2" or NA. Default "df1"
+#' @details Columns with matching names can or cannot be merged, 
+#'   rows are automatically bound (a wrapper of rbind), not merged. 
+#'   Any missing data as a result of the non-matchng columns will be filled by the fill argument.
 #' @return a data.frame
 #' @examples
 #' \donttest{
@@ -283,9 +297,11 @@ combine.data.frame <- function(df1, df2, fill=NA,
 #' @param d1 a MIxS.metadata object
 #' @param d2 a MIxS.metadata object
 #' @param fill character or NA. A value to put into the cells that have no data.
-#' @param variables.as.cols boolean. If TRUE, the input data is assumed to have rows as samples and variables/parameters as columns. If FALSE the data is formatted the other was around. default TRUE
+#' @param variables.as.cols boolean. If TRUE, the input data is assumed to have rows as samples and variables/parameters as columns. 
+#'   If FALSE the data is formatted the other was around. default TRUE
 #' @importFrom methods new
-#' @details Variables with matching names are merged, if variables.as.cols=TRUE this means columns are merged, if FALSE rows are merged. Any missing data as a result of the non-matchng variable-name will be filled by the fill argument.
+#' @details Variables with matching names are merged, if variables.as.cols=TRUE this means columns are merged, if FALSE rows are merged. 
+#'   Any missing data as a result of the non-matchng variable-name will be filled by the fill argument.
 #' @return a MIxS.metadata object
 #' @examples 
 #' \dontrun{
@@ -430,14 +446,16 @@ combine.data <- function(d1, d2, fill=NA, variables.as.cols=TRUE){
 #' @family formating functions
 #' @description turns a regular wide table into a hierarchical recursive table.
 #' @param dataset a data.frame. The wide table to be transformed, with columns as hierarchical variables. T
-#' @param col_hierarchy a data.frame with two columns named "child" and "parent". The hierarchical relations between the columns formatted in a child-parent table listing the column names. Use "root" or NA for columns with no parent.
+#' @param col_hierarchy a data.frame with two columns named "child" and "parent". The hierarchical relations between the columns formatted in a child-parent table listing the column names. 
+#'   Use "root" or NA for columns with no parent.
 #' @usage wideTab.to.hierarchicalTab(dataset, col_hierarchy)
 #' @details Columns in the input data with different levels of a hierarchy are poolled into one column with values and a second column indicating the parent of the value.
 #' @examples 
 #' \dontrun{
 #' wideTab.to.hierarchicalTab(dataset=test_MIxS)
 #' }
-#' @return a data.frame with three columns: one for the value (cell content in the origical data.frame), it's rank (the original column name), and parent (cell content of the column that is one up in the hierarchy)
+#' @return a data.frame with three columns: one for the value (cell content in the origical data.frame), it's rank (the original column name), and parent 
+#'   (cell content of the column that is one up in the hierarchy)
 wideTab.to.hierarchicalTab <- function(dataset, col_hierarchy){
   if(!all(colnames(col_hierarchy) %in% c("child", "parent"))){
     stop("invalid input of the col_hierarchy argument.\nMust be a data.frame with two columns, names \"child\" and \"parent\".")

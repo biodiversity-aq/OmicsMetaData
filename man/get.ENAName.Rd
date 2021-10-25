@@ -24,6 +24,6 @@ Other data archiving functions:
 \code{\link{sync.metadata.sequenceFiles}()}
 }
 \author{
-Maxime Sweetlove CC-0 2019
+Maxime Sweetlove
 }
 \concept{data archiving functions}

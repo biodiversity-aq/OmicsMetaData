@@ -20,7 +20,9 @@ looks for trailing spaces or common typos in taxonomic names.
 }
 \examples{
 \donttest{
-dataQC.taxaNames(c("Aulacoseira", "Calothrix confervicola", "unknown species", "Micrasterias cf. denticulata", "Calothrix sp."))
+dataQC.taxaNames(c("Aulacoseira", "Calothrix confervicola", 
+                   "unknown species", "Micrasterias cf. denticulata", 
+                   "Calothrix sp."))
 }
 }
 \seealso{

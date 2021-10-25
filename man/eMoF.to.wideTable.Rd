@@ -16,7 +16,8 @@ a list of length 3: "$data" the data in a wide formt, "$units" the units, and "$
 converts a DarwinCore extended Measurement Or Fact (eMOF) file, which is has a "long" file format into a wide tabular format
 }
 \details{
-Long formated data if great for data arciving, but is difficult to use in day-to-day statistical analyses. This function extracts the data from an eMoF file and puts it in a wide sample x variable table
+Long formated data if great for data arciving, but is difficult to use in day-to-day statistical analyses. 
+  This function extracts the data from an eMoF file and puts it in a wide sample x variable table
 }
 \examples{
 \donttest{

@@ -24,5 +24,5 @@ get.insertSize("/user/path/to/sequenceFileFolder")
 }
 }
 \author{
-Maxime Sweetlove CC-0 2020
+Maxime Sweetlove
 }

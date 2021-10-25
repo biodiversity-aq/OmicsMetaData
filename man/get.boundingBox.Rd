@@ -26,5 +26,5 @@ get.boundingBox(c(22.4, 23.7), c(98.7, -44.7))
 }
 }
 \author{
-Maxime Sweetlove CC-0 2019
+Maxime Sweetlove
 }

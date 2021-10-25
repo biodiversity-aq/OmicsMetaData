@@ -31,6 +31,6 @@ Other standardization functions:
 \code{\link{dataQC.MIxS}()}
 }
 \author{
-Maxime Sweetlove CC-0 2019
+Maxime Sweetlove
 }
 \concept{standardization functions}

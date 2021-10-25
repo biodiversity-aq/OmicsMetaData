@@ -4,12 +4,15 @@
 \alias{dataQC.LatitudeLongitudeCheck}
 \title{find and standardize geographic coordinates in a dataframe}
 \usage{
-dataQC.LatitudeLongitudeCheck(dataset, latlon.colnames=list(c("lat_lon"),c("latitude"), c("longitude")))
+dataQC.LatitudeLongitudeCheck(dataset, 
+  latlon.colnames=list(c("lat_lon"),c("latitude"), c("longitude")))
 }
 \arguments{
 \item{dataset}{dataframe. The dataset where the date column should be found}
 
-\item{latlon.colnames}{a list of length 3 with character vectors. Three vectors of potential names for the columns with the latitude-longidude values. The first vector in the list are names if latitude and longitude were to be in the same column (e.g. the MIxS lat_lon format), the second and third are for when latitude and longitude, respectively, are in seperate columns. Example: list(c("lat_lon"), c("latitude"), c("longitude"))}
+\item{latlon.colnames}{a list of length 3 with character vectors. Three vectors of potential names for the columns with the latitude-longidude values. 
+The first vector in the list are names if latitude and longitude were to be in the same column (e.g. the MIxS lat_lon format), 
+the second and third are for when latitude and longitude, respectively, are in seperate columns. Example: list(c("lat_lon"), c("latitude"), c("longitude"))}
 }
 \value{
 a list of length 2, with "$values" a vector of same length as the number of rows in the dataset argument, and "$warningmessages" a vector with potential warning messages as character strings.
@@ -18,16 +21,24 @@ a list of length 2, with "$values" a vector of same length as the number of rows
 looks in the columns of a dataset (dataframe) for a column with coordinates and transforms them a standardized decimal format (see details).
 }
 \details{
-The date column is found based on a user-provided list of possible names to look for (latlon.colnames argument). First, a single column is searched where latitude and longitude are noted in a single field, if this returns no result, latitude and longitude are looked for in seperate fields. When found, the coordinates are transformed to decimals and returned as a single field, with values separated by a single space That is: (X Y), with X a numeric decimal latitude value and Y a numeric decimal longitude value.
+The date column is found based on a user-provided list of possible names to look for (latlon.colnames argument). 
+  First, a single column is searched where latitude and longitude are noted in a single field, if this returns no result, latitude and longitude are looked for in seperate fields. 
+  When found, the coordinates are transformed to decimals and returned as a single field, with values separated by a single space That is: (X Y), with X a numeric decimal latitude value and Y a numeric decimal longitude value.
 }
 \examples{
 \donttest{
 test_metadata <- data.frame(sample_name=paste("sample", 1:5, sep="_"),
-                           collection_date=c("2020-09-23", "2020", "16 Jan. 2020", "November 1998", "12/01/1999"),
+                            collection_date=c("2020-09-23", "2020", 
+                                              "16 Jan. 2020", 
+                                              "November 1998", 
+                                              "12/01/1999"),
                            latitude=c(23, 45, -56.44, "47.5", "-88° 4\' 5\""),
                            longitude=c(24, -57, -107.55, "33.5", "-130° 26\' 9\""),
                            row.names=paste("sample", 1:5, sep="_"))
-dataQC.LatitudeLongitudeCheck(dataset=test_metadata, latlon.colnames=list(c("lat_lon"),c("latitude"), c("longitude")))
+dataQC.LatitudeLongitudeCheck(dataset=test_metadata, 
+                              latlon.colnames=list(c("lat_lon"),
+                                                   c("latitude"), 
+                                                   c("longitude")))
 }
 }
 \seealso{

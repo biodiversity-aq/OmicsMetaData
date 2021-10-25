@@ -20,14 +20,21 @@ a list of length 3 with: "$Names" a named vector with the most likely sample nam
 find the sample names in a given (meta-)dataset where at least an attempt has been made to standardize the data following MIxS or DarwinCore
 }
 \details{
-It is often not clear where the sample names are in a dataset. This function makes an educated guess, based on rownames or tags that are often used to indicate sample names. If ask.input, then the process happens user-supervised.
+It is often not clear where the sample names are in a dataset. This function makes an educated guess, based on rownames or tags that are often used to indicate sample names. 
+  If ask.input, then the process happens user-supervised.
 }
 \examples{
 \dontrun{
 test_metadata <- data.frame(sample_name=paste("sample", 1:5, sep="_"),
-                           collection_date=c("2020-09-23", "2020", "16 Jan. 2020", "November 1998", "12/01/1999"),
-                           latitude=c(23, 45, -56.44, "47.5", "-88° 4\' 5\""),
-                           longitude=c(24, -57, -107.55, "33.5", "-130° 26\' 9\""),
+                           collection_date=c("2020-09-23", 
+                                             "2020", 
+                                             "16 Jan. 2020", 
+                                             "November 1998", 
+                                             "12/01/1999"),
+                           latitude=c(23, 45, -56.44, "47.5",
+                                      "-88° 4\' 5\""),
+                           longitude=c(24, -57, -107.55, "33.5", 
+                                       "-130° 26\' 9\""),
                            row.names=paste("sample", 1:5, sep="_"))
 dataQC.findNames(dataset=test_metadata, ask.input=TRUE, sample.names="sample_name")
 }

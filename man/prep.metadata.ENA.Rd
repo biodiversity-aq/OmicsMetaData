@@ -4,7 +4,12 @@
 \alias{prep.metadata.ENA}
 \title{Formatting metadata and environmental data to upload to EMBL-ENA}
 \usage{
-prep.metadata.ENA(metadata, dest.dir, file.name, sample_unique_name_prefix=NA, checklist_accession=NA, tax_name=NA, ask.input=TRUE, insert.size=NA, library.layout=NA, library.strategy=NA, library.selection=NA, seq.file.extension=".fastq.gz", pairedEnd.extension=c("_1", "_2"))
+prep.metadata.ENA(metadata, dest.dir, file.name,
+  sample_unique_name_prefix=NA, checklist_accession=NA, 
+  tax_name=NA, ask.input=TRUE, insert.size=NA, library.layout=NA, 
+  library.strategy=NA, library.selection=NA, 
+  seq.file.extension=".fastq.gz", 
+  pairedEnd.extension=c("_1", "_2"))
 }
 \arguments{
 \item{metadata}{a MIxS.metadata class object. The object to be written as text file suited for submission to ENA.}
@@ -40,7 +45,9 @@ a *.tsv file with the sample metadata, and a \*_runInfo.tsv file with the techni
 converts metadata into the right format (a tab separated text file) to submit data to ENA (version Januari 2020)
 }
 \details{
-This function will reformat metadata for submission to ENA. Specifically made for ecological environmental studies (e.g. amplicon sequencing, shotgun metagenomics,...), with additional QCs build in for Antarctic and Southern Ocean data. The assumption is taken that the dataset has already been subjected a quality controll.
+This function will reformat metadata for submission to ENA. Specifically made for ecological environmental studies 
+  (e.g. amplicon sequencing, shotgun metagenomics,...), with additional QCs build in for Antarctic and Southern Ocean data. 
+  The assumption is taken that the dataset has already been subjected a quality controll.
 }
 \examples{
 \dontrun{
@@ -78,6 +85,6 @@ Other data archiving functions:
 \code{\link{sync.metadata.sequenceFiles}()}
 }
 \author{
-Maxime Sweetlove CC-0 2020
+Maxime Sweetlove
 }
 \concept{data archiving functions}

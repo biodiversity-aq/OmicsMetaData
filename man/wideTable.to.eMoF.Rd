@@ -18,15 +18,21 @@ a data.frame formatted as an extended Measurement or Fact table
 converts a dataframe to a DarwinCore extended Measurement Or Fact (eMOF) file
 }
 \details{
-extended Measurement or Fact (eMoF) as a DarwinCore extension to standardize environmental or other additional data in a computer readable fashon. This standard structures data into a long format (a column with sample name, variable name and value). This function converts more commonly used wide format tables (that is, structured like a matrix, e.g. samples as rows and variables as columns) into the correct long format that complies to eMoF
+extended Measurement or Fact (eMoF) as a DarwinCore extension to standardize environmental or other additional data in a computer readable fashion. 
+  This standard structures data into a long format (a column with sample name, variable name and value). This function converts more commonly used wide format tables 
+  (that is, structured like a matrix, e.g. samples as rows and variables as columns) into the correct long format that complies to eMoF
 }
 \examples{
 \donttest{
 sampleNames <- c("sample_1", "sample_2")
 test_MIxS <- new("MIxS.metadata",
-             data = data.frame(var1=c(1,2), var2=c(3,4), eventID=sampleNames, row.names=sampleNames),
-             section = c(var1="section1", var2="section1", eventID="miscellaneous"),
-             units = c(var1="unit1", var2="unit2", eventID="alphanumeric"),
+             data = data.frame(var1=c(1,2), var2=c(3,4), 
+                               eventID=sampleNames, 
+                               row.names=sampleNames),
+             section = c(var1="section1", var2="section1", 
+                         eventID="miscellaneous"),
+             units = c(var1="unit1", var2="unit2", 
+                       eventID="alphanumeric"),
              env_package = "water",
              type = "versatile",
              QC = TRUE)

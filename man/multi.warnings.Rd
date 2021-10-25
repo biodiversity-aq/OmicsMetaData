@@ -18,5 +18,5 @@ a character string with unique warning messages
 collect warning messages troughout a running function
 }
 \author{
-Maxime Sweetlove CC-0 2019
+Maxime Sweetlove
 }

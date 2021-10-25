@@ -9,10 +9,12 @@ wideTab.to.hierarchicalTab(dataset, col_hierarchy)
 \arguments{
 \item{dataset}{a data.frame. The wide table to be transformed, with columns as hierarchical variables. T}
 
-\item{col_hierarchy}{a data.frame with two columns named "child" and "parent". The hierarchical relations between the columns formatted in a child-parent table listing the column names. Use "root" or NA for columns with no parent.}
+\item{col_hierarchy}{a data.frame with two columns named "child" and "parent". The hierarchical relations between the columns formatted in a child-parent table listing the column names. 
+Use "root" or NA for columns with no parent.}
 }
 \value{
-a data.frame with three columns: one for the value (cell content in the origical data.frame), it's rank (the original column name), and parent (cell content of the column that is one up in the hierarchy)
+a data.frame with three columns: one for the value (cell content in the origical data.frame), it's rank (the original column name), and parent 
+  (cell content of the column that is one up in the hierarchy)
 }
 \description{
 turns a regular wide table into a hierarchical recursive table.

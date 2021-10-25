@@ -26,5 +26,5 @@ find.dataset(dataset=data.frame(var1=1:3, var2=1:3), "var2")
 }
 }
 \author{
-Maxime Sweetlove CC-0 2020
+Maxime Sweetlove
 }
