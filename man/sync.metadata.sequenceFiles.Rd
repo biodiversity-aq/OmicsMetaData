@@ -38,7 +38,6 @@ sync.metadata.sequenceFiles(Names="seq_sample1", file.dir="user/path/to/sequence
 \seealso{
 Other data archiving functions: 
 \code{\link{FileNames.to.Table}()},
-\code{\link{commonTax.to.NCBI.TaxID}()},
 \code{\link{get.ENAName}()},
 \code{\link{prep.metadata.ENA}()},
 \code{\link{renameSequenceFiles}()}

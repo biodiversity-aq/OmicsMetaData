@@ -48,7 +48,6 @@ renameSequenceFiles(name_df=fileNamesTable_rename, colNameOld="OldName",
 \seealso{
 Other data archiving functions: 
 \code{\link{FileNames.to.Table}()},
-\code{\link{commonTax.to.NCBI.TaxID}()},
 \code{\link{get.ENAName}()},
 \code{\link{prep.metadata.ENA}()},
 \code{\link{sync.metadata.sequenceFiles}()}

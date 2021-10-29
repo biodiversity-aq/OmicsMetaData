@@ -34,7 +34,6 @@ multi.warnings <- function(message_text, warningmessages){
 
 #' Convert a taxon name to an NCBI taxon ID
 #' @author Maxime Sweetlove
-#' @family data archiving functions
 #' @description converts taxon names of common taxa (superkingdom and phylum level) to it's NCBI taxID using an internal library. For taxa not in the internal library, please see https://www.ncbi.nlm.nih.gov/Taxonomy/TaxIdentifier/tax_identifier.cgi
 #' @param taxon character or character vector. The taxon names to be converted to NCBI tax IDs.
 #' @param fill.unknown character. The string to return when a taxon was not found in the list with common taxa. Default is NCBI:txid12908 (the ID for "unknown sequences"), other options include NA or ""

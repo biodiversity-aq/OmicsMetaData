@@ -23,7 +23,6 @@ get.ENAName("target_gene")
 \seealso{
 Other data archiving functions: 
 \code{\link{FileNames.to.Table}()},
-\code{\link{commonTax.to.NCBI.TaxID}()},
 \code{\link{prep.metadata.ENA}()},
 \code{\link{renameSequenceFiles}()},
 \code{\link{sync.metadata.sequenceFiles}()}

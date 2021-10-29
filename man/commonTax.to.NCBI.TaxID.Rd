@@ -25,15 +25,6 @@ This function makes use of a limited internal library, not all the taxIDs are pr
 commonTax.to.NCBI.TaxID("soil metagenome", fill.unknown="12908")
 }
 }
-\seealso{
-Other data archiving functions: 
-\code{\link{FileNames.to.Table}()},
-\code{\link{get.ENAName}()},
-\code{\link{prep.metadata.ENA}()},
-\code{\link{renameSequenceFiles}()},
-\code{\link{sync.metadata.sequenceFiles}()}
-}
 \author{
 Maxime Sweetlove
 }
-\concept{data archiving functions}

@@ -36,7 +36,6 @@ FileNames.to.Table(file.dir="path/to/the/sequenceFilesFolder", paired=TRUE,
 }
 \seealso{
 Other data archiving functions: 
-\code{\link{commonTax.to.NCBI.TaxID}()},
 \code{\link{get.ENAName}()},
 \code{\link{prep.metadata.ENA}()},
 \code{\link{renameSequenceFiles}()},

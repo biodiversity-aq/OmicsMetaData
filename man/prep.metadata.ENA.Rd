@@ -79,7 +79,6 @@ prep.metadata.ENA(metadata=test_MIxS, dest.dir=getwd(), file.name="testthat",
 \seealso{
 Other data archiving functions: 
 \code{\link{FileNames.to.Table}()},
-\code{\link{commonTax.to.NCBI.TaxID}()},
 \code{\link{get.ENAName}()},
 \code{\link{renameSequenceFiles}()},
 \code{\link{sync.metadata.sequenceFiles}()}
