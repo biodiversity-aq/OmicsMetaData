@@ -4,14 +4,16 @@
 \alias{download.sequences.INSDC}
 \title{Download open sequence data to your computer.}
 \usage{
-download.sequences.INSDC(BioPrj = c(), destination.path = NA, apiKey=NA, unzip = FALSE, keep.metadata = TRUE, download.sequences = TRUE)
+download.sequences.INSDC(BioPrj = c(), 
+  destination.path = NA, apiKey=NA, unzip = FALSE, 
+  keep.metadata = TRUE, download.sequences = TRUE)
 }
 \arguments{
 \item{BioPrj}{a list with character strings. A list of one or more BioProject numbers to be downloaded. Required argument.}
 
 \item{destination.path}{a character string. The path to the directory where all the downloaded sequence data needs to go}
 
-\item{apiKey}{a character string. Only required if download.sequences.INSDC(keep.metadata=TRUE). A personal API-key to the acces the NCBI databases, and required to use the Entrez Programming Utilities (E-utilities). An API-key (API stands for application programming interface) is a unique identifier used to authenticate a user. You can easily generate an API-key: see https://ncbiinsights.ncbi.nlm.nih.gov/2017/11/02/new-api-keys-for-the-e-utilities/}
+\item{apiKey}{a character string. Only required if download.sequences.INSDC(keep.metadata=TRUE). A personal API-key to the access the NCBI databases, and required to use the Entrez Programming Utilities (E-utilities). An API-key (API stands for application programming interface) is a unique identifier used to authenticate a user. You can easily generate an API-key: see https://ncbiinsights.ncbi.nlm.nih.gov/2017/11/02/new-api-keys-for-the-e-utilities/}
 
 \item{unzip}{boolean. If TRUE, the all *.fastq.gz files in the destination.path will unzipped. Default FALSE}
 

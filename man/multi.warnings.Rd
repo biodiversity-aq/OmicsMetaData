@@ -17,6 +17,12 @@ a character string with unique warning messages
 \description{
 collect warning messages troughout a running function
 }
+\examples{
+\donttest{
+warningmessages <- c()
+multi.warnings(warningmessages, "new warning")
+}
+}
 \author{
 Maxime Sweetlove
 }

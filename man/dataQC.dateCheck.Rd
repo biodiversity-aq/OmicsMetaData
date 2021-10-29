@@ -23,9 +23,14 @@ The date column is found based on a user-provided list of possible names to look
 \examples{
 \donttest{
 test_metadata <- data.frame(sample_name=paste("sample", 1:5, sep="_"),
-                           collection_date=c("2020-09-23", "2020", "16 Jan. 2020", "November 1998", "12/01/1999"),
-                           latitude=c(23, 45, -56.44, "47.5", "-88° 4\' 5\""),
-                           longitude=c(24, -57, -107.55, "33.5", "-130° 26\' 9\""),
+                           collection_date=c("2020-09-23", 
+                                             "2020", "16 Jan. 2020", 
+                                             "November 1998", 
+                                             "12/01/1999"),
+                           latitude=c(23, 45, -56.44, 
+                                      "47.5", "-88° 4\' 5\""),
+                           longitude=c(24, -57, -107.55, 
+                                       "33.5", "-130° 26\' 9\""),
                            row.names=paste("sample", 1:5, sep="_"))
 dataQC.dateCheck(dataset=test_metadata, date.colnames=c("collection_date"))
 }

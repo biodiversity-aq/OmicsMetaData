@@ -20,6 +20,11 @@ converts taxon names of common taxa (superkingdom and phylum level) to it's NCBI
 \details{
 This function makes use of a limited internal library, not all the taxIDs are present
 }
+\examples{
+\donttest{
+commonTax.to.NCBI.TaxID("soil metagenome", fill.unknown="12908")
+}
+}
 \seealso{
 Other data archiving functions: 
 \code{\link{FileNames.to.Table}()},

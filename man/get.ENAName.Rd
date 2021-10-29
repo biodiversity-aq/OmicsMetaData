@@ -15,6 +15,11 @@ a character
 \description{
 get the ENA variant a MIxS term
 }
+\examples{
+\donttest{
+get.ENAName("target_gene")
+}
+}
 \seealso{
 Other data archiving functions: 
 \code{\link{FileNames.to.Table}()},
