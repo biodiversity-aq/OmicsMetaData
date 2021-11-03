@@ -1,7 +1,7 @@
 #==============================================================
-# The MicrobeDataTools package
-#       MicrobeDataTools is a collection data management tools for microbial 'omics datasets.
-#       They allow to download, structure, quqlity-controll and standardize microbial datasets
+# The OmicsMetaData package
+#       OmicsMetaData is a collection data management tools for microbial 'omics datasets.
+#       They allow to download, structure, quality-control and standardize microbial datasets
 #==============================================================
 # Author Maxime Sweetlove
 # Part of the POLA3R website (successor or mARS.biodiversity.aq)
