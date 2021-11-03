@@ -32,5 +32,6 @@ Suggests:
     testthat (>= 2.3.2),
     roxygen2 (>= 7.1.1),
     devtools (>= 2.3.0),
-    knitr (>= 1.34)
+    knitr (>= 1.34),
+    devtools (>= 2.3.0)
 VignetteBuilder: knitr
