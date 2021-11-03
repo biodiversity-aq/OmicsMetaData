@@ -17,7 +17,7 @@ get the ENA variant a MIxS term
 }
 \examples{
 \donttest{
-get.ENAName("target_gene")
+OmicsMetaData:::get.ENAName("target_gene")
 }
 }
 \seealso{

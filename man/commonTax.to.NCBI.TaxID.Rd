@@ -22,7 +22,7 @@ This function makes use of a limited internal library, not all the taxIDs are pr
 }
 \examples{
 \donttest{
-commonTax.to.NCBI.TaxID("soil metagenome", fill.unknown="12908")
+OmicsMetaData:::commonTax.to.NCBI.TaxID("soil metagenome", fill.unknown="12908")
 }
 }
 \author{

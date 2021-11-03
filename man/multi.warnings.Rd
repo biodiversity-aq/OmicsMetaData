@@ -20,7 +20,7 @@ collect warning messages troughout a running function
 \examples{
 \donttest{
 warningmessages <- c()
-multi.warnings(warningmessages, "new warning")
+OmicsMetaData:::multi.warnings("new warning", warningmessages)
 }
 }
 \author{

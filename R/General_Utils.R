@@ -22,7 +22,7 @@
 #' @examples 
 #' \donttest{
 #' warningmessages <- c()
-#' multi.warnings(warningmessages, "new warning")
+#' OmicsMetaData:::multi.warnings("new warning", warningmessages)
 #' }
 #' @return a character string with unique warning messages
 multi.warnings <- function(message_text, warningmessages){
@@ -40,7 +40,7 @@ multi.warnings <- function(message_text, warningmessages){
 #' @details This function makes use of a limited internal library, not all the taxIDs are present
 #' @examples 
 #' \donttest{
-#' commonTax.to.NCBI.TaxID("soil metagenome", fill.unknown="12908")
+#' OmicsMetaData:::commonTax.to.NCBI.TaxID("soil metagenome", fill.unknown="12908")
 #' }
 #' @return a character or character vector with the matching taxon IDs, with fill.unknown for those not found.
 commonTax.to.NCBI.TaxID<-function(taxon, fill.unknown="12908"){
@@ -75,7 +75,7 @@ commonTax.to.NCBI.TaxID<-function(taxon, fill.unknown="12908"){
 #' @param variable character a MIxS term.
 #' @examples 
 #' \donttest{
-#' get.ENAName("target_gene")
+#' OmicsMetaData:::get.ENAName("target_gene")
 #' }
 #' @return a character
 get.ENAName <- function(variable){
