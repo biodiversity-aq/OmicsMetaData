@@ -1,9 +1,8 @@
 #==============================================================
 # Author Maxime Sweetlove
-# lisence CC 4.0
 # Part of the POLA3R website (successor or mARS.biodiversity.aq)
 # version 1.0 (2020-01-28)
-# file encdong UTF-8
+# file encding UTF-8
 #
 # assumptions:
 #    - use NA for missing values
@@ -36,7 +35,7 @@
 #' }
 #' @export
 dataQC.MIxS <- function(dataset = NA, ask.input=TRUE, add_to = NA, sample.names = NA){
-  warningmessages<-c()
+  warningmessages <- c()
 
   # 0. pre-process input
   # 0.1. check input data

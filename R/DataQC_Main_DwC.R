@@ -1,9 +1,8 @@
 #==============================================================
 # Author Maxime Sweetlove
-# lisence CC-0 2020
 # Part of the POLA3R website (successor or mARS.biodiversity.aq)
 # version 1.0 (2020-01-28)
-# file encdong UTF-8
+# file encding UTF-8
 #
 # assumptions:
 #    - use NA for missing values

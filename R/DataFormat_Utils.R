@@ -35,7 +35,7 @@ eMoF.to.wideTable <- function(dataset){
   }
 
   if("eventID" %in% colnames(dataset)){
-    dataLong<-dataset[,colnames(dataset) %in% c("eventID", "measurementType", "measurementValue")]
+    dataLong <- dataset[,colnames(dataset) %in% c("eventID", "measurementType", "measurementValue")]
     dataWide <- tidyr::spread(data=dataLong, "eventID", "measurementValue")
   }else if("occurrenceID" %in% colnames(dataset)){
     dataLong<-dataset[,colnames(dataset) %in% c("occurrenceID", "measurementType", "measurementValue")]
@@ -45,22 +45,22 @@ eMoF.to.wideTable <- function(dataset){
   }
 
   dataWide_rows <- colnames(dataWide)[-1]
-  dataWide<-data.frame(dataWide)
+  dataWide <- data.frame(dataWide)
   rownames(dataWide) <- dataWide$measurementType
   dataWide <- data.frame(t(dataWide[,!colnames(dataWide) %in% "measurementType"]))
   rownames(dataWide) <- dataWide_rows
 
-  dataUnits<-dataset[,colnames(dataset) %in% c("measurementType", "measurementUnit")]
+  dataUnits <- dataset[,colnames(dataset) %in% c("measurementType", "measurementUnit")]
   dataUnits <- unique(dataUnits)
-  Units_list<-c()
-  Units_list[as.character(dataUnits$measurementType)]<-as.character(dataUnits$measurementUnit)
+  Units_list <- c()
+  Units_list[as.character(dataUnits$measurementType)] <- as.character(dataUnits$measurementUnit)
 
   Method_list<-NA
   if("measurementMethod" %in% colnames(dataset)){
-    Method_list<-c()
-    dataMethods<-dataset[,colnames(dataset) %in% c("measurementType", "measurementMethod")]
+    Method_list <- c()
+    dataMethods <- dataset[,colnames(dataset) %in% c("measurementType", "measurementMethod")]
     dataMethods <- unique(dataMethods)
-    Method_list[as.character(dataMethods$measurementType)]<-as.character(dataMethods$measurementMethod)
+    Method_list[as.character(dataMethods$measurementType)] <- as.character(dataMethods$measurementMethod)
   }
 
   # not yet included:
@@ -169,13 +169,14 @@ wideTable.to.eMoF <- function(metadata.object, variables=NA){
 #' @param fill character or NA. A value to put into the cells that have no data. 
 #'   Default NA
 #' @param merge.cols logical. Merge colomns with common name. Default TRUE
-#' @param original_rowName.col logical. if TRUE, add a column with the original rownames. Default TRUE
+#' @param original_rowName.col logical. if TRUE, add a column with the original rownames. 
+#'  Default TRUE
 #' @param merge.rows character. If the data.frames df1 and df2 have common rows, 
 #'   the values for these rows of this dataset must be kept in favor of the other. 
 #'   If NA, both rows will be kept. Either "df1", "df2" or NA. Default "df1"
 #' @details Columns with matching names can or cannot be merged, 
 #'   rows are automatically bound (a wrapper of rbind), not merged. 
-#'   Any missing data as a result of the non-matchng columns will be filled by the fill argument.
+#'   Any missing data as a result of the non-matching columns will be filled by the fill argument.
 #' @return a data.frame
 #' @examples
 #' \donttest{

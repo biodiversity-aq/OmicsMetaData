@@ -105,7 +105,7 @@ find.dataset <- function(dataset, TermsList=c()){
       colMatch <- dataset[,TermsList[i]]
       ctu<-FALSE
     }else{
-      i=i+1
+      i<-i+1
     }
     if(i>length(TermsList)){
       ctu<-FALSE
@@ -150,10 +150,10 @@ coordinate.to.decimal<-function(val){
   Encoding(val)<-"UTF-8"
 
   if(grepl("S|W", val)){
-    s=-1
+    s <- -1
     val <- gsub("S|W", "", val)[[1]]
   }else{
-    s=1
+    s <- 1
     val <- gsub("N|E", "", val)[[1]]
   }
 
@@ -233,16 +233,16 @@ coordinate.to.decimal<-function(val){
 #' get.boundingBox(c(22.4, 23.7), c(98.7, -44.7))
 #' }
 #' @export
-get.boundingBox<-function(latitudes, longitudes){
+get.boundingBox <- function(latitudes, longitudes){
 
   latitudes<- as.numeric(latitudes)
   longitudes<- as.numeric(longitudes)
 
-  S<-paste("South = ", min(latitudes))
-  N<-paste("North = ", max(latitudes))
+  S <- paste("South = ", min(latitudes))
+  N <- paste("North = ", max(latitudes))
 
-  E<-paste("East = ", max(longitudes))
-  W<-paste("West = ", min(longitudes))
+  E <- paste("East = ", max(longitudes))
+  W <- paste("West = ", min(longitudes))
 
   message(paste(S, "\n", N, '\n\n', W, "\n", E, "\n", sep=""))
   }
